@@ -50,8 +50,15 @@
 				<legend class="m-3">請輸入查詢條件</legend>
 				<div class="p-3 border border-2 border-warning bg bg-warning">
 			<form method="post" action="" class="mb-3  " >
-				 &emsp;身分別:&nbsp;<input type="text" id="personGroup" name="personGroup" placeholder="請輸入身分別" required />
-				 &emsp;年齡:&nbsp; <input type="number" id="personAge" name="personAge" placeholder="請輸入年齡" required />
+			&emsp;<p />
+				&emsp;身分別:&nbsp;<select name="entity">
+								<option value="middle school">middle school</option>
+								<option value="high school">high school</option>
+								<option value="undergraduate">undergraduate</option>
+								<option value="graduate">graduate</option>
+								<option value="PhD">PhD</option>
+							  </select>
+				 &emsp;年齡:&nbsp; <input class="col-md-2" type="number" id="personAge" name="personAge" placeholder="請輸入年齡" max="30" min="14" required />
 				 &emsp;獎學金額度:&nbsp; <input type="number" id="scholarDegree" name="scholarDegree"
 					placeholder="例:50000" required />
 				<button type="submit">送出</button>
