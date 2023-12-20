@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import scholarship.bean.Entity;
 import scholarship.bean.Institution;
 import scholarship.bean.Scholarship;
 import scholarship.bean.User;
@@ -83,6 +82,14 @@ public class ScholarshipMySQLController {
 	@ResponseBody
 	public String backendtest(HttpServletRequest req, HttpServletResponse resp) {
 		return "backendTest 後台測試頁 登入成功 !";
+	}
+	
+	@GetMapping("/passwordtest")
+	public String passwordTest() {
+		String password = "password2";
+		String encodedPasswordString = Bcrypt.
+		return password;
+		
 	}
 
 

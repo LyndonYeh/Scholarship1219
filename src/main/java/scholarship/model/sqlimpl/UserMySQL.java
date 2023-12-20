@@ -73,7 +73,7 @@ public class UserMySQL implements UserDao {
     
     @Override
     public Optional<User> findUserByUsername(String username) {
-        String sql = "SELECT userId, username, password FROM user WHERE username = :username";
+        String sql = "SELECT userId, institutionId, username, password FROM scholarshipv1.user WHERE username = :username";
 
         Map<String, Object> paramMap = Collections.singletonMap("username", username);
 
