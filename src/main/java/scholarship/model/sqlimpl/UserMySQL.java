@@ -69,7 +69,7 @@ public class UserMySQL implements UserDao {
         return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
     }
 
-    //  namedjdbc 登入用
+    //  namedJdbc 登入用
     
     @Override
     public Optional<User> findUserByUsername(String username) {
