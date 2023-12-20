@@ -34,6 +34,7 @@ import scholarship.model.dao.UserDao;
 public class ScholarshipMySQLController {
 
 
+
 	// private Logger logger = LoggerFactory.getLogger(getClass());
 	/*
 	 * 測試用hello為測試用，測試能否從網址連到controller
@@ -88,6 +89,10 @@ public class ScholarshipMySQLController {
 	}
 	
 
+	/*
+	 * 首頁基礎資料
+	 */
+
 	@Autowired
 	private InstitutionDao instiutionDao;
 	@Autowired
@@ -95,9 +100,6 @@ public class ScholarshipMySQLController {
 	@Autowired
 	private ScholarshipDao scholarshipDao;
 
-	/*
-	 * 首頁基礎資料
-	 */
 	private void addBasicModel(Model model) {
 		List<Institution> instiutions = instiutionDao.findAllInstitutions();
 		List<Scholarship> scholarships = scholarshipDao.findAllscholarship();
@@ -113,7 +115,7 @@ public class ScholarshipMySQLController {
 		addBasicModel(model);
 		model.addAttribute("submitBtnName", "新增");
 		model.addAttribute("_method", "POST");
-		return "backendmain";
+		return "backend/backendmain";
 	}
 
 	@PostMapping("/main") // 新增 User
