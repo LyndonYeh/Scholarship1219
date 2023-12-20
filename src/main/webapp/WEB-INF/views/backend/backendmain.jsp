@@ -34,7 +34,7 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="../frontend/scholarmain.jsp">前台首頁</a></li>
+					aria-current="page" href="http://localhost:8080/Scholarship/scholarship/frontend/scholarmain.jsp">前台首頁</a></li>
 				<!--<li class="nav-item"><a class="nav-link disabled">Disabled</a>
 				</li>-->
 			</ul>
@@ -73,26 +73,27 @@
 
 					<h2>新增獎學金項目</h2>
 					<!-- 名稱旁要有上傳檔案的按鈕 -->
-					<sp:input path="id" type="hidden" />
+					<sp:input path="scholarshipId" type="hidden" />
 					<input name="_method" type="hidden" value="${ _method }" />
 						
-						&emsp;獎學金名稱:&nbsp;<sp:input path="sname" type="text" />
-						&emsp;開始日期:&nbsp; <sp:input path="sDate" type="date" /> 
-						&emsp;結束日期:&nbsp; <sp:input path="eDate" type="date" />
-					<!--&emsp;身分別:&nbsp;<select name="entity">
-						<option value="middle school">middle school</option>
-						<option value="high school">high school</option>
-						<option value="undergraduate">undergraduate</option>
-						<option value="graduate">graduate</option>
-						<option value="PhD">PhD</option>
-					</select> -->
-					<sp:select path="entityId" items="${ entitys }" itemLabel="name"
-						itemValue="id" />
+						&emsp;獎學金名稱:&nbsp;<sp:input path="scholarshipName" type="text" />
+						&emsp;開始日期:&nbsp; <sp:input path="startDate" type="date" /> 
+						&emsp;結束日期:&nbsp; <sp:input path="endDate" type="date" />
+					&emsp;身分別:&nbsp;<select name="entity">
+						<option value="kindergarten">幼稚園</option>
+						<option value="elementary school">小學</option>
+						<option value="middle school">國中</option>
+						<option value="high school">高中</option>
+						<option value="University">大學</option>
+						<option value="graduate">研究所</option>
+					</select> 
+					<!--<sp:select path="entity" items="${ entities }" itemLabel="name"
+						itemValue="id" />-->
 					<p />
 					<p />
-						&emsp;最高額度:&nbsp; <sp:input path="maxvalue" type="number" />
-						&emsp;聯絡人:&nbsp; <sp:input path="contactner" type="text" />
-						&emsp;聯絡電話:&nbsp; <sp:input path="contactnumber" type="text" />
+						&emsp;額度:&nbsp; <sp:input path="scholarshipAmount" type="number" />
+						&emsp;聯絡人:&nbsp; <sp:input path="institution.contact" type="text" />
+						&emsp;聯絡電話:&nbsp; <sp:input path="institution.contactNumber" type="text" />-->
 					<button type="submit">建立</button>
 				</sp:form>
 			</div>
@@ -121,32 +122,37 @@
 					<td>行天宮</td>
 					<td>清寒獎助學金</td>
 					<td>50000</td>
-					<td>陳小姐 0912345678</td>
+					<td>陳小姐 </td>
+					<td>0912345678</td>
 					<td><button type="button" onclick="" id="copy" name="copy">複製</button></td>
 					<td>&nbsp;<input type="checkbox" id="ontable" name="ontable" /></td>
 					<td>&nbsp;<input type="checkbox" id="pushrecycle"
 						name="pushrecycle" /></td>
-					<td>&nbsp;
-						<button type="submit" id="pushconfirm" name="pushconfirm">確認</button>
+					<td>
+						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/update/${ scholarship.scholarshipId }">確認更改</a>
+						<!--  <button type="submit" id="pushconfirm" name="pushconfirm">確認</button>-->
 					</td>
 				</tr>
-				  
-				 <c:forEach items="${scholarship}" var="scholarship">
+				<c:forEach items="${scholarships}" var="scholarship">
 				 <tr>
-					<td>${scholarship.institution.name } </td>
-					<td>${scholarship.name } </td>
-					<td>${scholarship.amount} </td>
-					<td>${scholarship.institution.contact } </td>
-					<td>${scholarship.institution.contactNumber } </td>
+					<td>${scholarship.scholarshipId }</td>
+					<td>${scholarship.institution.name } 名稱需注入</td>
+					<td>${scholarship.scholarshipName } </td>
+					<td>${scholarship.scholarshipAmount} </td>
+					<td>${scholarship.institution.contact } 聯絡人需注入</td>
+					<td>${scholarship.institution.contactNumber } 聯絡電話需注入</td>
 					<td>
-						<a href="${pageContext.request.contextPath}/mvc/scholarshipController/${ scholarship.id }">複製</a>
+						<button type="button" onclick="${pageContext.request.contextPath}/mvc/scholarshipController/${ scholarship.scholarshipId }" id="copy" name="copy">複製</button>
 					</td>
+					<td>&nbsp;<input type="checkbox" id="isLaunch" name="isLaunch" /></td>
+					<td>&nbsp;<input type="checkbox" id="pushrecycle" name="pushrecycle" /></td>
 					<td>
-						<!-- 刪除(Get method) -->
-						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/delete/${ scholarship.id }">刪除</a>
+						<!-- 更改按鍵(Get method) -->
+						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/update/${ scholarship.scholarshipId }">確認更改</a>
 					</td>
 				</tr>
 			</c:forEach> 
+
 
 			</tbody>
 		</table>

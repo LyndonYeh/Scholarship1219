@@ -35,50 +35,50 @@ import scholarship.model.dao.UserDao;
 public class ScholarshipMySQLController {
 
 
-	// private Logger logger = LoggerFactory.getLogger(getClass());
-	/*
-	 * 測試用hello為測試用，測試能否從網址連到controller
-	 */
-
-	@GetMapping("/hello")
-	@ResponseBody
-	public String hello(HttpServletRequest req, HttpServletResponse resp) {
-		// logger.info("hello, spirng 來了!!!");
-		return "Hello, Spring12345 !!";
-	}
-
-	/*
-	 * 透過網址連到登入頁
-	 */
-	@GetMapping(value = {"/login", "/", "/login/"})
-	public String loginPage() {
-		return "scholarship/login";
-	}
-	
-	
-	@PostMapping("/login")
-	public String login(@RequestParam("username") String username, 
-						 @RequestParam("password") String password, 
-						HttpSession session, Model model) {
-		// 根據 username 查找 user 物件
-		Optional<User> userOpt = userDao.findUserByUsername(username);
-		if(userOpt.isPresent()) {
-			User user = userOpt.get();
-			// 比對 password
-			if(user.getPassword().equals(password)) {
-				session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
-				return "redirect:/mvc/scholarship/backendtest"; // OK, 導向後台首頁
-			} else {
-				session.invalidate(); // session 過期失效
-				model.addAttribute("loginMessage", "密碼錯誤");
-				return "scholarship/login";
-			}
-		} else {
-			session.invalidate(); // session 過期失效
-			model.addAttribute("loginMessage", "無此使用者");
-			return "group_buy/login";
-		}
-	}
+//	// private Logger logger = LoggerFactory.getLogger(getClass());
+//	/*
+//	 * 測試用hello為測試用，測試能否從網址連到controller
+//	 */
+//
+//	@GetMapping("/hello")
+//	@ResponseBody
+//	public String hello(HttpServletRequest req, HttpServletResponse resp) {
+//		// logger.info("hello, spirng 來了!!!");
+//		return "Hello, Spring12345 !!";
+//	}
+//
+//	/*
+//	 * 透過網址連到登入頁
+//	 */
+//	@GetMapping(value = {"/login", "/", "/login/"})
+//	public String loginPage() {
+//		return "scholarship/login";
+//	}
+//	
+//	
+//	@PostMapping("/login")
+//	public String login(@RequestParam("username") String username, 
+//						 @RequestParam("password") String password, 
+//						HttpSession session, Model model) {
+//		// 根據 username 查找 user 物件
+//		Optional<User> userOpt = userDao.findUserByUsername(username);
+//		if(userOpt.isPresent()) {
+//			User user = userOpt.get();
+//			// 比對 password
+//			if(user.getPassword().equals(password)) {
+//				session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
+//				return "redirect:/mvc/scholarship/backendtest"; // OK, 導向後台首頁
+//			} else {
+//				session.invalidate(); // session 過期失效
+//				model.addAttribute("loginMessage", "密碼錯誤");
+//				return "scholarship/login";
+//			}
+//		} else {
+//			session.invalidate(); // session 過期失效
+//			model.addAttribute("loginMessage", "無此使用者");
+//			return "scholarship/login";
+//		}
+//	}
 	
 	// 登入後重新導向的 後台測試頁, 若 後台 controller 串接好此路徑可刪除
 	@GetMapping("/backendtest")
@@ -89,6 +89,9 @@ public class ScholarshipMySQLController {
 	}
 	
 
+	/*
+	 * 首頁基礎資料
+	 */
 
 	@Autowired
 	private InstitutionDao instiutionDao;
@@ -97,9 +100,6 @@ public class ScholarshipMySQLController {
 	@Autowired
 	private ScholarshipDao scholarshipDao;
 
-	/*
-	 * 首頁基礎資料
-	 */
 	private void addBasicModel(Model model) {
 		List<Institution> instiutions = instiutionDao.findAllInstitutions();
 		List<Scholarship> scholarships = scholarshipDao.findAllscholarship();
@@ -115,7 +115,7 @@ public class ScholarshipMySQLController {
 		addBasicModel(model);
 		model.addAttribute("submitBtnName", "新增");
 		model.addAttribute("_method", "POST");
-		return "backendmain";
+		return "backend/backendmain";
 	}
 
 	@PostMapping("/main") // 新增 User
