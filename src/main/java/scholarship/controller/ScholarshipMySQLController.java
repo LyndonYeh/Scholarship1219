@@ -33,41 +33,45 @@ import scholarship.model.dao.UserDao;
 @Controller
 @RequestMapping("/scholarshipController")
 public class ScholarshipMySQLController {
-	
-	//private Logger logger = LoggerFactory.getLogger(getClass());
-	
+
+	// private Logger logger = LoggerFactory.getLogger(getClass());
+	/*
+	 * 測試用hello為測試用，測試能否從網址連到controller
+	 */
 	@GetMapping("/hello")
 	@ResponseBody
 	public String hello(HttpServletRequest req, HttpServletResponse resp) {
-		//logger.info("hello, spirng 來了!!!");
+		// logger.info("hello, spirng 來了!!!");
 		return "Hello, Spring12345 !!";
 	}
-	
+	/*
+	 * 透過網址連到登入頁
+	 */
 	@GetMapping("/login")
 	@ResponseBody
-	public String login(HttpServletRequest req, HttpServletResponse resp) {
 		public String login(@RequestParam("username") String username, 
-				 @RequestParam("password") String password, 
-				HttpSession session, Model model) {
-// 根據 username 查找 user 物件
-Optional<User> userOpt = userDao.findUserByUsername(username);
-if(userOpt.isPresent()) {
-	User user = userOpt.get();
-	// 比對 password
-	if(user.getPassword().equals(password)) {
-		session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
-		return "redirect:/mvc/group_buy/frontend/main"; // OK, 導向前台首頁
-	} else {
-		session.invalidate(); // session 過期失效
-		model.addAttribute("loginMessage", "密碼錯誤");
-		return "group_buy/login";
+				 			@RequestParam("password") String password, 
+				 			HttpSession session, Model model) {
+			// 根據 username 查找 user 物件
+			Optional<User> userOpt = userDao.findUserByUsername(username);
+			if(userOpt.isPresent()) {
+				User user = userOpt.get();
+				// 比對 password
+				if(user.getPassword().equals(password)) {
+					session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
+					return "redirect:/mvc/group_buy/frontend/main"; // OK, 導向前台首頁
+				} else {
+					session.invalidate(); // session 過期失效
+					model.addAttribute("loginMessage", "密碼錯誤");
+					return "group_buy/login";
+				}
+			} else {
+				session.invalidate(); // session 過期失效
+				model.addAttribute("loginMessage", "無此使用者");
+				return "group_buy/login";
+			}
 	}
-} else {
-	session.invalidate(); // session 過期失效
-	model.addAttribute("loginMessage", "無此使用者");
-	return "group_buy/login";
-}
-	}
+	
 
 	@Autowired
 	private InstitutionDao instiutionDao;
@@ -75,43 +79,46 @@ if(userOpt.isPresent()) {
 	private UserDao userDao;
 	@Autowired
 	private ScholarshipDao scholarshipDao;
-	
-	// 首頁基礎資料
+
+	/*
+	 * 首頁基礎資料
+	 */
 	private void addBasicModel(Model model) {
 		List<Institution> instiutions = instiutionDao.findAllInstitutions();
 		List<Scholarship> scholarships = scholarshipDao.findAllscholarship();
 		List<User> users = userDao.findAllUsers();
-	
+
 		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
 		model.addAttribute("users", users); // 取得目前最新 users 資料
 	}
+
 	@GetMapping("/")
-	
 	public String index(@ModelAttribute Scholarship scholarship, Model model) {
 		addBasicModel(model);
 		model.addAttribute("submitBtnName", "新增");
-		model.addAttribute("_method", "POST"); 
+		model.addAttribute("_method", "POST");
 		return "backendmain";
 	}
+
 	@PostMapping("/") // 新增 User
-	public String addUser(@Valid Scholarship scholarship, BindingResult result, Model model) { // @Valid 驗證, BindingResult 驗證結果
+	public String addUser(@Valid Scholarship scholarship, BindingResult result, Model model) { // @Valid 驗證,
+																								// BindingResult 驗證結果
 		// 判斷驗證是否通過?
-		if(result.hasErrors()) { // 有錯誤發生
+		if (result.hasErrors()) { // 有錯誤發生
 			// 自動會將 errors 的資料放在 model 中
-			
+
 			addBasicModel(model);
 			model.addAttribute("submitBtnName", "新增");
-			model.addAttribute("_method", "POST"); 
+			model.addAttribute("_method", "POST");
 			model.addAttribute("scholarship", scholarship); // 給 form 表單用的 (ModelAttribute)
-			
+
 			return "backendmain";
 		}
-		
+
 		scholarshipDao.addScholarship(scholarship);
-		//System.out.println("add User rowcount = " + rowcount);
+		// System.out.println("add User rowcount = " + rowcount);
 		return "redirect:/mvc/scholarshipController/"; // 重導到 user 首頁
 	}
 
-	
 }
