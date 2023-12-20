@@ -61,7 +61,7 @@ public class ScholarshipMySQLController {
 						 @RequestParam("password") String password, 
 						HttpSession session, Model model) {
 		// 根據 username 查找 user 物件
-		Optional<User> userOpt = userDaoImpl.findUserByUsername(username);
+		Optional<User> userOpt = userDao.findUserByUsername(username);
 		if(userOpt.isPresent()) {
 			User user = userOpt.get();
 			// 比對 password
