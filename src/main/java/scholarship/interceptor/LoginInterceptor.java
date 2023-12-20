@@ -18,7 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			return true; // 放行
 		}
 		// 未登入, 導入到登入頁面
-		response.sendRedirect(request.getServletContext().getContextPath() + "/mvc/group_buy/login");
+		response.sendRedirect(request.getServletContext().getContextPath() + "/mvc/scholarship/login");
 		return false; // 不放行
 	}
 

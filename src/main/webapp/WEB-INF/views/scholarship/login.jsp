@@ -40,23 +40,24 @@ form {
 	<div class="d-flex justify-content-center  align-items-center vh-100 "
 		class="">
 		<form class="needs-validation " novalidate method="post"
-			action="./scholarmain.jsp">
+			action="./login">
 			<h4 class="text-center">請登入</h4>
 			<div class="">
 				<label for="username" class="form-label">使用者帳號</label> <input
 					type="text" class="form-control" id="username" name="username"
-					value="" required>
+					value="dave.wenyu@gmail.com" required>
 				<div class="invalid-feedback">請輸入帳號</div>
 			</div>
 			<div class="">
 				<label for="password" class="form-label">密碼</label> <input
 					type="password" class="form-control" id="password" name="password"
-					value="" required>
+					value="password1" required>
 				<div class="invalid-feedback">請輸入密碼</div>
 			</div>
 			<div class=" d-flex justify-content-center my-3">
 				<button class="btn btn-primary" type="submit" onclick="location.href='./backend/main.jsp';">登入</button>
 			</div>
+			<div style="color: red">${ loginMessage }</div>
 		</form>
 	</div>
 
