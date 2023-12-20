@@ -1,11 +1,15 @@
 package scholarship.model.sqlimpl;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +21,9 @@ public class UserMySQL implements UserDao {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    
+    @Autowired
+	private JdbcTemplate jdbcTemplate;
 
     @Override
     public void addUser(User user) {
@@ -61,4 +68,42 @@ public class UserMySQL implements UserDao {
         String sql = "SELECT * FROM User";
         return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
     }
+
+    //  namedjdbc 登入用
+    
+    @Override
+    public Optional<User> findUserByUsername(String username) {
+        String sql = "SELECT userId, username, password FROM user WHERE username = :username";
+
+        Map<String, Object> paramMap = Collections.singletonMap("username", username);
+
+        try {
+            User user = namedParameterJdbcTemplate.queryForObject(sql, paramMap, new BeanPropertyRowMapper<>(User.class));
+            return Optional.ofNullable(user);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+
+    
+    /* jdbcTemplate 登入用 還是有保留
+	@Override
+	public Optional<User> findUserByUsername(String username) {
+		String sql = "select userId, username, password, level from user where username = ?";
+		try {
+			User user = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), username);
+			return Optional.ofNullable(user);
+		} catch (EmptyResultDataAccessException e) {
+			return Optional.empty();
+		}
+	}
+	*/
+    
+    
+	@Override
+	public Optional<User> findUserById(Integer userId) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
 }

@@ -1,10 +1,12 @@
 package scholarship.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.faces.annotation.RequestCookieMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import scholarship.bean.Entity;
@@ -38,6 +41,32 @@ public class ScholarshipMySQLController {
 	public String hello(HttpServletRequest req, HttpServletResponse resp) {
 		//logger.info("hello, spirng 來了!!!");
 		return "Hello, Spring12345 !!";
+	}
+	
+	@GetMapping("/login")
+	@ResponseBody
+	public String login(HttpServletRequest req, HttpServletResponse resp) {
+		public String login(@RequestParam("username") String username, 
+				 @RequestParam("password") String password, 
+				HttpSession session, Model model) {
+// 根據 username 查找 user 物件
+Optional<User> userOpt = userDao.findUserByUsername(username);
+if(userOpt.isPresent()) {
+	User user = userOpt.get();
+	// 比對 password
+	if(user.getPassword().equals(password)) {
+		session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
+		return "redirect:/mvc/group_buy/frontend/main"; // OK, 導向前台首頁
+	} else {
+		session.invalidate(); // session 過期失效
+		model.addAttribute("loginMessage", "密碼錯誤");
+		return "group_buy/login";
+	}
+} else {
+	session.invalidate(); // session 過期失效
+	model.addAttribute("loginMessage", "無此使用者");
+	return "group_buy/login";
+}
 	}
 
 	@Autowired

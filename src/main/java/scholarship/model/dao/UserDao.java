@@ -1,6 +1,7 @@
 package scholarship.model.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import scholarship.bean.User;
 
@@ -55,8 +56,22 @@ public interface UserDao {
 		 * 
 		 * @return 所有使用者列表
 		 */
-
+		
+	
 		List<User> findAllUsers();
+		
+		/*
+		 * 5. 根據使用者名稱查找使用者(登入用-單筆)
+		 * 
+		 */
+		Optional<User> findUserByUsername(String username);
+		
+		/*
+		 * 6. 根據使用者ID查找使用者(單筆)
+		 */
+		
+		Optional<User> findUserById(Integer userId);
+
 
 
 }

@@ -15,7 +15,7 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-<title>登入頁(獎學網)</title>
+<title>獎學網登入頁</title>
 <style type="text/css">
 body {
 	background-color: rgb(200, 200, 200);
@@ -55,7 +55,7 @@ form {
 				<div class="invalid-feedback">請輸入密碼</div>
 			</div>
 			<div class=" d-flex justify-content-center my-3">
-				<button class="btn btn-primary" type="submit">登入</button>
+				<button class="btn btn-primary" type="submit" onclick="location.href='./backend/main.jsp';">登入</button>
 			</div>
 		</form>
 	</div>
