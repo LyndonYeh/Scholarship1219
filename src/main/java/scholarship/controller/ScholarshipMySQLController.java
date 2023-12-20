@@ -31,11 +31,15 @@ import scholarship.model.dao.ScholarshipDao;
 import scholarship.model.dao.UserDao;
 
 @Controller
-@RequestMapping("/scholarshipController")
+@RequestMapping("/scholarship")
 public class ScholarshipMySQLController {
 	
 	//private Logger logger = LoggerFactory.getLogger(getClass());
 	
+	@Autowired
+	private UserDao userDaoimpl; 
+	
+	// test spring 
 	@GetMapping("/hello")
 	@ResponseBody
 	public String hello(HttpServletRequest req, HttpServletResponse resp) {
@@ -43,31 +47,44 @@ public class ScholarshipMySQLController {
 		return "Hello, Spring12345 !!";
 	}
 	
-	@GetMapping("/login")
+	// 登入首頁
+	@GetMapping(value = {"/login", "/", "/login/"})
+	public String loginPage() {
+		return "scholarship/login";
+	}
+	
+	
+	@PostMapping("/login")
+	public String login(@RequestParam("username") String username, 
+						 @RequestParam("password") String password, 
+						HttpSession session, Model model) {
+		// 根據 username 查找 user 物件
+		Optional<User> userOpt = userDaoimpl.findUserByUsername(username);
+		if(userOpt.isPresent()) {
+			User user = userOpt.get();
+			// 比對 password
+			if(user.getPassword().equals(password)) {
+				session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
+				return "redirect:/mvc/scholarship/backendtest"; // OK, 導向後台首頁
+			} else {
+				session.invalidate(); // session 過期失效
+				model.addAttribute("loginMessage", "密碼錯誤");
+				return "scholarship/login";
+			}
+		} else {
+			session.invalidate(); // session 過期失效
+			model.addAttribute("loginMessage", "無此使用者");
+			return "group_buy/login";
+		}
+	}
+	
+	// 登入後重新導向的 後台測試頁, 若 後台 controller 串接好此路徑可刪除
+	@GetMapping("/backendtest")
 	@ResponseBody
-	public String login(HttpServletRequest req, HttpServletResponse resp) {
-		public String login(@RequestParam("username") String username, 
-				 @RequestParam("password") String password, 
-				HttpSession session, Model model) {
-// 根據 username 查找 user 物件
-Optional<User> userOpt = userDao.findUserByUsername(username);
-if(userOpt.isPresent()) {
-	User user = userOpt.get();
-	// 比對 password
-	if(user.getPassword().equals(password)) {
-		session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
-		return "redirect:/mvc/group_buy/frontend/main"; // OK, 導向前台首頁
-	} else {
-		session.invalidate(); // session 過期失效
-		model.addAttribute("loginMessage", "密碼錯誤");
-		return "group_buy/login";
+	public String backendtest(HttpServletRequest req, HttpServletResponse resp) {
+		return "backendTest 後台測試頁 登入成功 !";
 	}
-} else {
-	session.invalidate(); // session 過期失效
-	model.addAttribute("loginMessage", "無此使用者");
-	return "group_buy/login";
-}
-	}
+
 
 	@Autowired
 	private InstitutionDao instiutionDao;
@@ -94,7 +111,7 @@ if(userOpt.isPresent()) {
 		model.addAttribute("_method", "POST"); 
 		return "backendmain";
 	}
-	@PostMapping("/") // 新增 User
+	@PostMapping("/main") // 新增 User
 	public String addUser(@Valid Scholarship scholarship, BindingResult result, Model model) { // @Valid 驗證, BindingResult 驗證結果
 		// 判斷驗證是否通過?
 		if(result.hasErrors()) { // 有錯誤發生
