@@ -6,7 +6,7 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-	
+
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
@@ -15,24 +15,27 @@
 		http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 	<mvc:annotation-driven />
-	
-	<context:component-scan base-package="scholarship" />
-	
+
+	<context:component-scan
+		base-package="scholarship" />
+
 	<!-- 設定 Spring AOP 切面程式自動實現代理 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-	
+
 	<!-- 配置 view 渲染器位置 -->
 	<bean id="internalResourceViewResolver"
-		  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
+
 	<!-- c3p0 pool -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<!-- basic -->
 		<property name="driverClass" value="com.mysql.cj.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/web?serverTimezone=Asia/Taipei&amp;characterEncoding=utf-8&amp;useUnicode=true" />
+		<property name="jdbcUrl"
+			value="jdbc:mysql://localhost:3306/web?serverTimezone=Asia/Taipei&amp;characterEncoding=utf-8&amp;useUnicode=true" />
 		<property name="user" value="root" />
 		<property name="password" value="123" />
 		<!-- options -->
@@ -43,41 +46,60 @@
 		<property name="maxStatements" value="100" /> <!-- 0 表示 no cahce any statement -->
 	</bean>
 
-	
+
 	<!-- jdbc template -->
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
 	<!-- named parameter jdbc template -->
-	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-    	<constructor-arg ref="dataSource"/>
+	<bean id="namedParameterJdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource" />
 	</bean>
-	
+
 	<!-- 配置事務管理器 -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" ></property>
-    </bean>
-    
-    <!-- 開啟註解驅動，對事務相關的註解進行掃描與解析 -->
-    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
-	
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 開啟註解驅動，對事務相關的註解進行掃描與解析 -->
+	<tx:annotation-driven
+		transaction-manager="transactionManager"></tx:annotation-driven>
+
+
+	<bean id="loginInterceptor"
+		class="scholarship.interceptor.LoginInterceptor" />
+		
+	<mvc:interceptors>
+	<mvc:interceptor>
+		<mvc:mapping path="/mvc/**" />
+		<mvc:exclude-mapping path="/mvc/login" />
+		<mvc:exclude-mapping path="/mvc/login/*" />
+		<bean class="scholarship.interceptor.LoginInterceptor" />
+	</mvc:interceptor>
+	</mvc:interceptors>
+
 	<!-- 錯誤訊息設定 properites -->
 	<bean id="messageSource"
-			class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-	    <property name="basename" value="/WEB-INF/resources/errorMessage" />
-	    <property name="useCodeAsDefaultMessage" value="false"/>
-		<property name="defaultEncoding" value="UTF-8"/>
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename"
+			value="/WEB-INF/resources/errorMessage" />
+		<property name="useCodeAsDefaultMessage" value="false" />
+		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
-	
-	<!-- JSR 303 Validator 驗證: Hibernate Validator 實作驗證配置-->
-    <bean id="validator"
-    		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-    	<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
-    	<property name="validationMessageSource" ref="messageSource" />
-    </bean>
-	
-	<!--  解決中文 與 JSR 303 Validator 設定 -->
+
+	<!-- JSR 303 Validator 驗證: Hibernate Validator 實作驗證配置 -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass"
+			value="org.hibernate.validator.HibernateValidator" />
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
+
+	<!-- 解決中文 與 JSR 303 Validator 設定 -->
 	<mvc:annotation-driven validator="validator">
 		<mvc:message-converters
 			register-defaults="true">
@@ -91,5 +113,5 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
-	
+
 </beans>		

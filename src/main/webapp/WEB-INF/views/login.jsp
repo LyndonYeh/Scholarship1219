@@ -46,7 +46,7 @@ form {
 				<label for="username" class="form-label">使用者帳號</label> <input
 					type="text" class="form-control" id="username" name="username"
 					value="dave.wenyu@gmail.com" required>
-				<div class="invalid-feedback">請輸入帳號</div>
+				
 			</div>
 			<div class="">
 				<label for="password" class="form-label">密碼</label> <input
@@ -55,8 +55,11 @@ form {
 				<div class="invalid-feedback">請輸入密碼</div>
 			</div>
 			<div class=" d-flex justify-content-center my-3">
+				
 				<button class="btn btn-primary" type="submit" onclick="location.href='./backend/main.jsp';">登入</button>
+				<button class="btn btn-outline-danger ms-5" type="submit" onclick="location.href='./forgotPassword.jsp';">忘記密碼</button>
 			</div>
+		
 			<div style="color: red">${ loginMessage }</div>
 		</form>
 	</div>
