@@ -103,6 +103,9 @@ public class ScholarshipMySQLController {
 
 	}
 
+	/*
+	 * 首頁基礎資料
+	 */
 	@GetMapping("/backend")
 	public String index(@ModelAttribute Scholarship scholarship, Model model) {
 		addBasicModel(model);
@@ -111,9 +114,18 @@ public class ScholarshipMySQLController {
 		return "backend/backendmain";
 	}
 
+	
 	/*
-	 * 首頁基礎資料
+	 * 透過後台進入帶有該會員資料的修改頁面
 	 */
+	
+	@GetMapping("/backend/edit")
+	public String edit(@ModelAttribute User user, Model model) {
+		
+		
+		
+		return "backend/edit";
+	}
 
 	@Autowired
 	private InstitutionDao instiutionDao;
