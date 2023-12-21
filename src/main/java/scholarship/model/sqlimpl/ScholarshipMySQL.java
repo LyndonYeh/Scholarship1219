@@ -25,7 +25,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public void addScholarship(Scholarship scholarship) {
-        String sql = "INSERT INTO scholarshiprecord (scholarshipId, userId, institutionId, scholarshipName, scholarshipAmount, entity, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated) " +
+        String sql = "INSERT INTO scholarshipv1.scholarshiprecord (scholarshipId, userId, institutionId, scholarshipName, scholarshipAmount, entity, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated) " +
                 "VALUES (:scholarshipId, :userId, :institutionId, :scholarshipName, :scholarshipAmount, :entity, :updatedTime, :startDate, :endDate, :isExpired, :webUrl, :isUpdated)";
 
         Map<String, Object> params = new HashMap<>();
