@@ -1,5 +1,16 @@
-<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
-<%@include file="header.jspf" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" type="image/x-icon" href="../../images/icon.png">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" ></script>
+<meta charset="UTF-8">
+<title>獎學網首頁</title>
+<%@include file="../header.jspf" %>
+</head>
 <body>
 	<tr>
 		<td valign="top">
