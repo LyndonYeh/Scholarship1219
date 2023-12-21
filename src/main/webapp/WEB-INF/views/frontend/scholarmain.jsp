@@ -1,15 +1,29 @@
+<!--%@page import="Scholarship.entity.ScholarshipUpdateRecord"%> -->
+<%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
+<!-- % List<ScholarshipUpdateRecord> ScholarshipUpdateRecords = (List<ScholarshipUpdateRecord>) request.getAttribute("cholarshipUpdateRecord");%> -->
 <html>
 <head>
-<link rel="shortcut icon" type="image/x-icon" href="../../images/icon.png">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" ></script>
+<link rel="shortcut icon" type="image/x-icon"
+	href="../../images/icon.png">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <meta charset="UTF-8">
-<title>獎學網首頁</title>
+<title>獎學網後台</title>
 <%@include file="../header.jspf" %>
+
 </head>
 <body>
 	<tr>
@@ -41,7 +55,8 @@
 					<th scope="col">獎助機構</th>
 					<th scope="col">獎學金名稱</th>
 					<th scope="col">獎學金額度</th>
-					<th scope="col">聯絡資訊</th>
+					<th scope="col">聯絡人</th>
+					<th scope="col">聯絡電話</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -51,6 +66,7 @@
 					<td>清寒獎助學金</td>
 					<td>50000</td>
 					<td>陳小姐 0912345678</td>
+					<td>0912345678</td>
 				</tr>
 				<tr>
 					<th scope="row">2</th>
@@ -58,6 +74,7 @@
 					<td>偏鄉繁星獎勵金</td>
 					<td>80000</td>
 					<td>劉小姐 0988811112</td>
+					<td>0988811112</td>
 				</tr>
 				<tr>
 					<th scope="row">3</th>
@@ -65,11 +82,21 @@
 					<td>小狀元就學獎勵金</td>
 					<td>30000</td>
 					<td>蔡先生 0977716665</td>
+					<td>0977716665</td>
 				</tr>
-				<tr>
-					<th scope="row">4</th>
-					<td colspan="4" >未完待續</td>
+				<c:forEach items="${scholarships}" var="scholarship">
+				 <tr>
+					<td>${scholarship.scholarshipId }</td>
+					<td>${scholarship.institution.name } 名稱需注入</td>
+					<td>${scholarship.scholarshipName } </td>
+					<td>${scholarship.scholarshipAmount} </td>
+					<td>${scholarship.institution.contact } 聯絡人需注入</td>
+					<td>${scholarship.institution.contactNumber } 聯絡電話需注入</td>
+				
 				</tr>
+			</c:forEach> 
+
+
 			</tbody>
 		</table>
 </body>

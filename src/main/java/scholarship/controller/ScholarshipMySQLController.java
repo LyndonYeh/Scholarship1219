@@ -102,35 +102,45 @@ public class ScholarshipMySQLController {
 		return "backendTest 後台測試頁 登入成功 !";
 
 	}
-
-	@GetMapping("/backend")
-	public String index(@ModelAttribute Scholarship scholarship, Model model) {
-		addBasicModel(model);
-		model.addAttribute("submitBtnName", "新增");
-		model.addAttribute("_method", "POST");
-		return "backend/backendmain";
-	}
-
+	
+	
+	
 	/*
 	 * 首頁基礎資料
 	 */
-
+	
 	@Autowired
 	private InstitutionDao instiutionDao;
 	@Autowired
 	private UserDao userDao;
 	@Autowired
 	private ScholarshipDao scholarshipDao;
-
+	
 	private void addBasicModel(Model model) {
 		List<Institution> instiutions = instiutionDao.findAllInstitutions();
 		List<Scholarship> scholarships = scholarshipDao.findAllscholarship();
 		List<User> users = userDao.findAllUsers();
-
+		
 		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
 		model.addAttribute("users", users); // 取得目前最新 users 資料
 	}
+
+	@GetMapping("/frontend")
+	public String indexFront(@ModelAttribute Scholarship scholarship, Model model) {
+		addBasicModel(model);
+		model.addAttribute("submitBtnName", "新增");
+		model.addAttribute("_method", "POST");
+		return "frontend/scholarmain";
+	}
+	@GetMapping("/backend")
+	public String indexBackend(@ModelAttribute Scholarship scholarship, Model model) {
+		addBasicModel(model);
+		model.addAttribute("submitBtnName", "新增");
+		model.addAttribute("_method", "POST");
+		return "backend/backendmain";
+	}
+
 
 
 	
