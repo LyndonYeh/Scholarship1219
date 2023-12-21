@@ -25,7 +25,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public void addScholarship(Scholarship scholarship) {
-        String sql = "INSERT INTO scholarshipv1.scholarshiprecord (scholarshipId, userId, institutionId, scholarshipName, scholarshipAmount, entity, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated) " +
+        String sql = "INSERT INTO scholarshipv1.scholarshiprecord (scholarshipId, userId, institutionId, scholarshipName, scholarshipAmount, entityId, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated) " +
                 "VALUES (:scholarshipId, :userId, :institutionId, :scholarshipName, :scholarshipAmount, :entity, :updatedTime, :startDate, :endDate, :isExpired, :webUrl, :isUpdated)";
 
         Map<String, Object> params = new HashMap<>();
@@ -35,7 +35,9 @@ public class ScholarshipMySQL implements ScholarshipDao {
         params.put("scholarshipName", scholarship.getScholarshipName());
         params.put("scholarshipAmount", scholarship.getScholarshipAmount());
         params.put("entity", scholarship.getEntity());
-        params.put("updatedTime", Timestamp.valueOf(scholarship.getUpdatedTime()));
+        
+        params.put("updatedTime", Date.valueOf(scholarship.getUpdatedTime()));
+//        params.put("updatedTime", Timestamp.valueOf(scholarship.getUpdatedTime()));
         params.put("startDate", Date.valueOf(scholarship.getStartDate()));
         params.put("endDate", Date.valueOf(scholarship.getEndDate()));
         params.put("isExpired", scholarship.getIsExpired());

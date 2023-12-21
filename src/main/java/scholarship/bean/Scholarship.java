@@ -54,7 +54,7 @@ String updatedTime, String startDate, String endDate, String webUrl) {
 		this.scholarshipId = scholarshipId;
 //		this.userId = userId;
 		this.scholarshipName = scholarshipName;
-//		this.entity= entity;
+		this.entity= entity;
 		this.scholarshipAmount = scholarshipAmount;
 		this.updatedTime = updatedTime; //now time
 		this.startDate = startDate;

@@ -122,15 +122,15 @@ public class ScholarshipMySQLController {
 
 	
 
-	@PostMapping("/main") // 新增 User
-	public String addUser(@Valid Scholarship scholarship, BindingResult result, Model model) { // @Valid 驗證, BindingResult 驗證結果
+	@PostMapping("/backend") // 新增 scholarship
+	public String addScholarship(@Valid Scholarship scholarship, BindingResult result, Model model) { // @Valid 驗證, BindingResult 驗證結果
 
 		// 判斷驗證是否通過?
 		if (result.hasErrors()) { // 有錯誤發生
 			// 自動會將 errors 的資料放在 model 中
 
 			addBasicModel(model);
-			model.addAttribute("submitBtnName", "新增");
+			model.addAttribute("submitBtnName", "建立");
 			model.addAttribute("_method", "POST");
 			model.addAttribute("scholarship", scholarship); // 給 form 表單用的 (ModelAttribute)
 
@@ -139,7 +139,7 @@ public class ScholarshipMySQLController {
 
 		scholarshipDao.addScholarship(scholarship);
 		// System.out.println("add User rowcount = " + rowcount);
-		return "redirect:/mvc/scholarshipController/"; // 重導到 user 首頁
+		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁
 	}
 
 }

@@ -68,7 +68,7 @@
 			</table>
 			<div class="p-3 border border-2 border-warning bg bg-warning">
 				<sp:form modelAttribute="scholarship" method="post" cssClass="width:auto"
-					action="${pageContext.request.contextPath}/mvc/scholarshipController/">
+					action="${pageContext.request.contextPath}/mvc/scholarship/backend">
 
 					<h2>新增獎學金項目</h2>
 					<!-- 名稱旁要有上傳檔案的按鈕 -->
@@ -76,17 +76,19 @@
 					<input name="_method" type="hidden" value="${ _method }" />
 						
 						&emsp;獎學金名稱:&nbsp;<sp:input path="scholarshipName" type="text" />
+						&emsp;上傳時間:&nbsp; <sp:input path="updatedTime" type="date" /> 
 						&emsp;開始日期:&nbsp; <sp:input path="startDate" type="date" /> 
 						&emsp;結束日期:&nbsp; <sp:input path="endDate" type="date" />
-						&emsp;身分別:&nbsp;<select name="entity">
-						<option value="kindergarten">幼稚園</option>
-						<option value="elementary school">小學</option>
-						<option value="middle school">國中</option>
-						<option value="high school">高中</option>
-						<option value="University">大學</option>
-						<option value="graduate">研究所</option>
-					</select> 
-					<!--<sp:select path="entity" items="${ entities }" itemLabel="name"
+						&emsp;身分別:&nbsp; <sp:input path="entity" type="number" />
+						<!-- &emsp;身分別:&nbsp;<sp:select path="entity" type="text">
+						<sp:option value="kindergarten">幼稚園</sp:option>
+						<sp:option value="elementary school">小學</sp:option>
+						<sp:option value="middle school">國中</sp:option>
+						<sp:option value="high school">高中</sp:option>
+						<sp:option value="University">大學</sp:option>
+						<sp:option value="graduate">研究所</sp:option>
+					</sp:select>  -->
+					<!--<sp:select path="entity" items="${ entity }" itemLabel="name"
 						itemValue="id" />-->
 					
 						&emsp;額度:&nbsp; <sp:input path="scholarshipAmount" type="number" />
@@ -94,7 +96,7 @@
 						<p />
 						&emsp;聯絡人:&nbsp; <sp:input path="institution.contact" type="text" />
 						&emsp;聯絡電話:&nbsp; <sp:input path="institution.contactNumber" type="text" />-->
-					<button type="submit">建立</button>
+					<button type="submit">${ submitBtnName }</button>
 				</sp:form>
 			</div>
 		</td>
