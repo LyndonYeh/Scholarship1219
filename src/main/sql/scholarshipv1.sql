@@ -21,7 +21,7 @@ CREATE TABLE scholarshipv1.user (
   `userId` int NOT NULL AUTO_INCREMENT,
   `institutionId` int,
   `userName` varchar(50) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`userId`),
   CONSTRAINT `fk_user_institution` FOREIGN KEY (`institutionId`) REFERENCES `institution` (`institutionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -54,9 +54,9 @@ CREATE TABLE scholarshipv1.scholarshiprecord (
 INSERT INTO scholarshipv1.institution (`institutionId`,`institutionName`, `contact`, `contactNumber`) VALUES ('25371548','行天宮', '李先生', '0912345678'), ('25371549','教育部', '陳小姐', '028922210'), ('25348848','勞動部', '張先生', '07998441');
 
 INSERT INTO scholarshipv1.user (`institutionId`,`userName`, `password`) VALUES
-('25371548', 'dave.wenyu@gmail.com', 'password1'),
-('25371549','lyndonyeh@gmail.com', 'password2'),
-('25348848','alicelu@gmail.com', 'password3');
+('25371548', 'dave.wenyu@gmail.com', '$2a$05$FDHt7rx0kB74Vs0mon5GWugT4cGOFvDSYra/qdZr8y5DS2fCAs0ta'),
+('25371549','lyndonyeh@gmail.com', '$2a$05$0ppuj4QdEyWAnlNf7IbWFObR9.NH1rSIgTaTJ1WyNvAyd9iWtR7uW'),
+('25348848','alicelu@gmail.com', '$2a$05$wbUIDjEtLQ5J8mzwIiDE1Op5nz4N6XNclJxFEtehQg2Bodhj22G2K');
 
 INSERT INTO scholarshipv1.entity (`entityid`, `entity`) VALUES
 ('1', 'kindergarten'),

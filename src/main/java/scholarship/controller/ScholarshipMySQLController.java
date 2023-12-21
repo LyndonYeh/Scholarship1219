@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,12 +29,11 @@ import scholarship.bean.User;
 import scholarship.model.dao.InstitutionDao;
 import scholarship.model.dao.ScholarshipDao;
 import scholarship.model.dao.UserDao;
+import java.lang.StringBuilder;
 
 @Controller
 @RequestMapping("/scholarship")
 public class ScholarshipMySQLController {
-
-
 
 	// private Logger logger = LoggerFactory.getLogger(getClass());
 	/*
@@ -50,23 +50,37 @@ public class ScholarshipMySQLController {
 	/*
 	 * 透過網址連到登入頁
 	 */
-	
-	@GetMapping(value = {"/login", "/", "/login/"})
+
+	@GetMapping(value = { "/login", "/", "/login/" })
 	public String loginPage() {
 		return "/login";
 	}
 	
-	
+
+
+	@GetMapping("/pass")
+	@ResponseBody
+	public String pass() {
+		StringBuilder s = new StringBuilder();
+		s.append("帳號: dave.wenyu@gmail.com / 明碼 : password1 暗碼: '$2a$05$FDHt7rx0kB74Vs0mon5GWugT4cGOFvDSYra/qdZr8y5DS2fCAs0ta'")
+		.append("帳號: lyndonyeh@gmail.com / 明碼: password2 + 暗碼: '$2a$05$0ppuj4QdEyWAnlNf7IbWFObR9.NH1rSIgTaTJ1WyNvAyd9iWtR7uW'")
+		.append("帳號: alicelu@gmail.com /明碼: password3 暗碼:'$2a$05$wbUIDjEtLQ5J8mzwIiDE1Op5nz4N6XNclJxFEtehQg2Bodhj22G2K");
+		return s.toString(); 
+	}
+
+	//'$2a$05$0ppuj4QdEyWAnlNf7IbWFObR9.NH1rSIgTaTJ1WyNvAyd9iWtR7uW'
+
 	@PostMapping("/login")
-	public String login(@RequestParam("username") String username, 
-						 @RequestParam("password") String password, 
-						HttpSession session, Model model) {
+	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
+			HttpSession session, Model model) {
+
 		// 根據 username 查找 user 物件
 		Optional<User> userOpt = userDao.findUserByUsername(username);
-		if(userOpt.isPresent()) {
+
+		if (userOpt.isPresent()) {
 			User user = userOpt.get();
 			// 比對 password
-			if(user.getPassword().equals(password)) {
+			if (BCrypt.checkpw(password, user.getPassword())) {
 				session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
 				return "redirect:/mvc/scholarship/backendtest"; // OK, 導向後台首頁
 			} else {
@@ -80,7 +94,7 @@ public class ScholarshipMySQLController {
 			return "login";
 		}
 	}
-	
+
 	// 登入後重新導向的 後台測試頁, 若 後台 controller 串接好此路徑可刪除
 	@GetMapping("/backendtest")
 	@ResponseBody
@@ -88,7 +102,7 @@ public class ScholarshipMySQLController {
 		return "backendTest 後台測試頁 登入成功 !";
 
 	}
-	
+
 	@GetMapping("/backend")
 	public String index(@ModelAttribute Scholarship scholarship, Model model) {
 		addBasicModel(model);
@@ -96,7 +110,6 @@ public class ScholarshipMySQLController {
 		model.addAttribute("_method", "POST");
 		return "backend/backendmain";
 	}
-	
 
 	/*
 	 * 首頁基礎資料
@@ -124,6 +137,7 @@ public class ScholarshipMySQLController {
 
 	@PostMapping("/backend") // 新增 scholarship
 	public String addScholarship(@Valid Scholarship scholarship, BindingResult result, Model model) { // @Valid 驗證, BindingResult 驗證結果
+
 
 		// 判斷驗證是否通過?
 		if (result.hasErrors()) { // 有錯誤發生
