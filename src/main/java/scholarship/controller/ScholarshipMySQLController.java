@@ -30,7 +30,7 @@ import scholarship.model.dao.ScholarshipDao;
 import scholarship.model.dao.UserDao;
 
 @Controller
-@RequestMapping()
+@RequestMapping("/scholarship")
 public class ScholarshipMySQLController {
 
 
