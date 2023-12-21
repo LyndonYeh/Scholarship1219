@@ -1,6 +1,4 @@
-獎學金
-
-1. 獎助機構
+ 獎助機構
 
 +-----------+-------------+-------+--------+------------------------------+
 | institutionId | institutionName| contact | contact number | isExisted   |

@@ -102,9 +102,8 @@ public class ScholarshipMySQLController {
 		return "backendTest 後台測試頁 登入成功 !";
 
 	}
-	
-	
-	
+
+
 	/*
 	 * 首頁基礎資料
 	 */
@@ -126,6 +125,21 @@ public class ScholarshipMySQLController {
 		model.addAttribute("users", users); // 取得目前最新 users 資料
 	}
 
+
+
+	
+	/*
+	 * 透過後台進入帶有該會員資料的修改頁面
+	 */
+	@GetMapping("/backend/edit")
+	public String edit(@ModelAttribute User user, Model model) {
+		
+		return "backend/edit";
+	}
+
+
+
+	
 	@GetMapping("/frontend")
 	public String indexFront(@ModelAttribute Scholarship scholarship, Model model) {
 		addBasicModel(model);
@@ -133,6 +147,8 @@ public class ScholarshipMySQLController {
 		model.addAttribute("_method", "POST");
 		return "frontend/scholarmain";
 	}
+	
+	
 	@GetMapping("/backend")
 	public String indexBackend(@ModelAttribute Scholarship scholarship, Model model) {
 		addBasicModel(model);
@@ -140,11 +156,7 @@ public class ScholarshipMySQLController {
 		model.addAttribute("_method", "POST");
 		return "backend/backendmain";
 	}
-
-
-
 	
-
 	@PostMapping("/backend") // 新增 scholarship
 	public String addScholarship(@Valid Scholarship scholarship, BindingResult result, Model model) { // @Valid 驗證, BindingResult 驗證結果
 
