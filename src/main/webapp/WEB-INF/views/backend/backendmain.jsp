@@ -67,9 +67,8 @@
 				</tbody>
 			</table>
 			<div class="p-3 border border-2 border-warning bg bg-warning">
-				<sp:form modelAttribute="scholarship" method="post"
-					action="${pageContext.request.contextPath}/mvc/scholarshipController/"
-					>
+				<sp:form modelAttribute="scholarship" method="post" cssClass="width:auto"
+					action="${pageContext.request.contextPath}/mvc/scholarshipController/">
 
 					<h2>新增獎學金項目</h2>
 					<!-- 名稱旁要有上傳檔案的按鈕 -->
@@ -79,7 +78,7 @@
 						&emsp;獎學金名稱:&nbsp;<sp:input path="scholarshipName" type="text" />
 						&emsp;開始日期:&nbsp; <sp:input path="startDate" type="date" /> 
 						&emsp;結束日期:&nbsp; <sp:input path="endDate" type="date" />
-					&emsp;身分別:&nbsp;<select name="entity">
+						&emsp;身分別:&nbsp;<select name="entity">
 						<option value="kindergarten">幼稚園</option>
 						<option value="elementary school">小學</option>
 						<option value="middle school">國中</option>
@@ -89,9 +88,10 @@
 					</select> 
 					<!--<sp:select path="entity" items="${ entities }" itemLabel="name"
 						itemValue="id" />-->
-					<p />
-					<p />
+					
 						&emsp;額度:&nbsp; <sp:input path="scholarshipAmount" type="number" />
+						<p />
+						<p />
 						&emsp;聯絡人:&nbsp; <sp:input path="institution.contact" type="text" />
 						&emsp;聯絡電話:&nbsp; <sp:input path="institution.contactNumber" type="text" />-->
 					<button type="submit">建立</button>
@@ -112,7 +112,7 @@
 					<th scope="col">複製</th>
 					<th scope="col">上架</th>
 					<th scope="col">刪除</th>
-					<th scope="col">狀態更改</th>
+
 				</tr>
 			</thead>
 			<tbody>
@@ -125,12 +125,11 @@
 					<td>陳小姐 </td>
 					<td>0912345678</td>
 					<td><button type="button" onclick="" id="copy" name="copy">複製</button></td>
-					<td>&nbsp;<input type="checkbox" id="ontable" name="ontable" /></td>
-					<td>&nbsp;<input type="checkbox" id="pushrecycle"
-						name="pushrecycle" /></td>
 					<td>
-						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/update/${ scholarship.scholarshipId }">確認更改</a>
-						<!--  <button type="submit" id="pushconfirm" name="pushconfirm">確認</button>-->
+						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/launch/${ scholarship.scholarshipId }">上架</a>
+					</td>
+					<td>
+						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/delete/${ scholarship.scholarshipId }">刪除</a>
 					</td>
 				</tr>
 				<c:forEach items="${scholarships}" var="scholarship">
@@ -144,12 +143,15 @@
 					<td>
 						<button type="button" onclick="${pageContext.request.contextPath}/mvc/scholarshipController/${ scholarship.scholarshipId }" id="copy" name="copy">複製</button>
 					</td>
-					<td>&nbsp;<input type="checkbox" id="isLaunch" name="isLaunch" /></td>
-					<td>&nbsp;<input type="checkbox" id="pushrecycle" name="pushrecycle" /></td>
+					<!--  <td>&nbsp;<input type="checkbox" id="isLaunch" name="isLaunch" /></td>
+					<td>&nbsp;<input type="checkbox" id="pushrecycle" name="pushrecycle" /></td>-->
 					<td>
-						<!-- 更改按鍵(Get method) -->
-						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/update/${ scholarship.scholarshipId }">確認更改</a>
+						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/launch/${ scholarship.scholarshipId }">上架</a>
 					</td>
+					<td>
+						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/delete/${ scholarship.scholarshipId }">刪除</a>
+					</td>
+				
 				</tr>
 			</c:forEach> 
 
