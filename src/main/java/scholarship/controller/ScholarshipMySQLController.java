@@ -124,13 +124,7 @@ public class ScholarshipMySQLController {
 		return "backendTest 後台測試頁 登入成功 !";
 
 	}
-<<<<<<< HEAD
-	
-	
-=======
 
-
->>>>>>> e2f719d6b983634e80ab45da9236c5857ea9be98
 	/*
 	 * 首頁基礎資料
 	 */
