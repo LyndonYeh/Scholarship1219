@@ -69,13 +69,14 @@ public class ScholarshipMySQLController {
 	}
 
 	//'$2a$05$0ppuj4QdEyWAnlNf7IbWFObR9.NH1rSIgTaTJ1WyNvAyd9iWtR7uW'
-
 	@PostMapping("/login")
+	
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
 			HttpSession session, Model model) {
 
 		// 根據 username 查找 user 物件
 		Optional<User> userOpt = userDao.findUserByUsername(username);
+		
 
 		if (userOpt.isPresent()) {
 			User user = userOpt.get();
