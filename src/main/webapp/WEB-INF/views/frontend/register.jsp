@@ -14,7 +14,7 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-<title>註冊頁(獎學網)</title>
+<title>會員註冊</title>
 <style type="text/css">
 body {
 background-color:rgb(200,200,200);
@@ -40,12 +40,12 @@ height: auto;
 <body>
 	<div class="d-flex justify-content-center  align-items-center vh-100 " class="">
 		<form class="row g-3 needs-validation " novalidate method="post" action="./scholarmain.jsp">
-			<h4 class="text-center">註冊資訊</h4>
+			<h4 class="text-center">填寫會員資料</h4>
 			<div class="" >
-				<label for="username" class="form-label">使用者帳號(信箱)</label> 
+				<label for="username" class="form-label">使用者電子郵件</label> 
 				<input type="text" class="form-control"
 					id="username" name="username" value="" required>
-				 <div class="invalid-feedback">請輸入帳號(信箱)</div>
+				 <div class="invalid-feedback">請輸入帳號(信箱)</div> <button class="btn btn-outline-primary" type="submit">信箱驗證</button>
 			</div>
 			<div class="">
 				<label for="password" class="form-label">密碼</label>

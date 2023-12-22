@@ -74,7 +74,10 @@ public class ScholarshipMySQLController {
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
 			HttpSession session, Model model) {
 
-		// 根據 username 查找 user 物件
+		/* 
+		 * 根據 username 查找 user 物件
+		*驗證有 bug 待確認
+		*/
 		Optional<User> userOpt = userDao.findUserByUsername(username);
 		
 
@@ -96,15 +99,38 @@ public class ScholarshipMySQLController {
 		}
 	}
 
-	// 登入後重新導向的 後台測試頁, 若 後台 controller 串接好此路徑可刪除
+	
+	@GetMapping(value = { "/register", "/register/" })
+	public String registerPage() {
+		return "/frontend/register";
+	}
+	
+	@PostMapping("/frontend/register")
+	public String register(@RequestParam("username") String username, @RequestParam("password") String password,
+			HttpSession session, Model model) {
+		
+		return "redirect:/mvc/scholarship/backendtest";
+	}
+	
+
+
+	/* 
+	 * 登入後重新導向的 後台測試頁
+	 * 若後台 controller 串接好此路徑可刪除
+	 */
 	@GetMapping("/backendtest")
 	@ResponseBody
 	public String backendtest(HttpServletRequest req, HttpServletResponse resp) {
 		return "backendTest 後台測試頁 登入成功 !";
 
 	}
+<<<<<<< HEAD
+	
+	
+=======
 
 
+>>>>>>> e2f719d6b983634e80ab45da9236c5857ea9be98
 	/*
 	 * 首頁基礎資料
 	 */
