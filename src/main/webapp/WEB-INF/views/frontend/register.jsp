@@ -72,7 +72,7 @@ height: auto;
 				  <div class="invalid-feedback">請輸入機構統編</div>
 			</div>
 			<div class="col-md-5">
-				<label for="password" class="form-label">預設聯絡人</label>
+				<label for="password" class="form-label">聯絡人</label>
 				<input type="password" class="form-control" id="password"
 					name="password" value="" required>
 				  <div class="invalid-feedback">請輸入預設聯絡人姓名</div>

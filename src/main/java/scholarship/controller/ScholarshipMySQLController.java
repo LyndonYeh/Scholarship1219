@@ -62,22 +62,20 @@ public class ScholarshipMySQLController {
 	@ResponseBody
 	public String pass() {
 		StringBuilder s = new StringBuilder();
-		s.append("帳號: dave.wenyu@gmail.com / 明碼 : password1 暗碼: '$2a$05$FDHt7rx0kB74Vs0mon5GWugT4cGOFvDSYra/qdZr8y5DS2fCAs0ta'")
-		.append("帳號: lyndonyeh@gmail.com / 明碼: password2 + 暗碼: '$2a$05$0ppuj4QdEyWAnlNf7IbWFObR9.NH1rSIgTaTJ1WyNvAyd9iWtR7uW'")
-		.append("帳號: alicelu@gmail.com /明碼: password3 暗碼:'$2a$05$wbUIDjEtLQ5J8mzwIiDE1Op5nz4N6XNclJxFEtehQg2Bodhj22G2K");
+		s.append("帳號: dave.wenyu@gmail.com / 密碼 : password1 '")
+		.append("帳號: lyndonyeh@gmail.com / 密碼: password2 '")
+		.append("帳號: alicelu@gmail.com /碼密碼: password3 ");
 		return s.toString(); 
 	}
 
 	//'$2a$05$0ppuj4QdEyWAnlNf7IbWFObR9.NH1rSIgTaTJ1WyNvAyd9iWtR7uW'
 
+	/*
+	
 	@PostMapping("/login")
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
 			HttpSession session, Model model) {
-
-		/* 
-		 * 根據 username 查找 user 物件
-		*驗證有 bug 待確認
-		*/
+			
 		Optional<User> userOpt = userDao.findUserByUsername(username);
 
 		if (userOpt.isPresent()) {
@@ -97,6 +95,40 @@ public class ScholarshipMySQLController {
 			return "login";
 		}
 	}
+* 
+*/
+	
+	@PostMapping("/login")
+	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
+	        HttpSession session, Model model) {
+
+	    // 根據 username 查找 user 物件
+	    Optional<User> userOpt = userDao.findUserByUsername(username);
+
+	    if (userOpt.isPresent()) {
+	        User user = userOpt.get();
+
+	        // Generate a new hash for the entered password
+	        String newPasswordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+
+	        // 比對 password
+	        if (BCrypt.checkpw(password, user.getPassword())) {
+	            // 新增 新 hash 到 DB
+	            userDao.updateUserPasswordById(user.getUserId(), user.getPassword(), newPasswordHash);
+
+	            session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
+	            return "redirect:/mvc/scholarship/backendtest"; // OK, 導向後台首頁
+	        } else {
+	            session.invalidate(); // session 過期失效
+	            model.addAttribute("loginMessage", "密碼錯誤");
+	            return "login";
+	        }
+	    } else {
+	        session.invalidate(); // session 過期失效
+	        model.addAttribute("loginMessage", "無此使用者");
+	        return "login";
+	    }
+	}
 
 	
 	@GetMapping(value = { "/register", "/register/" })
@@ -104,13 +136,23 @@ public class ScholarshipMySQLController {
 		return "/frontend/register";
 	}
 	
+	
 	@PostMapping("/frontend/register")
-	public String register(@RequestParam("username") String username, @RequestParam("password") String password,
-			HttpSession session, Model model) {
-		
+	public String registerUserData(@RequestParam("username") String username, @RequestParam("password") String password,
+			@RequestParam("insitutionId") String institutionId,@RequestParam("insitutionName") String insitutionName, HttpSession session, Model model) {
+		Optional<User> userOpt = userDao.findUserByUsername(username);
+		if (userOpt.isPresent())
 		return "redirect:/mvc/scholarship/backendtest";
+		return insitutionName;
 	}
 	
+	
+	@GetMapping("/{username}/edit")
+	public String editPage() {
+		return "/frontend/register";
+	}
+	
+
 
 
 	/* 
@@ -123,13 +165,7 @@ public class ScholarshipMySQLController {
 		return "backendTest 後台測試頁 登入成功 !";
 
 	}
-<<<<<<< HEAD
-	
-	
-=======
 
-
->>>>>>> e2f719d6b983634e80ab45da9236c5857ea9be98
 	/*
 	 * 首頁基礎資料
 	 */
