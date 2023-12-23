@@ -35,10 +35,14 @@ import java.lang.StringBuilder;
 @RequestMapping("/scholarship")
 public class ScholarshipMySQLController {
 
+	@Autowired
+	private InstitutionDao institutionDao;
+	@Autowired
+	private UserDao userDao;
+	@Autowired
+	private ScholarshipDao scholarshipDao;
+	
 	// private Logger logger = LoggerFactory.getLogger(getClass());
-	/*
-	 * 測試用hello為測試用，測試能否從網址連到controller
-	 */
 
 	@GetMapping("/hello")
 	@ResponseBody
@@ -57,7 +61,6 @@ public class ScholarshipMySQLController {
 	}
 	
 
-
 	@GetMapping("/pass")
 	@ResponseBody
 	public String pass() {
@@ -68,39 +71,9 @@ public class ScholarshipMySQLController {
 		return s.toString(); 
 	}
 
-
-	/*
-	
-	@PostMapping("/login")
-	
-	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
-			HttpSession session, Model model) {
-			
-		Optional<User> userOpt = userDao.findUserByUsername(username);
-		
-
-		if (userOpt.isPresent()) {
-			User user = userOpt.get();
-			// 比對 password
-			if (BCrypt.checkpw(password, user.getPassword())) {
-				session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
-				return "redirect:/mvc/scholarship/backendtest"; // OK, 導向後台首頁
-			} else {
-				session.invalidate(); // session 過期失效
-				model.addAttribute("loginMessage", "密碼錯誤");
-				return "login";
-			}
-		} else {
-			session.invalidate(); // session 過期失效
-			model.addAttribute("loginMessage", "無此使用者");
-			return "login";
-		}
-	}
-* 
-*/
 	
 	/*
-	 * 動態 hash
+	 * 動態 hash 登入
 	 */
 	@PostMapping("/login")
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
@@ -139,22 +112,51 @@ public class ScholarshipMySQLController {
 	public String registerPage() {
 		return "/frontend/register";
 	}
-	
-	
-	@PostMapping("/frontend/register")
-	public String registerUserData(@RequestParam("username") String username, @RequestParam("password") String password,
-			@RequestParam("insitutionId") String institutionId,@RequestParam("insitutionName") String insitutionName, HttpSession session, Model model) {
-		Optional<User> userOpt = userDao.findUserByUsername(username);
-		if (userOpt.isPresent())
-		return "redirect:/mvc/scholarship/backendtest";
-		return insitutionName;
+
+
+	@PostMapping("/register")
+	public String registerUser(
+	        @RequestParam("username") String username,
+	        @RequestParam("password") String password,
+	        @RequestParam("institutionName") String institutionName,
+	        @RequestParam("institutionId") String institutionId,
+	        @RequestParam("contact") String contact,
+	        @RequestParam("contactNumber") String contactNumber,
+	        Model model) {
+
+	    try {
+	        // Create User and Institution objects
+	        User user = new User();
+	        user.setUsername(username);
+	        user.setPassword(password);
+
+	        Institution institution = new Institution();
+	        institution.setInstitutionName(institutionName);
+	        institution.setInstitutionId(institutionId);
+	        institution.setContact(contact);
+	        institution.setContactNumber(contactNumber);
+
+	        // Save User and Institution to the database
+	        userDao.addUser(user);
+	        institutionDao.addInstitution(institution);
+
+	        // Redirect to a success page
+	        return "redirect:/successPage";
+	    } catch (Exception e) {
+	        // Handle the exception, log it, and redirect to an error page
+	        e.printStackTrace();
+	        model.addAttribute("error", "Error occurred during registration.");
+	        return "errorPage";
+	    }
 	}
+
 	
-	
+	/*
 	@GetMapping("/{username}/edit")
 	public String editPage() {
 		return "/frontend/register";
 	}
+	*/
 	
 
 
@@ -174,15 +176,8 @@ public class ScholarshipMySQLController {
 	 * 首頁基礎資料
 	 */
 	
-	@Autowired
-	private InstitutionDao instiutionDao;
-	@Autowired
-	private UserDao userDao;
-	@Autowired
-	private ScholarshipDao scholarshipDao;
-	
 	private void addBasicModel(Model model) {
-		List<Institution> instiutions = instiutionDao.findAllInstitutions();
+		List<Institution> instiutions = institutionDao.findAllInstitutions();
 		List<Scholarship> scholarships = scholarshipDao.findAllscholarship();
 		List<User> users = userDao.findAllUsers();
 		

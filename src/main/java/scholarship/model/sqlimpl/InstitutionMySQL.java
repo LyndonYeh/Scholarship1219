@@ -3,6 +3,7 @@ package scholarship.model.sqlimpl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,4 +72,10 @@ public class InstitutionMySQL implements InstitutionDao {
         String sql = "SELECT * FROM scholarshipv1.institution";
         return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Institution.class));
     }
+
+	@Override
+	public Optional<Institution> findInstitutionByInstitutionName(String instutionName) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
 }

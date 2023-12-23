@@ -1,8 +1,10 @@
 package scholarship.model.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import scholarship.bean.Institution;
+import scholarship.bean.User;
 
 public interface InstitutionDao {
 
@@ -37,11 +39,20 @@ public interface InstitutionDao {
      * @return 是否存在
      */
     Boolean checkIfInstitutionExist(String institutionId);
+    
+    /*
+     * 5. 根據機構名稱查詢機構是否已存在
+     */
+    
+    Optional<Institution> findInstitutionByInstitutionName(String instutionName);
 
     /**
-     *5. 查詢所有機構
+     *6. 查詢所有機構
      *
      * @return 所有機構列表
      */
     List<Institution> findAllInstitutions();
+    
+    
+    
 }

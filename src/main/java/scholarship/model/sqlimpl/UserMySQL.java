@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 
 import scholarship.bean.User;
@@ -27,13 +28,12 @@ public class UserMySQL implements UserDao {
 
     @Override
     public void addUser(User user) {
-        String sql = "INSERT INTO User(institutionId, userName, password) " +
-                "VALUES (:institutionId, :username, :password)";
+        String sql = "INSERT INTO User (username, password) VALUES (:username, :password)";
+        
         Map<String, Object> params = new HashMap<>();
-        params.put("institutionId", user.getInstitutionId());
-        params.put("userName", user.getUsername());
-        params.put("password", user.getPassword());
-   
+        params.put("username", user.getUsername());
+        params.put("password", BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+
         namedParameterJdbcTemplate.update(sql, params);
     }
 /*
@@ -103,7 +103,6 @@ public class UserMySQL implements UserDao {
     
 	@Override
 	public Optional<User> findUserById(Integer userId) {
-		// TODO Auto-generated method stub
 		return Optional.empty();
 	}
 }

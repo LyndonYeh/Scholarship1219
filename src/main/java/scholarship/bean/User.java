@@ -25,6 +25,9 @@ public class User {
 		this.institutionId = institutionId;
 		this.password = password;
 	}
+	public void setInstitutionId(String institutionId) {
+		this.institutionId = institutionId;
+	}
 	public User() {
 		
 	}
