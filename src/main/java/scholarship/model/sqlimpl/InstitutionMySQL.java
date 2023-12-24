@@ -3,6 +3,7 @@ package scholarship.model.sqlimpl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class InstitutionMySQL implements InstitutionDao {
 
     @Override
     public void addInstitution(Institution institution) {
-        String sql = "INSERT INTO institution (institutionId, institutionName, contact, contactNumber) " +
+        String sql = "INSERT INTO scholarshipv1.institution (institutionId, institutionName, contact, contactNumber) " +
                 "VALUES (:institutionId, :institutionName, :contact, :contactNumber)";
 
         Map<String, Object> params = new HashMap<>();
@@ -37,7 +38,7 @@ public class InstitutionMySQL implements InstitutionDao {
 
     @Override
     public Boolean updateContact(String institutionId, String newContact) {
-        String sql = "UPDATE institution SET contact = :newContact WHERE institutionId = :institutionId";
+        String sql = "UPDATE scholarshipv1.institution SET contact = :newContact WHERE institutionId = :institutionId";
         Map<String, Object> params = new HashMap<>();
         params.put("newContact", newContact);
         params.put("institutionId", institutionId);
@@ -48,7 +49,7 @@ public class InstitutionMySQL implements InstitutionDao {
 
     @Override
     public Boolean updateContactNumberById(String institutionId, String newContactNumber) {
-        String sql = "UPDATE institution SET contactNumber = :newContactNumber WHERE institutionId = :institutionId";
+        String sql = "UPDATE scholarshipv1.institution  SET contactNumber = :newContactNumber WHERE institutionId = :institutionId";
         Map<String, Object> params = new HashMap<>();
         params.put("newContactNumber", newContactNumber);
         params.put("institutionId", institutionId);
@@ -59,7 +60,7 @@ public class InstitutionMySQL implements InstitutionDao {
 
     @Override
     public Boolean checkIfInstitutionExist(String institutionId) {
-        String sql = "SELECT COUNT(*) FROM institution WHERE institutionId = :institutionId";
+        String sql = "SELECT COUNT(*) FROM scholarshipv1.institution WHERE institutionId = :institutionId";
         Map<String, Object> params = new HashMap<>();
         params.put("institutionId", institutionId);
 // 輸入 insId, count(*) 總筆數 如果有對到就是 1, 返回 true
@@ -68,7 +69,13 @@ public class InstitutionMySQL implements InstitutionDao {
 
     @Override
     public List<Institution> findAllInstitutions() {
-        String sql = "SELECT * FROM institution";
+        String sql = "SELECT * FROM scholarshipv1.institution";
         return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Institution.class));
     }
+
+	@Override
+	public Optional<Institution> findInstitutionByInstitutionName(String instutionName) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
 }

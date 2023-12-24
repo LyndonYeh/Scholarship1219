@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +16,7 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-<title>註冊頁(獎學網)</title>
+<title>會員註冊</title>
 <style type="text/css">
 body {
 background-color:rgb(200,200,200);
@@ -39,13 +41,13 @@ height: auto;
 </head>
 <body>
 	<div class="d-flex justify-content-center  align-items-center vh-100 " class="">
-		<form class="row g-3 needs-validation " novalidate method="post" action="./scholarmain.jsp">
-			<h4 class="text-center">註冊資訊</h4>
+		<form class="row g-3 needs-validation " novalidate method="post" action="./register">
+			<h4 class="text-center">註冊會員</h4>
 			<div class="" >
-				<label for="username" class="form-label">使用者帳號(信箱)</label> 
+				<label for="username" class="form-label">使用者電子郵件</label> 
 				<input type="text" class="form-control"
 					id="username" name="username" value="" required>
-				 <div class="invalid-feedback">請輸入帳號(信箱)</div>
+				 <div class="invalid-feedback">請輸入電子郵件</div> <button class="btn btn-outline-primary" type="submit">信箱驗證</button>
 			</div>
 			<div class="">
 				<label for="password" class="form-label">密碼</label>
@@ -60,8 +62,8 @@ height: auto;
 				  <div class="invalid-feedback">再次輸入密碼</div>
 			</div>
 			<div class="col-md-5">
-				<label for="password" class="form-label">機構名稱</label>
-				<input type="password" class="form-control" id="password"
+				<label for="text" class="form-label">機構名稱</label>
+				<input type="text" class="form-control" id="password"
 					name="password" value="" required>
 				  <div class="invalid-feedback">請輸入機構名稱</div>
 			</div>
@@ -72,13 +74,13 @@ height: auto;
 				  <div class="invalid-feedback">請輸入機構統編</div>
 			</div>
 			<div class="col-md-5">
-				<label for="password" class="form-label">預設聯絡人</label>
+				<label for="password" class="form-label">聯絡人</label>
 				<input type="password" class="form-control" id="password"
 					name="password" value="" required>
 				  <div class="invalid-feedback">請輸入預設聯絡人姓名</div>
 			</div>
 			<div class="col-md-7">
-				<label for="password" class="form-label">預設聯絡電話</label>
+				<label for="password" class="form-label">聯絡電話</label>
 				<input type="password" class="form-control" id="password"
 					name="password" value="" required>
 				  <div class="invalid-feedback">請輸入聯絡電話</div>

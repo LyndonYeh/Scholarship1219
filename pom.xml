@@ -246,11 +246,18 @@
 			<version>1.3.1</version>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>SpringMVC</groupId>
 			<artifactId>SpringMVC</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>-->
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+			<version>6.2.1</version>
 		</dependency>
+		
 		
 	</dependencies>
 

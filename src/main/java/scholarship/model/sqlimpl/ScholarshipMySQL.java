@@ -25,7 +25,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public void addScholarship(Scholarship scholarship) {
-        String sql = "INSERT INTO scholarshiprecord (scholarshipId, userId, institutionId, scholarshipName, scholarshipAmount, entity, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated) " +
+        String sql = "INSERT INTO scholarshipv1.scholarshiprecord (scholarshipId, userId, institutionId, scholarshipName, scholarshipAmount, entityId, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated) " +
                 "VALUES (:scholarshipId, :userId, :institutionId, :scholarshipName, :scholarshipAmount, :entity, :updatedTime, :startDate, :endDate, :isExpired, :webUrl, :isUpdated)";
 
         Map<String, Object> params = new HashMap<>();
@@ -35,7 +35,9 @@ public class ScholarshipMySQL implements ScholarshipDao {
         params.put("scholarshipName", scholarship.getScholarshipName());
         params.put("scholarshipAmount", scholarship.getScholarshipAmount());
         params.put("entity", scholarship.getEntity());
-        params.put("updatedTime", Timestamp.valueOf(scholarship.getUpdatedTime()));
+        
+        params.put("updatedTime", Date.valueOf(scholarship.getUpdatedTime()));
+//        params.put("updatedTime", Timestamp.valueOf(scholarship.getUpdatedTime()));
         params.put("startDate", Date.valueOf(scholarship.getStartDate()));
         params.put("endDate", Date.valueOf(scholarship.getEndDate()));
         params.put("isExpired", scholarship.getIsExpired());
@@ -47,7 +49,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public boolean updateLauchStatusbyId(Integer scholarshipId, boolean isUpdated) {
-        String sql = "UPDATE scholarshiprecord SET isUpdated = :isUpdated WHERE scholarshipId = :scholarshipId";
+        String sql = "UPDATE scholarshipv1.cholarshiprecord SET isUpdated = :isUpdated WHERE  scholarshipv1.scholarshipId = :scholarshipId";
         Map<String, Object> params = new HashMap<>();
         params.put("isUpdated", isUpdated);
         params.put("scholarshipId", scholarshipId);
@@ -58,7 +60,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public boolean removeScholarshipById(Integer scholarshipId) {
-        String sql = "DELETE FROM scholarshiprecord WHERE scholarshipId = :scholarshipId";
+        String sql = "DELETE FROM  scholarshipv1.scholarshiprecord WHERE  scholarshipv1.scholarshipId = :scholarshipId";
         Map<String, Object> params = new HashMap<>();
         params.put("scholarshipId", scholarshipId);
 
@@ -68,7 +70,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public List<Scholarship> findScholarshipByInstitutionId(String institutionId) {
-        String sql = "SELECT * FROM scholarshiprecord WHERE institutionId = :institutionId";
+        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE  scholarshipv1.institutionId = :institutionId";
         Map<String, Object> params = new HashMap<>();
         params.put("institutionId", institutionId);
 
@@ -77,13 +79,13 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public List<Scholarship> findAllscholarship() {
-        String sql = "SELECT * FROM scholarshiprecord";
+        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord";
         return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
     }
 
     @Override
     public List<Scholarship> findScholarshipByEntity(String entity) {
-        String sql = "SELECT * FROM scholarshiprecord WHERE entity = :entity";
+        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE  scholarshipv1.entity = :entity";
         Map<String, Object> params = new HashMap<>();
         params.put("entity", entity);
 
@@ -92,7 +94,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public List<Scholarship> findScholarshipByEntityAndAmount(String entity, Integer scholarshipAmount) {
-        String sql = "SELECT * FROM scholarshiprecord WHERE entity = :entity AND scholarshipAmount = :scholarshipAmount";
+        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE  scholarshipv1.entity = :entity AND  scholarshipv1.scholarshipAmount = :scholarshipAmount";
         Map<String, Object> params = new HashMap<>();
         params.put("entity", entity);
         params.put("scholarshipAmount", scholarshipAmount);
@@ -102,7 +104,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public List<Scholarship> findScholarshipByAmount(Integer scholarshipAmount) {
-        String sql = "SELECT * FROM scholarshiprecord WHERE scholarshipAmount = :scholarshipAmount";
+        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE  scholarshipv1.scholarshipAmount = :scholarshipAmount";
         Map<String, Object> params = new HashMap<>();
         params.put("scholarshipAmount", scholarshipAmount);
 
