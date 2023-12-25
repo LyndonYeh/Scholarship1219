@@ -21,17 +21,17 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="#">首頁</a></li>
+					aria-current="page" href="./frontend">首頁</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">關於我們</a></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						更多資訊 </a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="../backend/backendmain.jsp">後台</a></li>
-						<li><a class="dropdown-item" href="./register.jsp">註冊頁</li>
-						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item" href="#">Something else here</a></li>
+						<li><a class="dropdown-item" href="./backend">後台</a></li>
+						<li><a class="dropdown-item" href="./register.jsp">註冊頁</a></li>
+						<!-- <li><hr class="dropdown-divider"></li>
+						 <li><a class="dropdown-item"  href="#"></a></li> -->
 					</ul></li>
 				  <!--<li class="nav-item"><a class="nav-link disabled">Disabled</a>
 				</li>-->

@@ -74,8 +74,21 @@ public class InstitutionMySQL implements InstitutionDao {
     }
 
 	@Override
-	public Optional<Institution> findInstitutionByInstitutionName(String instutionName) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+	public Optional<Institution> findInstitutionByInstitutionName(String institutionName) {
+        String sql = "SELECT * FROM scholarshipv1.institution where institutionName = :institutionName";
+		Map<String, Object> params = new HashMap<>();
+		params.put("institutionName", institutionName);
+        Institution institution = namedParameterJdbcTemplate.queryForObject(sql,params, new BeanPropertyRowMapper<>(Institution.class));
+        return Optional.ofNullable(institution);
 	}
+	@Override
+	public Optional<Institution> findInstitutionByInstitutionId(String institutionId) {
+		String sql = "SELECT * FROM scholarshipv1.institution where institutionId = :institutionId";
+		Map<String, Object> params = new HashMap<>();
+		params.put("institutionId", institutionId);
+		Institution institution = namedParameterJdbcTemplate.queryForObject(sql,params, new BeanPropertyRowMapper<>(Institution.class));
+		return Optional.ofNullable(institution);
+	}
+
+
 }

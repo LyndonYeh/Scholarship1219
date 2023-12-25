@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
 
 import scholarship.bean.Scholarship;
 import scholarship.model.dao.ScholarshipDao;
+import scholarship.model.dao.InstitutionDao;
+
+
 @Repository
 public class ScholarshipMySQL implements ScholarshipDao {
 
@@ -110,4 +113,12 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
         return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
     }
+    
+	private void enrichScholarshipWithDetails(Scholarship scholarship) {
+		// 注入 Institution
+		InstitutionDao IDao= new InstitutionMySQL();
+		
+		IDao.findInstitutionByInstitutionId(scholarship.getInstitutionId()).ifPresent(scholarship::setInstitution);
+		
+	}
 }
