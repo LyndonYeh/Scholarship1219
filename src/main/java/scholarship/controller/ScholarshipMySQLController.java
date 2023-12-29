@@ -70,11 +70,7 @@ public class ScholarshipMySQLController {
 		.append("帳號: alicelu@gmail.com /碼密碼: password3 ");
 		return s.toString(); 
 	}
-
 	
-	/*
-	 * 動態 hash 登入
-	 */
 	@PostMapping("/login")
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
 	        HttpSession session, Model model) {
@@ -85,14 +81,9 @@ public class ScholarshipMySQLController {
 	    if (userOpt.isPresent()) {
 	        User user = userOpt.get();
 
-	        // Generate a new hash for the entered password
-	        String newPasswordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-
 	        // 比對 password
 	        if (BCrypt.checkpw(password, user.getPassword())) {
-	            // 新增 新 hash 到 DB
-	            userDao.updateUserPasswordById(user.getUserId(), user.getPassword(), newPasswordHash);
-
+	      
 	            session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
 	            return "redirect:/mvc/scholarship/backendtest"; // OK, 導向後台首頁
 	        } else {
@@ -197,8 +188,6 @@ public class ScholarshipMySQLController {
 		
 		return "backend/edit";
 	}
-
-
 
 	
 	@GetMapping("/frontend")
