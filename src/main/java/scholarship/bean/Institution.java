@@ -2,6 +2,13 @@ package scholarship.bean;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 import com.google.gson.Gson;
 
 /**
@@ -12,16 +19,29 @@ import com.google.gson.Gson;
 |    25570111    |   行天宮助寒獎學金  | 陳小姐    |  0912345678     |
 +--------------------------------------------------------------+
  */
+
+@Entity
 public class Institution {
 
-	private String institutionName;
-	private String institutionId;
-	private String contactNumber;
-	private String contact;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "institution_id") // Specify the column name
+    private String institutionId;
+
+    @Column(name = "institution_name") // Specify the column name
+    private String institutionName;
+
+    @Column(name = "contact_number") // Specify the column name
+    private String contactNumber;
+
+    private String contact;
 	
 	// 設定關聯
 	private User user;
 	private List<Scholarship> scholarships;
+	
+	@OneToMany(mappedBy = "institution")
+	private List<User> users;
 	
 	public Institution() {
 	

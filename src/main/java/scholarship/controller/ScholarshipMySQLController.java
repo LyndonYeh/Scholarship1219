@@ -106,7 +106,7 @@ public class ScholarshipMySQLController {
 
 
 	@PostMapping("/register")
-	public String registerUser(
+	public String register(
 	        @RequestParam("username") String username,
 	        @RequestParam("password") String password,
 	        @RequestParam("institutionName") String institutionName,
@@ -116,7 +116,6 @@ public class ScholarshipMySQLController {
 	        Model model) {
 
 	    try {
-	        // Create User and Institution objects
 	        User user = new User();
 	        user.setUsername(username);
 	        user.setPassword(password);
