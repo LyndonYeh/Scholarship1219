@@ -2,6 +2,7 @@ package scholarship.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.faces.annotation.RequestCookieMap;
 import javax.servlet.http.HttpServletRequest;
@@ -114,6 +115,11 @@ public class ScholarshipMySQLController {
 	        @RequestParam("contact") String contact,
 	        @RequestParam("contactNumber") String contactNumber,
 	        Model model) {
+		
+		Random random = new Random();
+
+        // Generate a random integer between 1 and 100 (inclusive)
+        int randomNumber = random.nextInt(1000000) ;
 
 	    try {
 	        User user = new User();

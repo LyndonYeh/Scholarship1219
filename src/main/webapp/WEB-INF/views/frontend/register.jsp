@@ -71,7 +71,9 @@ form {
 					<button class="btn btn-outline-primary" type="submit">驗證</button>
 				</div>
 			</div>
-
+			
+			<!--when mail is verified, disply the below-->
+			
 			<div class="mb-3">
 				<label for="password" class="form-label">密碼
 					(至少包含一個大寫及一個小寫英文字母及數字)</label> <input type="password" class="form-control"
