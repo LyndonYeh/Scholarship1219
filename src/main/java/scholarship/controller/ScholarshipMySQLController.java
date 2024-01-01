@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Random;
 
 import javax.faces.annotation.RequestCookieMap;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,12 +25,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import scholarship.*;
 import scholarship.bean.Institution;
 import scholarship.bean.Scholarship;
 import scholarship.bean.User;
 import scholarship.model.dao.InstitutionDao;
 import scholarship.model.dao.ScholarshipDao;
 import scholarship.model.dao.UserDao;
+import scholarship.service.EmailService;
+import scholarship.util.RandomNumberGenerator;
+
 import java.lang.StringBuilder;
 
 @Controller
@@ -104,7 +109,24 @@ public class ScholarshipMySQLController {
 	public String registerPage() {
 		return "/frontend/register";
 	}
+	
+	@PostMapping("/sendmail")
+	public String showRegistrationForm(@ModelAttribute("user") User user, HttpSession session) {
+		
+		String username = user.getUsername(); 
+		session.setAttribute("userEmail", username);
 
+		String verificationCode = RandomNumberGenerator.generateRandomCode();
+		String toEmail = (String) session.getAttribute("userEmail"); 
+
+		try {
+			EmailService.sendVerificationCode(toEmail, verificationCode);
+
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		return "error"; 
+	}
 
 	@PostMapping("/register")
 	public String register(
