@@ -2,8 +2,10 @@ package scholarship.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.faces.annotation.RequestCookieMap;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,12 +27,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import scholarship.*;
 import scholarship.bean.Institution;
 import scholarship.bean.Scholarship;
 import scholarship.bean.User;
 import scholarship.model.dao.InstitutionDao;
 import scholarship.model.dao.ScholarshipDao;
 import scholarship.model.dao.UserDao;
+import scholarship.service.EmailService;
+import scholarship.util.RandomNumberGenerator;
+
 import java.lang.StringBuilder;
 
 @Controller
@@ -72,11 +78,7 @@ public class ScholarshipMySQLController {
 		.append("帳號: alicelu@gmail.com /碼密碼: password3 ");
 		return s.toString(); 
 	}
-
 	
-	/*
-	 * 動態 hash 登入
-	 */
 	@PostMapping("/login")
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password,
 	        HttpSession session, Model model) {
@@ -87,14 +89,9 @@ public class ScholarshipMySQLController {
 	    if (userOpt.isPresent()) {
 	        User user = userOpt.get();
 
-	        // Generate a new hash for the entered password
-	        String newPasswordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-
 	        // 比對 password
 	        if (BCrypt.checkpw(password, user.getPassword())) {
-	            // 新增 新 hash 到 DB
-	            userDao.updateUserPasswordById(user.getUserId(), user.getPassword(), newPasswordHash);
-
+	      
 	            session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
 	            return "redirect:/mvc/scholarship/backend"; // OK, 導向後台首頁
 	        } else {
@@ -114,10 +111,27 @@ public class ScholarshipMySQLController {
 	public String registerPage() {
 		return "/frontend/register";
 	}
+	
+	@PostMapping("/sendmail")
+	public String showRegistrationForm(@ModelAttribute("user") User user, HttpSession session) {
+		
+		String username = user.getUsername(); 
+		session.setAttribute("userEmail", username);
 
+		String verificationCode = RandomNumberGenerator.generateRandomCode();
+		String toEmail = (String) session.getAttribute("userEmail"); 
+
+		try {
+			EmailService.sendVerificationCode(toEmail, verificationCode);
+
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		return "error"; 
+	}
 
 	@PostMapping("/register")
-	public String registerUser(
+	public String register(
 	        @RequestParam("username") String username,
 	        @RequestParam("password") String password,
 	        @RequestParam("institutionName") String institutionName,
@@ -125,9 +139,9 @@ public class ScholarshipMySQLController {
 	        @RequestParam("contact") String contact,
 	        @RequestParam("contactNumber") String contactNumber,
 	        Model model) {
+		
 
 	    try {
-	        // Create User and Institution objects
 	        User user = new User();
 	        user.setUsername(username);
 	        user.setPassword(password);
@@ -139,8 +153,8 @@ public class ScholarshipMySQLController {
 	        institution.setContactNumber(contactNumber);
 
 	        // Save User and Institution to the database
-	        userDao.addUser(user);
 	        institutionDao.addInstitution(institution);
+	        userDao.addUser(user);
 
 	        // Redirect to a success page
 	        return "redirect:/successPage";
@@ -173,8 +187,6 @@ public class ScholarshipMySQLController {
 		
 		return "backend/edit";
 	}
-
-
 
 	
 	@GetMapping("/frontend")

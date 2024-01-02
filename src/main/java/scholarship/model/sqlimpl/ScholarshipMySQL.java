@@ -10,7 +10,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 import scholarship.bean.Scholarship;
@@ -21,19 +23,37 @@ import scholarship.model.dao.InstitutionDao;
 @Repository
 public class ScholarshipMySQL implements ScholarshipDao {
 
+
+	
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private AtomicInteger scholarshipIdGenerator = new AtomicInteger(100);
+    // 原來的 private AtomicInteger scholarshipIdGenerator  註解掉 
+    //private AtomicInteger scholarshipIdGenerator = new AtomicInteger(100);
     
-
+    // 新增 getNextScholarshipId()
+    // 直接在其他要加的 dao 方法 把 scholarshipId 設定成這個 getNextScholarshipId()
+    // 下面先用 addScholarship 示範
+    private int getNextScholarshipId() {
+        // SQL找scholarshipid最大值
+        String LatestIdSql = "SELECT MAX(scholarshipid) FROM scholarshipv1.scholarshiprecord";
+        // scholarshipid 最大值
+        Integer latestId = namedParameterJdbcTemplate.queryForObject(LatestIdSql, new MapSqlParameterSource(), Integer.class);
+        // return 最大值 + 1 如果 null 最大值預設 100, 但應該不會 
+        return (latestId != null) ? latestId + 1 : 100;
+    }
+ 
+ 
+    
     @Override
     public void addScholarship(Scholarship scholarship) {
         String sql = "INSERT INTO scholarshipv1.scholarshiprecord (scholarshipId, userId, institutionId, scholarshipName, scholarshipAmount, entityId, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated) " +
                 "VALUES (:scholarshipId, :userId, :institutionId, :scholarshipName, :scholarshipAmount, :entity, :updatedTime, :startDate, :endDate, :isExpired, :webUrl, :isUpdated)";
-
+       
+        int scholarshipId = getNextScholarshipId();
+        
         Map<String, Object> params = new HashMap<>();
-        params.put("scholarshipId", scholarshipIdGenerator.getAndIncrement());
+        params.put("scholarshipId", scholarshipId);
         params.put("userId", scholarship.getUserId());
         params.put("institutionId", scholarship.getInstitutionId());
         params.put("scholarshipName", scholarship.getScholarshipName());
@@ -102,6 +122,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
     public List<Scholarship> findScholarshipByEntityAndAmount(String entity, Integer scholarshipAmount) {
         String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE  scholarshipv1.entity = :entity AND  scholarshipv1.scholarshipAmount = :scholarshipAmount";
         Map<String, Object> params = new HashMap<>();
+        
         params.put("entity", entity);
         params.put("scholarshipAmount", scholarshipAmount);
 
