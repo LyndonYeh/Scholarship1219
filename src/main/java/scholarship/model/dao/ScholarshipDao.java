@@ -97,4 +97,13 @@ public interface ScholarshipDao {
 	
 	List<Scholarship> findScholarshipByAmount( Integer scholarshipAmount);
 	
+	
+	/**
+	 *  9. 根據ID查詢獎學金
+	 * @param cholarshipAmount
+	 * @return
+	 */
+	
+	Optional<Scholarship> findScholarshipById( Integer scholarshipId);
+	
 }

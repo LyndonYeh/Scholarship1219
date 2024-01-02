@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS scholarshipv1.institution;
 
 
 CREATE TABLE scholarshipv1.institution (
-  `institutionId` int NOT NULL,
+  `institutionId` varchar(50) NOT NULL,
   `institutionName` varchar(255) DEFAULT NULL,
   `contact` varchar(50) DEFAULT NULL,
   `contactNumber` varchar(15) DEFAULT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE scholarshipv1.institution (
 
 CREATE TABLE scholarshipv1.user (
   `userId` int NOT NULL AUTO_INCREMENT,
-  `institutionId` int,
+  `institutionId` varchar(50),
   `userName` varchar(50) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`userId`),
@@ -38,7 +38,7 @@ CREATE TABLE scholarshipv1.entity (
 CREATE TABLE scholarshipv1.scholarshiprecord (
   `scholarshipId` int NOT NULL AUTO_INCREMENT,
   `userId` int DEFAULT NULL,
-  `institutionId` int DEFAULT NULL,
+  `institutionId` varchar(50) DEFAULT NULL,
   `scholarshipName` varchar(255) DEFAULT NULL,
   `scholarshipAmount` int DEFAULT NULL,
   `entityid` int DEFAULT NULL,

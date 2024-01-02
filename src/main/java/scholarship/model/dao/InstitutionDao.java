@@ -44,7 +44,7 @@ public interface InstitutionDao {
      * 5. 根據機構名稱查詢機構是否已存在
      */
     
-    Optional<Institution> findInstitutionByInstitutionName(String instutionName);
+    Optional<Institution> findInstitutionByInstitutionName(String institutionName);
 
     /**
      *6. 查詢所有機構
@@ -57,7 +57,7 @@ public interface InstitutionDao {
      * 7. 根據機構名稱查詢機構是否已存在
      */
     
-   Optional <Institution> findInstitutionByInstitutionId(String instutionId);
+   Optional <Institution> findInstitutionByInstitutionId(String institutionId);
     
     
     

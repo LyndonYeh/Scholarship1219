@@ -16,8 +16,10 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -94,7 +96,7 @@ public class ScholarshipMySQLController {
 	            userDao.updateUserPasswordById(user.getUserId(), user.getPassword(), newPasswordHash);
 
 	            session.setAttribute("user", user); // 將 user 物件放入到 session 變數中
-	            return "redirect:/mvc/scholarship/backendtest"; // OK, 導向後台首頁
+	            return "redirect:/mvc/scholarship/backend"; // OK, 導向後台首頁
 	        } else {
 	            session.invalidate(); // session 過期失效
 	            model.addAttribute("loginMessage", "密碼錯誤");
@@ -161,32 +163,6 @@ public class ScholarshipMySQLController {
 
 
 
-	/* 
-	 * 登入後重新導向的 後台測試頁
-	 * 若後台 controller 串接好此路徑可刪除
-	 */
-	@GetMapping("/backendtest")
-	@ResponseBody
-	public String backendtest(HttpServletRequest req, HttpServletResponse resp) {
-		return "backendTest 後台測試頁 登入成功 !";
-
-	}
-
-	/*
-	 * 首頁基礎資料
-	 */
-	
-	private void addBasicModel(Model model) {
-		List<Institution> instiutions = institutionDao.findAllInstitutions();
-		List<Scholarship> scholarships = scholarshipDao.findAllscholarship();
-		List<User> users = userDao.findAllUsers();
-		
-		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
-		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
-		model.addAttribute("users", users); // 取得目前最新 users 資料
-	}
-
-
 
 	
 	/*
@@ -202,8 +178,8 @@ public class ScholarshipMySQLController {
 
 	
 	@GetMapping("/frontend")
-	public String indexFront(@ModelAttribute Scholarship scholarship, Model model) {
-		addBasicModel(model);
+	public String indexFront(@ModelAttribute Scholarship scholarship, Model model,HttpSession session) {
+		addBasicModel(model,session);
 		model.addAttribute("submitBtnName", "新增");
 		model.addAttribute("_method", "POST");
 		return "frontend/scholarmain";
@@ -211,22 +187,24 @@ public class ScholarshipMySQLController {
 	
 	
 	@GetMapping("/backend")
-	public String indexBackend(@ModelAttribute Scholarship scholarship, Model model) {
-		addBasicModel(model);
+	public String indexBackend(@ModelAttribute Scholarship scholarship, Model model, HttpSession session) {
+		addBasicModel(model,session);
+
+		
 		model.addAttribute("submitBtnName", "新增");
 		model.addAttribute("_method", "POST");
 		return "backend/backendmain";
 	}
 	
 	@PostMapping("/backend") // 新增 scholarship
-	public String addScholarship(@Valid Scholarship scholarship, BindingResult result, Model model) { // @Valid 驗證, BindingResult 驗證結果
+	public String addScholarship(@Valid Scholarship scholarship, BindingResult result, Model model,HttpSession session) { // @Valid 驗證, BindingResult 驗證結果
 
 
 		// 判斷驗證是否通過?
 		if (result.hasErrors()) { // 有錯誤發生
 			// 自動會將 errors 的資料放在 model 中
 
-			addBasicModel(model);
+			addBasicModel(model,session);
 			model.addAttribute("submitBtnName", "建立");
 			model.addAttribute("_method", "POST");
 			model.addAttribute("scholarship", scholarship); // 給 form 表單用的 (ModelAttribute)
@@ -234,9 +212,49 @@ public class ScholarshipMySQLController {
 			return "backendmain";
 		}
 
+		User sessionData = (User)session.getAttribute("user");
+		scholarship.setInstitutionId(sessionData.getInstitutionId());
 		scholarshipDao.addScholarship(scholarship);
 		// System.out.println("add User rowcount = " + rowcount);
 		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁
 	}
-
+	
+	@GetMapping("/backend/copy/{scholarshipId}")
+	public String getUser(@PathVariable("scholarshipId") Integer scholarshipId, Model model ,HttpSession session ) {
+		
+		addBasicModel(model,session);
+		
+		Scholarship scholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
+		model.addAttribute("scholarship", scholarship);
+		model.addAttribute("submitBtnName", "新增");
+		model.addAttribute("_method", "POST");
+		return "/backend/backendmain";
+	}
+	
+	@DeleteMapping("/backend/delete/{scholarshipId}") // Delete method 刪除
+	//@ResponseBody
+	public String deleteScholarship(@PathVariable("scholarshipId") Integer scholarshipId) {
+		boolean rowcount = scholarshipDao.removeScholarshipById(scholarshipId);
+		System.out.println("delete User rowcount = " + rowcount);
+		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁
+	}
+	
+	/*
+	 * 首頁基礎資料
+	 * !!!!根據Institution顯示資料
+	 */
+	
+	private void addBasicModel(Model model, HttpSession session) {
+		List<Institution> instiutions = institutionDao.findAllInstitutions();
+		List<Scholarship> scholarships = scholarshipDao.findAllscholarship();
+		List<User> users = userDao.findAllUsers();
+		User sessionData = (User)session.getAttribute("user");
+		Optional<Institution> sessionInstitution=institutionDao.findInstitutionByInstitutionId(sessionData.getInstitutionId());
+		
+		model.addAttribute("sessionInstitution", sessionInstitution.get());
+		
+		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
+		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
+		model.addAttribute("users", users); // 取得目前最新 users 資料
+	}
 }
