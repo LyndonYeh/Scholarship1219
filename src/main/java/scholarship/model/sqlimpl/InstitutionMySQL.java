@@ -20,8 +20,6 @@ public class InstitutionMySQL implements InstitutionDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-
-
     @Override
     public void addInstitution(Institution institution) {
         String sql = "INSERT INTO scholarshipv1.institution (institutionId, institutionName, contact, contactNumber) " +
@@ -37,7 +35,7 @@ public class InstitutionMySQL implements InstitutionDao {
     }
 
     @Override
-    public Boolean updateContact(String institutionId, String newContact) {
+    public Boolean updateContactById(String institutionId, String newContact) {
         String sql = "UPDATE scholarshipv1.institution SET contact = :newContact WHERE institutionId = :institutionId";
         Map<String, Object> params = new HashMap<>();
         params.put("newContact", newContact);
