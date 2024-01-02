@@ -138,10 +138,6 @@ public class ScholarshipMySQLController {
 	        @RequestParam("contactNumber") String contactNumber,
 	        Model model) {
 		
-		Random random = new Random();
-
-        // Generate a random integer between 1 and 100 (inclusive)
-        int randomNumber = random.nextInt(1000000) ;
 
 	    try {
 	        User user = new User();
@@ -155,8 +151,8 @@ public class ScholarshipMySQLController {
 	        institution.setContactNumber(contactNumber);
 
 	        // Save User and Institution to the database
-	        userDao.addUser(user);
 	        institutionDao.addInstitution(institution);
+	        userDao.addUser(user);
 
 	        // Redirect to a success page
 	        return "redirect:/successPage";

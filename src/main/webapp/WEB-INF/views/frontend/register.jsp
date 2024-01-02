@@ -68,7 +68,7 @@ form {
 						maxlength="1" required> <input type="text"
 						class="form-control digit-input" id="digit6" name="digit6"
 						maxlength="1" required>
-					<button class="btn btn-outline-primary" type="submit">驗證</button>
+					<button class="btn btn-outline-primary" type="submit" onclick="sendMail()">驗證</button>
 				</div>
 			</div>
 			
@@ -187,4 +187,30 @@ form {
 							});
 						})
 	})();
+	
+	function sendMail() {
+		var form = $('#sendMailForm');
+		var username = $('#username').val();
+		// Store the username in the hidden input of the second form
+		$('#hiddenUsername').val(username);
+
+		// Perform AJAX request to submit the form
+		$.ajax({
+			type : form.attr('method'),
+			url : form.attr('action'),
+			data : {
+				username : username
+			},
+			success : function(data) {
+				// Update the page content based on the response
+				$('#sendMailButton').hide();
+				$('#mailSentMessage').show();
+				$('#verifyButton').prop('disabled', false); // Enable the verify button
+			},
+			error : function(error) {
+				console.error('Error sending mail:', error);
+			}
+		});
+	}
+	
 </script>
