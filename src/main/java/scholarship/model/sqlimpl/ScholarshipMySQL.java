@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +84,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public boolean removeScholarshipById(Integer scholarshipId) {
-        String sql = "DELETE FROM  scholarshipv1.scholarshiprecord WHERE  scholarshipv1.scholarshipId = :scholarshipId";
+        String sql = "DELETE FROM  scholarshipv1.scholarshiprecord WHERE scholarshipId = :scholarshipId";
         Map<String, Object> params = new HashMap<>();
         params.put("scholarshipId", scholarshipId);
 
@@ -103,7 +104,9 @@ public class ScholarshipMySQL implements ScholarshipDao {
     @Override
     public List<Scholarship> findAllscholarship() {
         String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord";
-        return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
+        List<Scholarship> scholarships = namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
+        //scholarships.forEach(this::enrichScholarshipWithDetails);
+        return scholarships;
     }
 
     @Override
@@ -134,6 +137,15 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
         return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
     }
+    @Override
+    public Optional<Scholarship> findScholarshipById(Integer scholarshipId) {
+    	String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE scholarshiprecord.scholarshipId = :scholarshipId";
+        Map<String, Object> params = new HashMap<>();
+        params.put("scholarshipId", scholarshipId);
+
+        Scholarship scholarship = namedParameterJdbcTemplate.queryForObject(sql,params, new BeanPropertyRowMapper<>(Scholarship.class));
+        return Optional.ofNullable(scholarship);
+    }
     
 	private void enrichScholarshipWithDetails(Scholarship scholarship) {
 		// 注入 Institution
@@ -141,5 +153,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 		
 		IDao.findInstitutionByInstitutionId(scholarship.getInstitutionId()).ifPresent(scholarship::setInstitution);
 		
+		
 	}
+
 }

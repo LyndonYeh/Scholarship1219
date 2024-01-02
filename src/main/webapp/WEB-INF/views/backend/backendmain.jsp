@@ -10,6 +10,26 @@
 <!-- % List<ScholarshipUpdateRecord> ScholarshipUpdateRecords = (List<ScholarshipUpdateRecord>) request.getAttribute("cholarshipUpdateRecord");%> -->
 <html>
 <head>
+		<script type="text/javascript">
+			function deleteScholarship(scholarshipId) {
+				const url = '${pageContext.request.contextPath}/mvc/scholarship/backend/delete/' + scholarshipId;
+				if(confirm('是否要刪除 ?')) {
+					fetch(url, {method: 'DELETE'})
+					.then(response => {
+						if(response.ok || response.redirected) {
+							console.log(response);
+
+							location.href = response.url;
+						} else {
+							console.log('delete fail');
+						}
+					})
+					.catch(error => {
+						console.log('delete error: ', error);
+					});
+				}
+			}
+		</script>
 <link rel="shortcut icon" type="image/x-icon"
 	href="../../images/icon.png">
 <link
@@ -38,7 +58,7 @@
 				<!--<li class="nav-item"><a class="nav-link disabled">Disabled</a>
 				</li>-->
 			</ul>
-			<form class="d-flex" action="../frontend/scholarmain.jsp">
+			<form class="d-flex" action="./login">
 				<button class="btn btn-outline-light" type="submit">登出</button>
 			</form>
 		</div>
@@ -59,10 +79,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<th scope="row">行天宮</th>
-					<td>XXXXXXX</td>
-					<td>陳小姐</td>
-					<td>02-22223333</td>
+				${ sessionInstitution }
+					<td scope="row">${ sessionInstitution.institutionId}</td>
+					<td>${ sessionInstitution.institutionName}</td>
+					<td>${ sessionInstitution.contact}</td>
+					<td>${ sessionInstitution.contactNumber}</td>
 
 				</tbody>
 			</table>
@@ -119,39 +140,25 @@
 			</thead>
 			<tbody>
 				${ scholarships }
-				<tr>
-					<th scope="row">1</th>
-					<td>行天宮</td>
-					<td>清寒獎助學金</td>
-					<td>50000</td>
-					<td>陳小姐 </td>
-					<td>0912345678</td>
-					<td><button type="button" onclick="" id="copy" name="copy">複製</button></td>
-					<td>
-						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/launch/${ scholarship.scholarshipId }">上架</a>
-					</td>
-					<td>
-						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/delete/${ scholarship.scholarshipId }">刪除</a>
-					</td>
-				</tr>
+				
 				<c:forEach items="${scholarships}" var="scholarship">
 				 <tr>
 					<td>${scholarship.scholarshipId }</td>
-					<td>${scholarship.institution.name } 名稱需注入</td>
+					<td>${scholarship.institution.institutionName } 名稱需注入</td>
 					<td>${scholarship.scholarshipName } </td>
 					<td>${scholarship.scholarshipAmount} </td>
 					<td>${scholarship.institution.contact } 聯絡人需注入</td>
 					<td>${scholarship.institution.contactNumber } 聯絡電話需注入</td>
 					<td>
-						<button type="button" onclick="${pageContext.request.contextPath}/mvc/scholarshipController/${ scholarship.scholarshipId }" id="copy" name="copy">複製</button>
+						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarship/backend/copy/${ scholarship.scholarshipId }">複製</a>
 					</td>
 					<!--  <td>&nbsp;<input type="checkbox" id="isLaunch" name="isLaunch" /></td>
 					<td>&nbsp;<input type="checkbox" id="pushrecycle" name="pushrecycle" /></td>-->
 					<td>
-						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/launch/${ scholarship.scholarshipId }">上架</a>
+						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarship/backend/launch/${ scholarship.scholarshipId }">上架</a>
 					</td>
 					<td>
-						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarshipController/delete/${ scholarship.scholarshipId }">刪除</a>
+						<a type="button" class="btn btn-warning" href="javascript:void(0);" onClick="deleteScholarship(${ scholarship.scholarshipId })">刪除</a>
 					</td>
 				
 				</tr>
