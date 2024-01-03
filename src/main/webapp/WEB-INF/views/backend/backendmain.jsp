@@ -72,8 +72,8 @@
 			<table class="table">
 				<thead class="bg bg-dark text-light">
 					<tr>
-						<th>機構名稱</th>
 						<th>統一編號</th>
+						<th>機構名稱</th>
 						<th>預設聯絡人</th>
 						<th>預設聯絡電話</th>
 					</tr>
@@ -97,7 +97,7 @@
 					<input name="_method" type="hidden" value="${ _method }" />
 						
 						&emsp;獎學金名稱:&nbsp;<sp:input path="scholarshipName" type="text" />
-						&emsp;上傳時間:&nbsp; <sp:input path="updatedTime" type="date" /> 
+						<!-- &emsp;上傳時間:&nbsp;  --><sp:input path="updatedTime" type="hidden" /> 
 						&emsp;開始日期:&nbsp; <sp:input path="startDate" type="date" /> 
 						&emsp;結束日期:&nbsp; <sp:input path="endDate" type="date" />
 						&emsp;身分別:&nbsp; <sp:input path="entity" type="number" />
@@ -144,11 +144,11 @@
 				<c:forEach items="${scholarships}" var="scholarship">
 				 <tr>
 					<td>${scholarship.scholarshipId }</td>
-					<td>${scholarship.institution.institutionName } 名稱需注入</td>
+					<td>${scholarship.institution.institutionName }</td>
 					<td>${scholarship.scholarshipName } </td>
 					<td>${scholarship.scholarshipAmount} </td>
-					<td>${scholarship.institution.contact } 聯絡人需注入</td>
-					<td>${scholarship.institution.contactNumber } 聯絡電話需注入</td>
+					<td>${scholarship.institution.contact }</td>
+					<td>${scholarship.institution.contactNumber }</td>
 					<td>
 						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarship/backend/copy/${ scholarship.scholarshipId }">複製</a>
 					</td>
