@@ -12,7 +12,7 @@ public interface InstitutionDao {
      * 1. 註冊獎助機構
      * @param institution
      */
-    void addInstitution(Institution institution);
+    int addInstitution(Institution institution);
     
     /**
      * 2. 更改項目聯絡人

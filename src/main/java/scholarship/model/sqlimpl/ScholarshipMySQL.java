@@ -135,7 +135,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
         Map<String, Object> params = new HashMap<>();
         params.put("scholarshipAmount", scholarshipAmount);
 
-        return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
+        return namedParameterJdbcTemplate.query(sql, params, new BeanPropertyRowMapper<>(Scholarship.class));
     }
     @Override
     public Optional<Scholarship> findScholarshipById(Integer scholarshipId) {

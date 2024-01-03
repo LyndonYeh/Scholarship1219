@@ -21,9 +21,9 @@ public class InstitutionMySQL implements InstitutionDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public void addInstitution(Institution institution) {
-        String sql = "INSERT INTO scholarshipv1.institution (institutionId, institutionName, contact, contactNumber) " +
-                "VALUES (:institutionId, :institutionName, :contact, :contactNumber)";
+    public int addInstitution(Institution institution) {
+        String sql = "INSERT INTO scholarshipv1.institution (institutionId, institutionName, contact, contactNumber, userId) " +
+                "VALUES (:institutionId, :institutionName, :contact, :contactNumber, :userId)";
 
         Map<String, Object> params = new HashMap<>();
         params.put("institutionId", institution.getInstitutionId());
@@ -31,8 +31,16 @@ public class InstitutionMySQL implements InstitutionDao {
         params.put("contact", institution.getContact());
         params.put("contactNumber", institution.getContactNumber());
 
-        namedParameterJdbcTemplate.update(sql, params);
+        if (institution.getUser() != null) {
+            params.put("userId", institution.getUser().getUserId());
+        } else {
+            // Handle the case where userId is null
+            params.put("userId", null); // or set it to a default value, depending on your logic
+        }
+
+        return namedParameterJdbcTemplate.update(sql, params);
     }
+    
 
     @Override
     public Boolean updateContactById(String institutionId, String newContact) {
