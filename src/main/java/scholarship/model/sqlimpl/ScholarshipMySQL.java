@@ -126,7 +126,8 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public List<Scholarship> findScholarshipByEntityAndAmount(String entity, Integer scholarshipAmount) {
-        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE  entity = :entity AND scholarshipAmount = :scholarshipAmount";
+
+        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE entity = :entity AND scholarshipAmount = :scholarshipAmount";
         Map<String, Object> params = new HashMap<>();
         
         params.put("entity", entity);
@@ -158,8 +159,10 @@ public class ScholarshipMySQL implements ScholarshipDao {
 		//InstitutionDao IDao= new InstitutionMySQL();
 		
 		//IDao.findInstitutionByInstitutionId(scholarship.getInstitutionId()).ifPresent(scholarship::setInstitution);
+
 		Optional<Institution> addInstitution=institutionDao.findInstitutionByInstitutionId(scholarship.getInstitutionId());
 		scholarship.setInstitution(addInstitution.get());
+
 		
 		
 	}
