@@ -187,7 +187,7 @@ public class ScholarshipMySQLController {
 
 
 	
-	/*
+	/**
 	 * 透過後台進入帶有該會員資料的修改頁面
 	 */
 	@GetMapping("/backend/edit")
@@ -215,7 +215,9 @@ public class ScholarshipMySQLController {
 		model.addAttribute("_method", "POST");
 		return "backend/backendmain";
 	}
-	
+	/**
+	 * 新增獎學金資料
+	 */
 	@PostMapping("/backend") // 新增 scholarship
 	public String addScholarship(@Valid Scholarship scholarship, BindingResult result, Model model,HttpSession session) { // @Valid 驗證, BindingResult 驗證結果
 
@@ -238,7 +240,9 @@ public class ScholarshipMySQLController {
 		// System.out.println("add User rowcount = " + rowcount);
 		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁
 	}
-	
+	/**
+	 *複製獎學金資料 
+	 */
 	@GetMapping("/backend/copy/{scholarshipId}")
 	public String getUser(@PathVariable("scholarshipId") Integer scholarshipId, Model model ,HttpSession session ) {
 		
@@ -250,7 +254,9 @@ public class ScholarshipMySQLController {
 		model.addAttribute("_method", "POST");
 		return "/backend/backendmain";
 	}
-	
+	/**
+	 *刪除獎學金資料
+	 */
 	@DeleteMapping("/backend/delete/{scholarshipId}") // Delete method 刪除
 	//@ResponseBody
 	public String deleteScholarship(@PathVariable("scholarshipId") Integer scholarshipId) {
@@ -259,7 +265,7 @@ public class ScholarshipMySQLController {
 		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁
 	}
 	
-	/*
+	/**
 	 * 首頁基礎資料
 	 * !!!!根據Institution顯示資料
 	 */
