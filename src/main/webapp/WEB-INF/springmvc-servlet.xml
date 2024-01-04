@@ -36,15 +36,16 @@
 		<property name="driverClass" value="com.mysql.cj.jdbc.Driver" />
 
 
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/scholarshipv1?serverTimezone=Asia/Taipei&amp;characterEncoding=utf-8&amp;useUnicode=true" />
-		
-	  	<property name="user" value="web" />
-		<property name="password" value="12345678" /> 
+		<property name="jdbcUrl"
+			value="jdbc:mysql://localhost:3306/scholarshipv1?serverTimezone=Asia/Taipei&amp;characterEncoding=utf-8&amp;useUnicode=true" />
 
-		
-		<!--  <property name="user" value="root" />
-		<property name="password" value="123" />-->
-		
+		<!-- <property name="user" value="web" /> <property name="password" value="12345678" 
+			/> -->
+
+
+		<property name="user" value="root" />
+		<property name="password" value="123" />
+
 
 
 		<!-- options -->
@@ -81,14 +82,14 @@
 
 	<bean id="loginInterceptor"
 		class="scholarship.interceptor.LoginInterceptor" />
-		
+
 	<mvc:interceptors>
-	<mvc:interceptor>
-		<mvc:mapping path="/mvc/**" />
-		<mvc:exclude-mapping path="/mvc/login" />
-		<mvc:exclude-mapping path="/mvc/login/*" />
-		<bean class="scholarship.interceptor.LoginInterceptor" />
-	</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/mvc/**" />
+			<mvc:exclude-mapping path="/mvc/login" />
+			<mvc:exclude-mapping path="/mvc/login/*" />
+			<bean class="scholarship.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
 	</mvc:interceptors>
 
 	<!-- 錯誤訊息設定 properites -->

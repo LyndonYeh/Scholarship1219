@@ -19,6 +19,7 @@ import scholarship.bean.Institution;
 import scholarship.bean.Scholarship;
 import scholarship.model.dao.ScholarshipDao;
 import scholarship.model.dao.InstitutionDao;
+import scholarship.model.sqlimpl.InstitutionMySQL;
 
 
 @Repository
@@ -28,6 +29,9 @@ public class ScholarshipMySQL implements ScholarshipDao {
 	
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    
+    @Autowired
+    private InstitutionDao institutionDao;
 
     // 原來的 private AtomicInteger scholarshipIdGenerator  註解掉 
     //private AtomicInteger scholarshipIdGenerator = new AtomicInteger(100);
@@ -107,6 +111,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
         String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord";
         List<Scholarship> scholarships = namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
         scholarships.forEach(this::enrichScholarshipWithDetails);
+
         return scholarships;
     }
 
@@ -121,6 +126,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public List<Scholarship> findScholarshipByEntityAndAmount(String entity, Integer scholarshipAmount) {
+
         String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE entity = :entity AND scholarshipAmount = :scholarshipAmount";
         Map<String, Object> params = new HashMap<>();
         
@@ -136,11 +142,11 @@ public class ScholarshipMySQL implements ScholarshipDao {
         Map<String, Object> params = new HashMap<>();
         params.put("scholarshipAmount", scholarshipAmount);
 
-        return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
+        return namedParameterJdbcTemplate.query(sql, params, new BeanPropertyRowMapper<>(Scholarship.class));
     }
     @Override
     public Optional<Scholarship> findScholarshipById(Integer scholarshipId) {
-    	String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE scholarshiprecord.scholarshipId = :scholarshipId";
+    	String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE scholarshipId = :scholarshipId";
         Map<String, Object> params = new HashMap<>();
         params.put("scholarshipId", scholarshipId);
 
@@ -150,12 +156,13 @@ public class ScholarshipMySQL implements ScholarshipDao {
     
 	private void enrichScholarshipWithDetails(Scholarship scholarship) {
 		// 注入 Institution
-		InstitutionDao IDao= new InstitutionMySQL();
+		//InstitutionDao IDao= new InstitutionMySQL();
 		
 		//IDao.findInstitutionByInstitutionId(scholarship.getInstitutionId()).ifPresent(scholarship::setInstitution);
-		Institution addInstitution=IDao.findInstitutionByInstitutionId(scholarship.getInstitutionId()).get();
-		
-		scholarship.setInstitution(addInstitution);
+
+		Optional<Institution> addInstitution=institutionDao.findInstitutionByInstitutionId(scholarship.getInstitutionId());
+		scholarship.setInstitution(addInstitution.get());
+
 		
 		
 	}

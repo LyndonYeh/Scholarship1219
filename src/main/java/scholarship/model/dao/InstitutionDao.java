@@ -12,7 +12,7 @@ public interface InstitutionDao {
      * 1. 註冊獎助機構
      * @param institution
      */
-    void addInstitution(Institution institution);
+    int addInstitution(Institution institution);
     
     /**
      * 2. 更改項目聯絡人
@@ -21,7 +21,7 @@ public interface InstitutionDao {
      * @param newContact        新聯絡人
      * @return 是否更新成功
      */
-    Boolean updateContact(String institutionId, String newContact);
+    Boolean updateContactById(String institutionId, String newContact);
 
     /**
      * 3. 更改項目聯絡連絡電話

@@ -9,23 +9,29 @@ import javax.persistence.ManyToOne;
 
 import scholarship.bean.Institution;
 
-@Entity
+
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private Integer userId; // 使用者 id
 	
 	private String username; // 使用者名稱
 	private String password; // 使用者密碼
-
+	private Institution institution;
 	public User() {
 
 	}
 
-	@ManyToOne
-    @JoinColumn(name = "institutionid", nullable = false)
-    private Institution institution;
 	
+	public Institution getInstitution() {
+		return institution;
+	}
+
+
+	public void setInstitution(Institution institution) {
+		this.institution = institution;
+	}
+
+
 	public User(Integer userId, String username, String password) {
 		this.userId = userId;
 		this.username = username;

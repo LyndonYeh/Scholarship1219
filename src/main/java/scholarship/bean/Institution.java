@@ -20,18 +20,15 @@ import com.google.gson.Gson;
 +--------------------------------------------------------------+
  */
 
-@Entity
+
 public class Institution {
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "institution_id") // Specify the column name
     private String institutionId;
 
-    @Column(name = "institution_name") // Specify the column name
+
     private String institutionName;
 
-    @Column(name = "contact_number") // Specify the column name
+
     private String contactNumber;
 
     private String contact;
@@ -40,7 +37,7 @@ public class Institution {
 	private User user;
 	private List<Scholarship> scholarships;
 	
-	@OneToMany(mappedBy = "institution")
+
 	private List<User> users;
 	
 	public Institution() {
@@ -57,8 +54,6 @@ public class Institution {
 	public User getUser() {
 		return user;
 	}
-
-
 
 	public void setUser(User user) {
 		this.user = user;
