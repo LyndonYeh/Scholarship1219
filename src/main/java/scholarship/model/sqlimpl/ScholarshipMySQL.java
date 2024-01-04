@@ -106,7 +106,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
     public List<Scholarship> findAllscholarship() {
         String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord";
         List<Scholarship> scholarships = namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
-        //scholarships.forEach(this::enrichScholarshipWithDetails);
+        scholarships.forEach(this::enrichScholarshipWithDetails);
         return scholarships;
     }
 

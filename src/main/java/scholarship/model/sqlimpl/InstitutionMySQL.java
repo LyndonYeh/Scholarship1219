@@ -87,7 +87,7 @@ public class InstitutionMySQL implements InstitutionDao {
 		Map<String, Object> params = new HashMap<>();
 		params.put("institutionId", institutionId);
 		Institution institution = namedParameterJdbcTemplate.queryForObject(sql,params, new BeanPropertyRowMapper<>(Institution.class));
-		return Optional.ofNullable(institution);
+		return Optional.of(institution);
 	}
 
 
