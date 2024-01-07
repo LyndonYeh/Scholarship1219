@@ -31,6 +31,7 @@ public class EmailService {
         properties.put("mail.smtp.port", "587"); // Replace with your email port 587
 
         // Set up a Session object
+        // 要再設定把 credential 存入安全地方
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
