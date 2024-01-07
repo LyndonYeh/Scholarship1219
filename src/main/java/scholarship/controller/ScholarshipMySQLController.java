@@ -35,6 +35,7 @@ import scholarship.model.dao.InstitutionDao;
 import scholarship.model.dao.ScholarshipDao;
 import scholarship.model.dao.UserDao;
 import scholarship.service.EmailService;
+import scholarship.service.RegistrationService;
 import scholarship.util.RandomNumberGenerator;
 
 import java.lang.StringBuilder;
@@ -43,6 +44,13 @@ import java.lang.StringBuilder;
 @RequestMapping("/scholarship")
 public class ScholarshipMySQLController {
 
+	private final RegistrationService registrationService;
+	
+	@Autowired
+	public ScholarshipMySQLController( RegistrationService registrationService) {
+		this.registrationService = registrationService;
+	}
+	
 	@Autowired
 	private InstitutionDao institutionDao;
 	@Autowired

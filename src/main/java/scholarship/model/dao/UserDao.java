@@ -32,7 +32,7 @@ public interface UserDao {
 		 * 
 		 * @param user
 		 */
-		void addUser(User user);
+		int addUser(User user);
 
 		/**
 		 * 2. 修改使用者名稱

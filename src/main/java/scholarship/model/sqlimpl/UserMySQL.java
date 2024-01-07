@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
+
 
 import scholarship.bean.User;
 import scholarship.model.dao.UserDao;
@@ -27,14 +29,18 @@ public class UserMySQL implements UserDao {
 	private JdbcTemplate jdbcTemplate;
 
     @Override
-    public void addUser(User user) {
-        String sql = "INSERT INTO User (username, password) VALUES (:username, :password)";
+    public int addUser(User user) {
+        String sql = "INSERT INTO User (username, password, institutionId) VALUES (:username, :password, :institutionId)";
         
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         Map<String, Object> params = new HashMap<>();
+        // 可使用 MapSqlParameterSource params = new MapSqlParameterSource();
+        // https://matthung0807.blogspot.com/2020/04/spring-jdbc-mapsqlparametersource.html
         params.put("username", user.getUsername());
-        params.put("password", BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        params.put("password", hashedPassword);
+        params.put("institutionId", user.getInstitution().getInstitutionId());
 
-        namedParameterJdbcTemplate.update(sql, params);
+        return namedParameterJdbcTemplate.update(sql, params);
     }
 /*
  * 
