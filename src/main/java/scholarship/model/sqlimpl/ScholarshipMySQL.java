@@ -1,25 +1,21 @@
 package scholarship.model.sqlimpl;
 
 import java.sql.*;
-
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 import scholarship.bean.Institution;
 import scholarship.bean.Scholarship;
 import scholarship.model.dao.ScholarshipDao;
 import scholarship.model.dao.InstitutionDao;
-import scholarship.model.sqlimpl.InstitutionMySQL;
 
 
 @Repository
@@ -32,6 +28,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
     
     @Autowired
     private InstitutionDao institutionDao;
+    
 
     // 原來的 private AtomicInteger scholarshipIdGenerator  註解掉 
     //private AtomicInteger scholarshipIdGenerator = new AtomicInteger(100);
@@ -56,6 +53,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
                 "VALUES (:scholarshipId, :userId, :institutionId, :scholarshipName, :scholarshipAmount, :entity, :updatedTime, :startDate, :endDate, :isExpired, :webUrl, :isUpdated)";
        
         int scholarshipId = getNextScholarshipId();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss"); 
         
         Map<String, Object> params = new HashMap<>();
         params.put("scholarshipId", scholarshipId);
@@ -65,13 +63,13 @@ public class ScholarshipMySQL implements ScholarshipDao {
         params.put("scholarshipAmount", scholarship.getScholarshipAmount());
         params.put("entity", scholarship.getEntity());
         
-        params.put("updatedTime", Date.valueOf(scholarship.getUpdatedTime()));
-//        params.put("updatedTime", Timestamp.valueOf(scholarship.getUpdatedTime()));
-        params.put("startDate", Date.valueOf(scholarship.getStartDate()));
+        //params.put("updatedTime", Date.valueOf(scholarship.getUpdatedTime()));
+        params.put("updatedTime", format.format(System.currentTimeMillis()));
+        params.put("startDate", scholarship.getStartDate());
         params.put("endDate", Date.valueOf(scholarship.getEndDate()));
-        params.put("isExpired", scholarship.getIsExpired());
+        params.put("isExpired", false);
         params.put("webUrl", scholarship.getWebUrl());
-        params.put("isUpdated", scholarship.getIsUpdated());
+        params.put("isUpdated", false);
 
         namedParameterJdbcTemplate.update(sql, params);
     }
@@ -114,6 +112,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
         return scholarships;
     }
+   
 
     @Override
     public List<Scholarship> findScholarshipByEntity(String entity) {

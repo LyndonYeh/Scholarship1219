@@ -156,6 +156,11 @@ public class ScholarshipMySQLController {
 		return "redirect:/backend/edit/{userId}";
 	}
 
+
+	/**
+	 * 前台首頁
+	 */
+
 	@GetMapping("/frontend")
 	public String indexFront(@ModelAttribute Scholarship scholarship, Model model, HttpSession session) {
 		addBasicModel(model, session);
@@ -164,14 +169,22 @@ public class ScholarshipMySQLController {
 		return "frontend/scholarmain";
 	}
 
+	
+	/**
+	 * 後台首頁
+	 */
+
 	@GetMapping("/backend")
 	public String indexBackend(@ModelAttribute Scholarship scholarship, Model model, HttpSession session) {
 		addBasicModel(model, session);
 
 		model.addAttribute("submitBtnName", "新增");
 		model.addAttribute("_method", "POST");
+		//System.out.println(scholarshipDao.findAllscholarship()); 
+		
 		return "backend/backendmain";
 	}
+
 
 	/**
 	 * 新增獎學金資料
@@ -194,6 +207,7 @@ public class ScholarshipMySQLController {
 
 		User sessionData = (User) session.getAttribute("user");
 		scholarship.setInstitutionId(sessionData.getInstitutionId());
+		scholarship.setUserId(sessionData.getUserId());
 		scholarshipDao.addScholarship(scholarship);
 		// System.out.println("add User rowcount = " + rowcount);
 		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁

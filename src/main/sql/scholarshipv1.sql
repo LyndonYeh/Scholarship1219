@@ -45,9 +45,9 @@ CREATE TABLE scholarshipv1.scholarshiprecord (
   `updatedTime` timestamp NULL DEFAULT NULL,
   `startDate` date DEFAULT NULL,
   `endDate` date DEFAULT NULL,
-  `isExpired` tinyint(1) DEFAULT NULL,
+  `isExpired` boolean DEFAULT 0,
   `webUrl` varchar(255) DEFAULT NULL,
-  `isUpdated` tinyint(1) DEFAULT NULL,
+  `isUpdated` boolean DEFAULT 0,
   PRIMARY KEY (`scholarshipId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

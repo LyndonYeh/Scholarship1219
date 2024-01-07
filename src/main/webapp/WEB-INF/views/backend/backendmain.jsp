@@ -100,15 +100,15 @@
 						<!-- &emsp;上傳時間:&nbsp;  --><sp:input path="updatedTime" type="hidden" /> 
 						&emsp;開始日期:&nbsp; <sp:input path="startDate" type="date" /> 
 						&emsp;結束日期:&nbsp; <sp:input path="endDate" type="date" />
-						&emsp;身分別:&nbsp; <sp:input path="entity" type="number" />
-						<!-- &emsp;身分別:&nbsp;<sp:select path="entity" type="text">
-						<sp:option value="kindergarten">幼稚園</sp:option>
-						<sp:option value="elementary school">小學</sp:option>
-						<sp:option value="middle school">國中</sp:option>
-						<sp:option value="high school">高中</sp:option>
-						<sp:option value="University">大學</sp:option>
-						<sp:option value="graduate">研究所</sp:option>
-					</sp:select>  -->
+						<!--&emsp;身分別:&nbsp; <sp:input path="entity" type="number" />-->
+						 &emsp;身分別:&nbsp;<sp:select path="entity" >
+						<sp:option value="1" label="幼稚園"></sp:option>
+						<sp:option value="2" label="小學"></sp:option>
+						<sp:option value="3" label="國中"></sp:option>
+						<sp:option value="4" label="高中"></sp:option>
+						<sp:option value="5" label="大學"></sp:option>
+						<sp:option value="6" label="研究所"></sp:option>
+					</sp:select>  
 					<!--<sp:select path="entity" items="${ entity }" itemLabel="name"
 						itemValue="id" />-->
 					
@@ -155,7 +155,8 @@
 					<!--  <td>&nbsp;<input type="checkbox" id="isLaunch" name="isLaunch" /></td>
 					<td>&nbsp;<input type="checkbox" id="pushrecycle" name="pushrecycle" /></td>-->
 					<td>
-						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarship/backend/launch/${ scholarship.scholarshipId }">上架</a>
+					<button type="button" style="display: ${scholarship.isUpdated ? 'block' : 'block'}">
+    					${scholarship.isUpdated ? '上架中' : '未上架'}</button>
 					</td>
 					<td>
 						<a type="button" class="btn btn-warning" href="javascript:void(0);" onClick="deleteScholarship(${ scholarship.scholarshipId })">刪除</a>
