@@ -75,7 +75,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
     }
 
     @Override
-    public boolean updateLauchStatusbyId(Integer scholarshipId, boolean isUpdated) {
+    public Boolean updateLauchStatusbyId(Integer scholarshipId, Boolean isUpdated) {
         String sql = "UPDATE scholarshipv1.cholarshiprecord SET isUpdated = :isUpdated WHERE scholarshipId = :scholarshipId";
         Map<String, Object> params = new HashMap<>();
         params.put("isUpdated", isUpdated);
@@ -86,7 +86,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
     }
 
     @Override
-    public boolean removeScholarshipById(Integer scholarshipId) {
+    public Boolean removeScholarshipById(Integer scholarshipId) {
         String sql = "DELETE FROM  scholarshipv1.scholarshiprecord WHERE scholarshipId = :scholarshipId";
         Map<String, Object> params = new HashMap<>();
         params.put("scholarshipId", scholarshipId);

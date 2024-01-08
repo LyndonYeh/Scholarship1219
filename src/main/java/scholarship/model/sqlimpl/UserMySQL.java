@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 
-
+import scholarship.bean.Institution;
 import scholarship.bean.User;
 import scholarship.model.dao.UserDao;
 
@@ -109,6 +109,11 @@ public class UserMySQL implements UserDao {
     
 	@Override
 	public Optional<User> findUserById(Integer userId) {
-		return Optional.empty();
+		String sql = "SELECT * FROM scholarshipv1.user where userId = :userId";
+		Map<String, Object> params = new HashMap<>();
+		params.put("userId", userId);
+		User user = namedParameterJdbcTemplate.queryForObject(sql,params, new BeanPropertyRowMapper<>(User.class));
+		return Optional.of(user);
+
 	}
 }

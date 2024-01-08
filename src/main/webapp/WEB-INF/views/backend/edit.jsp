@@ -40,10 +40,11 @@ form {
 </style>
 </head>
 <body>
+	${user}
 	<div>
 		<h2>Test Area</h2>
 		<p>User Id: ${user.userId}</p>
-		<p>User Name: ${username}</p>
+		<p>User Name: ${user.username}</p>
 		<p>Session: ${session}</p>
 		<p>SessionUser: ${session.username}</p>
 		<p>${sessionInstitution.get().getContactNumber()}</p>

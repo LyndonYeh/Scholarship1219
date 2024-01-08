@@ -37,7 +37,6 @@ import scholarship.model.dao.ScholarshipDao;
 import scholarship.model.dao.UserDao;
 import scholarship.model.sqlimpl.UserMySQL;
 import scholarship.service.EmailService;
-import scholarship.service.RegistrationService;
 import scholarship.service.UserService;
 import scholarship.util.RandomNumberGenerator;
 
@@ -48,19 +47,16 @@ import java.lang.StringBuilder;
 public class ScholarshipMySQLController {
 
 	private final UserService userService;
-	private final RegistrationService registrationService;
-
 
 	@Autowired
-	public ScholarshipMySQLController(UserService userService, RegistrationService registrationService) {
+	public ScholarshipMySQLController(UserService userService) {
 		this.userService = userService;
-		this.registrationService = registrationService;
 	}
 
 	@Autowired
 	private InstitutionDao institutionDao;
 	@Autowired
-	private UserMySQL userMySQL;
+	private UserDao userDao;
 	@Autowired
 	private ScholarshipDao scholarshipDao;
 
@@ -90,13 +86,16 @@ public class ScholarshipMySQLController {
 		return userService.loginUser(username, password, session, model);
 	}
 
-	@RequestMapping("/frontend/forgetpassword")
-	public String forget(Model model) {
-		return "/frontend/forgetpassword";
-	}
+//	@RequestMapping("/frontend/forgetpassword")
+//	public String forget(Model model) {
+//		
+//		return "/frontend/forgetpassword";
+//	}
 
-	@PostMapping("/frontend/forgetpassword")
-	public String sendVerificationCode(@RequestParam("username") String username, Model model)
+
+
+	@GetMapping("/frontend/forgetpassword")
+	public String sendVerificationCode1(@RequestParam("username") String username, Model model)
 			throws MessagingException {
 		String toEmail = username;
 		String verificationCode = RandomNumberGenerator.generateRandomCode();
@@ -105,7 +104,7 @@ public class ScholarshipMySQLController {
 		} catch (MessagingException e) {
 			return "error";
 		}
-		return "/frontend/forgetpassword";
+		return "redirect";
 	}
 
 	@GetMapping(value = { "/register", "/register/" })
@@ -117,19 +116,36 @@ public class ScholarshipMySQLController {
 	public String register(@RequestParam("username") String username, @RequestParam("password") String password,
 			@RequestParam("institutionName") String institutionName,
 			@RequestParam("institutionId") String institutionId, @RequestParam("contact") String contact,
-			@RequestParam("contactNumber") String contactNumber, Model model) {
+			@RequestParam("contactNumber") String contactNumber, @RequestParam("verifyCode") String verifyCode,
+			Model model, HttpSession session) {
 
+		String SessionVerifiedCode = (String) session.getAttribute("VerificationCode");
+		if (verifyCode.equals(SessionVerifiedCode)) {
+			try {
+				userService.registerUser(username, password, institutionName, institutionId, contact, contactNumber,
+						session);
+				return "redirect:login";
+			} catch (Exception e) {
+				e.printStackTrace();
+				model.addAttribute("error", "Error occurred during registration.");
+				return "error";
+			}
+
+		}
+		return "error";
+	}
+	
+	@GetMapping("/sendRegisterVerificationCode")
+	public String sendRegisterVerificationCode(String username)
+			throws MessagingException {
+		String toEmail = username;
+		String verificationCode = RandomNumberGenerator.generateRandomCode();
 		try {
-			userService.registerUser(username, password, institutionName, institutionId, contact, contactNumber, null);
-
-			// Redirect to a success page
-			return "redirect:login";
-		} catch (Exception e) {
-			// Handle the exception, log it, and redirect to an error page
-			e.printStackTrace();
-			model.addAttribute("error", "Error occurred during registration.");
+			EmailService.sendVerificationCode(toEmail, verificationCode);
+		} catch (MessagingException e) {
 			return "error";
 		}
+		return "/frontend/register";
 	}
 
 	@PostMapping("/backend/edit")
@@ -142,20 +158,18 @@ public class ScholarshipMySQLController {
 	 * 透過後台進入帶有該會員資料的修改頁面
 	 */
 	@GetMapping("/backend/edit/{userId}")
-	public String showEditPage(@PathVariable("userId") Integer userId,
-			@RequestParam(name = "username", required = false) String username, @ModelAttribute User user, Model model,
-			HttpSession session) {
-		userService.showEditUser(user, userId, username, session, model);
+	public String showEditPage(@PathVariable("userId") Integer userId, Model model, HttpSession session) {
+		User user = userDao.findUserById(1).get();
+		userService.showEditUser(user, session, model);
 		return "/backend/edit";
 	}
 
-	@PutMapping("/backend/edit/{userId}")
-	public String editConfirmed(@PathVariable("userId") Integer userId, @ModelAttribute User user,
-			@RequestParam String contact, @RequestParam String contactNumber, Model model, HttpSession session) {
-		userService.editUser(userId, user, contact, contactNumber, session, model);
-		return "redirect:/backend/edit/{userId}";
-	}
-
+//	@PutMapping("/backend/edit/{userId}")
+//	public String editConfirmed(@PathVariable("userId") Integer userId, @ModelAttribute User user,
+//			@RequestParam String contact, @RequestParam String contactNumber, Model model, HttpSession session) {
+//		userService.editUser(userId, user, contact, contactNumber, session, model);
+//		return "redirect:/backend/edit/{userId}";
+//	}
 
 	/**
 	 * 前台首頁
@@ -169,7 +183,6 @@ public class ScholarshipMySQLController {
 		return "frontend/scholarmain";
 	}
 
-	
 	/**
 	 * 後台首頁
 	 */
@@ -180,11 +193,10 @@ public class ScholarshipMySQLController {
 
 		model.addAttribute("submitBtnName", "新增");
 		model.addAttribute("_method", "POST");
-		//System.out.println(scholarshipDao.findAllscholarship()); 
-		
+		// System.out.println(scholarshipDao.findAllscholarship());
+
 		return "backend/backendmain";
 	}
-
 
 	/**
 	 * 新增獎學金資料
@@ -246,7 +258,7 @@ public class ScholarshipMySQLController {
 	private void addBasicModel(Model model, HttpSession session) {
 		List<Institution> instiutions = institutionDao.findAllInstitutions();
 		List<Scholarship> scholarships = scholarshipDao.findAllscholarship();
-		List<User> users = userMySQL.findAllUsers();
+		List<User> users = userDao.findAllUsers();
 		User sessionData = (User) session.getAttribute("user");
 		Optional<Institution> sessionInstitution = institutionDao
 				.findInstitutionByInstitutionId(sessionData.getInstitutionId());

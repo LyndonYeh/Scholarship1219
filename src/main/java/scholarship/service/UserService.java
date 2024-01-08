@@ -24,6 +24,7 @@ import scholarship.util.RandomNumberGenerator;
 @Service
 public class UserService {
 
+
 	@Autowired
 	private final UserDao userDao;
 
@@ -37,7 +38,7 @@ public class UserService {
 		this.userDao = userDao;
 		this.institutionDao = institutionDao;
 	}
-
+	
 	public String loginUser(String username, String password, HttpSession session, Model model) {
 		Optional<User> userOpt = userDao.findUserByUsername(username);
 
@@ -91,7 +92,24 @@ public class UserService {
 	}
 
 	// 先拿到 jsp username 比對 db username, 設定 user
-	public void sendVerificationCode(String username, HttpSession session) {
+	public void sendRegisterVerificationCode(String username, HttpSession session) {
+		
+		session.setAttribute("userEmail", username);
+		
+
+		String verificationCode = RandomNumberGenerator.generateRandomCode();
+		String toEmail = (String) session.getAttribute("userEmail");
+		session.setAttribute("verificationCode",verificationCode);
+
+		try {
+			EmailService.sendVerificationCode(toEmail, verificationCode);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+			// Handle the exception as needed
+		}
+	}
+	
+	public void sendForgetVerificationCode(String username, HttpSession session) {
 		User user = null;
 		String confirmedUsername = user.getUsername();
 		session.setAttribute("userEmail", username);
@@ -107,13 +125,13 @@ public class UserService {
 		}
 	}
 
-	public void showEditUser(User user, Integer userId, String username, HttpSession session, Model model) {
-		User sessionData = (User) session.getAttribute("user");
+	public void showEditUser(User user,  HttpSession session, Model model) {
+		
+		
+		User sessionData = user;
 		Optional<Institution> sessionInstitution = institutionDao
 				.findInstitutionByInstitutionId(sessionData.getInstitutionId());
 
-		user.setUserId(userId);
-		user.setUsername(username);
 
 		model.addAttribute("user", user);
 		model.addAttribute("session", sessionData);
