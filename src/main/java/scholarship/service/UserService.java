@@ -128,19 +128,19 @@ public class UserService {
 		}
 	}
 	
-	public Boolean  verifyRegisterVerificationCode(String verificationCode, HttpSession session, RedirectAttributes redirectAttributes) {
-
-			String to = (String) session.getAttribute("verificationCode");;
-			
-			
-			try {
-				EmailService.sendVerificationCode(toEmail, verificationCode);
-			} catch (MessagingException e) {
-				redirectAttributes.addFlashAttribute("registerVerifyMessage", "驗證碼錯誤");
-				// Handle the exception as needed
-			}
-			redirectAttributes.addFlashAttribute("registerVerifyMessage", "驗證碼錯誤");
-	}
+//	public Boolean  verifyRegisterVerificationCode(String verificationCode, HttpSession session, RedirectAttributes redirectAttributes) {
+//
+//			String to = (String) session.getAttribute("verificationCode");;
+//			
+//			
+//			try {
+//				EmailService.sendVerificationCode(toEmail, verificationCode);
+//			} catch (MessagingException e) {
+//				redirectAttributes.addFlashAttribute("registerVerifyMessage", "驗證碼錯誤");
+//				// Handle the exception as needed
+//			}
+//			redirectAttributes.addFlashAttribute("registerVerifyMessage", "驗證碼錯誤");
+//	}
 
 	public void showEditUser(User user, HttpSession session, Model model) {
 		User sessionData = user;
