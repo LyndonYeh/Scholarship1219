@@ -50,6 +50,7 @@ public interface UserDao {
 		 * @return 是否刪除成功
 		 */
 		Boolean updateUserPasswordById(Integer userId, String oldPassword, String newPassword);
+		Boolean updateUserPasswordById(Integer userId, String newPassword);
 
 		/**
 		 * 4. 查詢所有使用者
@@ -71,6 +72,7 @@ public interface UserDao {
 		 */
 		
 		Optional<User> findUserById(Integer userId);
+
 
 
 

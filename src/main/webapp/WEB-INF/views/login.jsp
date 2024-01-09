@@ -43,7 +43,7 @@ form {
 			action="./login">
 			<h4 class="text-center">請登入</h4>
 			<div class="">
-				<label for="username" class="form-label">使用者帳號</label> <input
+				<label for="username" class="form-label">使用者帳號</label> <a style="color: red">${forgetErrorMessage}</a><input
 					type="text" class="form-control" id="username" name="username"
 					value="dave.wenyu@gmail.com" required>
 				

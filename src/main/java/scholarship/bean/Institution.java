@@ -110,12 +110,9 @@ public class Institution {
 	}
 
 
-
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
-
-
 
 	@Override
 	public String toString() {

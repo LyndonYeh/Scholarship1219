@@ -46,7 +46,7 @@ public interface ScholarshipDao {
 	 * @return 是否更改成功
 	 */
 
-	boolean updateLauchStatusbyId(Integer scholoarshipId, boolean isUpdated);
+	Boolean updateLauchStatusbyId(Integer scholoarshipId, Boolean isUpdated);
 
 	/**
 	 * 3. 刪除一筆獎學金
@@ -55,7 +55,7 @@ public interface ScholarshipDao {
 	 * @return 是否刪除成功
 	 */
 
-	boolean removeScholarshipById(Integer scholoarshipId);
+	Boolean removeScholarshipById(Integer scholoarshipId);
 
     /**4. 查詢獎學金紀錄(包含上架與否與過期與否 僅限項目所有方)
      * 
