@@ -158,12 +158,13 @@ public class ScholarshipMySQLController {
 	}
 
 	@PostMapping("/register")
-	public String register(@RequestParam("username") String username, @RequestParam("password") String password,
+	public String register(@RequestParam("password") String password,
 			@RequestParam("institutionName") String institutionName,
 			@RequestParam("institutionId") String institutionId, @RequestParam("contact") String contact,
 			@RequestParam("contactNumber") String contactNumber,
 			@RequestParam("verificationCode") String verificationCode, Model model, HttpSession session) {
 		String sessionVerifiedCode = (String) session.getAttribute("verificationCode");
+		String username =(String)session.getAttribute("username");
 		if (verificationCode.equals(sessionVerifiedCode)) {
 			try {
 				userService.registerUser(username, password, institutionName, institutionId, contact, contactNumber,
@@ -179,13 +180,14 @@ public class ScholarshipMySQLController {
 		return "error";
 	}
 
-	@GetMapping("/sendRegisterVerificationCode")
+	@PostMapping("/sendRegisterVerificationCode")
 	public String sendRegisterVerificationCode(@RequestParam String username, HttpSession session)
 			throws MessagingException {
 
 		String toEmail = username;
 		String verificationCode = RandomNumberGenerator.generateRandomCode();
 		session.setAttribute("username", username);
+		session.setAttribute("verificationCode", verificationCode);
 		try {
 			EmailService.sendVerificationCode(toEmail, verificationCode);
 		} catch (MessagingException e) {

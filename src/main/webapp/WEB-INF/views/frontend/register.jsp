@@ -43,15 +43,14 @@ form {
 	<div class="d-flex justify-content-center  align-items-center vh-100 "
 		class="">
 		<form class="row g-3 needs-validation" method="post"
-			action="./register">
+			action="./sendRegisterVerificationCode">
 			<h4 class="text-center">註冊會員</h4>
 			<div class="mb-3">
 				<label for="username" class="form-label">使用者電子郵件</label>
 				<div class="input-group">
 					<input type="text" class="form-control" id="username"
 						name="username" value="" required>
-					<button id="send" class="btn btn-outline-primary" type="button"
-						onclick="sendVerificationCode()">發送驗證碼至信箱</button>
+					<button id="send" class="btn btn-outline-primary" type="submit">發送驗證碼至信箱</button>
 				</div>
 				<div class="invalid-feedback">請輸入電子郵件</div>
 			</div>
@@ -59,14 +58,7 @@ form {
 		<form class="row g-3 needs-validation " method="post"
 			action="./register">
 			<h4 class="text-center">註冊會員</h4>
-			<label for="username" class="form-label">使用者電子郵件</label>
-			<div class="input-group">
-				<input type="text" class="form-control" id="username"
-					name="username" value="${inputUsername}123" required>
-				<button id="send" class="btn btn-outline-primary" type="button">發送驗證碼至信箱</button>
 
-				<div class="invalid-feedback">請輸入電子郵件</div>
-			</div>
 			<div class="mb-3">
 				<label for="verificationCode" class="form-label">請輸入6位數驗證碼</label>
 				<div class="input-group" id="verificationCode">
