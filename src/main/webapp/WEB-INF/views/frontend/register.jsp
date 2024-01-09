@@ -39,16 +39,10 @@ form {
 </style>
 </head>
 <body>
+
 	<div class="d-flex justify-content-center  align-items-center vh-100 "
 		class="">
-		<form action="./sendRegisterVerificationCode" method="get">
-			<label for="username" class="form-label">使用者電子郵件</label> <input
-				type="text" class="form-control" id="username" name="username"
-				value="" required>
-			<button id="send" class="btn btn-outline-primary" type="submit" onclick="sendVerificationCode()">發送驗證碼至信箱</button>
-
-		</form>
-		<form class="row g-3 needs-validation " novalidate method="post"
+		<form class="row g-3 needs-validation" method="post"
 			action="./register">
 			<h4 class="text-center">註冊會員</h4>
 			<div class="mb-3">
@@ -61,15 +55,26 @@ form {
 				</div>
 				<div class="invalid-feedback">請輸入電子郵件</div>
 			</div>
+		</form>
+		<form class="row g-3 needs-validation " method="post"
+			action="./register">
+			<h4 class="text-center">註冊會員</h4>
+			<label for="username" class="form-label">使用者電子郵件</label>
+			<div class="input-group">
+				<input type="text" class="form-control" id="username"
+					name="username" value="${inputUsername}123" required>
+				<button id="send" class="btn btn-outline-primary" type="button">發送驗證碼至信箱</button>
+
+				<div class="invalid-feedback">請輸入電子郵件</div>
+			</div>
 			<div class="mb-3">
 				<label for="verificationCode" class="form-label">請輸入6位數驗證碼</label>
 				<div class="input-group" id="verificationCode">
 					<input type="text" class="form-control digit-input"
 						id="verificationCode" name="verificationCode" maxlength="6"
 						required>
-					<button id="verifyCode" class="btn btn-outline-primary"
-						type="submit" onclick="sendMail()">驗證</button>
-
+					<!-- 			<button id="verifyCode" class="btn btn-outline-primary"
+						type="submit" onclick="sendMail()">驗證</button> -->
 				</div>
 			</div>
 
@@ -119,7 +124,8 @@ form {
 			</div>
 		</form>
 	</div>
-<script>
+	<script>
+// 要有 function mail 驗證方法才會作動
     function sendVerificationCode() {
         // Get the email value
         var email = document.getElementById('username').value;
@@ -128,7 +134,7 @@ form {
 
         // Perform AJAX request to send verification code
         // Example using fetch API
-        fetch('/sendRegisterVerificationCode?username=' + encodeURIComponent(email), {
+        fetch('http://localhost:8080/Scholarship/mvc/scholarship/sendRegisterVerificationCode?username=' + encodeURIComponent(email), {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -144,6 +150,7 @@ form {
             console.error('Error:', error);
         });
     }
+   
 </script>
 </body>
 </html>

@@ -17,7 +17,7 @@
 
 				<div class="mb-3 ">
 					<label for="username" class="form-label">請輸入信箱</label>
-					<form action="./forgetpassword" method="post" >
+					<form action="${pageContext.request.contextPath}/mvc/scholarship/frontend/forgetpassword" method="post" >
 						<div class="mb-3 input-group">
 							<input type="text" class="form-control" id="username"
 								name="username" required>
@@ -30,24 +30,40 @@
 
 				<div class="mb-3">
 					<label for="verificationCode" class="form-label">請輸入6位數驗證碼</label>
-					<form>
+					<form action="${pageContext.request.contextPath}/mvc/scholarship/frontend/verify" method="post">
 						<div class="input-group" id="verificationCode">
-							<input type="text" class="form-control digit-input" id="verificationCode"
-								name="verificationCode" maxlength="61" required> 
+							<input type="text" class="form-control digit-input" id="verifyCode"
+								name="verifyCode" maxlength="6" required> 
 							<button id="verifyCode" class="btn btn-outline-primary"
-								type="submit" onclick="sendMail()">驗證</button>
+								type="submit">驗證</button>
 								<!-- 比對 session 驗證碼; yes : 導至 reset password page no :  -->
 						</div>
 					</form>
 				</div>
+				<div style="color: red">${forgetErrorMessage}</div>
 
-
-				</form>
 			</div>
 		</div>
 	</div>
-	<script>
-   
+	<script type="text/javascript">
+(function() {
+	'use strict'
+
+	// Fetch all the forms we want to apply custom Bootstrap validation styles to
+	var forms = document.querySelectorAll('.needs-validation')
+
+	// Loop over them and prevent submission
+	Array.prototype.slice.call(forms).forEach(function(form) {
+		form.addEventListener('submit', function(event) {
+			if (!form.checkValidity()) {
+				event.preventDefault()
+				event.stopPropagation()
+			}
+
+			form.classList.add('was-validated')
+		}, false)
+	})
+})()
 </script>
 </body>
 </html>

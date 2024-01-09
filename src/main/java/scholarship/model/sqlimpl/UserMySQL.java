@@ -68,6 +68,17 @@ public class UserMySQL implements UserDao {
         int rowsUpdated = namedParameterJdbcTemplate.update(sql, params);
         return rowsUpdated > 0;
     }
+    
+    @Override
+    public Boolean updateUserPasswordById(Integer userId, String newPassword) {
+        String sql = "UPDATE User SET password = :newPassword WHERE userId = :userId";
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("newPassword", newPassword);
+
+        int rowsUpdated = namedParameterJdbcTemplate.update(sql, params);
+        return rowsUpdated > 0;
+    }
 
     @Override
     public List<User> findAllUsers() {

@@ -1,8 +1,10 @@
 package scholarship.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import scholarship.bean.Institution;
 import scholarship.bean.User;
@@ -23,7 +28,6 @@ import scholarship.util.RandomNumberGenerator;
 
 @Service
 public class UserService {
-
 
 	@Autowired
 	private final UserDao userDao;
@@ -38,7 +42,7 @@ public class UserService {
 		this.userDao = userDao;
 		this.institutionDao = institutionDao;
 	}
-	
+
 	public String loginUser(String username, String password, HttpSession session, Model model) {
 		Optional<User> userOpt = userDao.findUserByUsername(username);
 
@@ -61,6 +65,14 @@ public class UserService {
 	private void handleLoginFailure(HttpSession session, Model model, String message) {
 		session.invalidate();
 		model.addAttribute("loginMessage", message);
+	}
+
+	public String resetPassword(String strUUID, String newpassword, HttpSession session, Model model) {
+		String sessionUsername = (String) session.getAttribute("userEmail");
+		Optional<User> userOpt = userDao.findUserByUsername(sessionUsername);
+		User user = userOpt.get();
+		userDao.updateUserPasswordById(user.getUserId(), BCrypt.hashpw(newpassword, BCrypt.gensalt()));
+		return "login";
 	}
 
 	@Transactional
@@ -93,29 +105,12 @@ public class UserService {
 
 	// 先拿到 jsp username 比對 db username, 設定 user
 	public void sendRegisterVerificationCode(String username, HttpSession session) {
-		
-		session.setAttribute("userEmail", username);
-		
 
-		String verificationCode = RandomNumberGenerator.generateRandomCode();
-		String toEmail = (String) session.getAttribute("userEmail");
-		session.setAttribute("verificationCode",verificationCode);
-
-		try {
-			EmailService.sendVerificationCode(toEmail, verificationCode);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-			// Handle the exception as needed
-		}
-	}
-	
-	public void sendForgetVerificationCode(String username, HttpSession session) {
-		User user = null;
-		String confirmedUsername = user.getUsername();
 		session.setAttribute("userEmail", username);
 
 		String verificationCode = RandomNumberGenerator.generateRandomCode();
 		String toEmail = (String) session.getAttribute("userEmail");
+		session.setAttribute("verificationCode", verificationCode);
 
 		try {
 			EmailService.sendVerificationCode(toEmail, verificationCode);
@@ -125,35 +120,44 @@ public class UserService {
 		}
 	}
 
-	public void showEditUser(User user,  HttpSession session, Model model) {
-		
-		
+	public void showEditUser(User user, HttpSession session, Model model) {
+
 		User sessionData = user;
+		// user 被設定成 controller 的 session 抓取值: User user =
+		// userDao.findUserById(userId).get();
 		Optional<Institution> sessionInstitution = institutionDao
 				.findInstitutionByInstitutionId(sessionData.getInstitutionId());
+		// 透過 user session 找到 session institution
 
-
-		model.addAttribute("user", user);
 		model.addAttribute("session", sessionData);
 		model.addAttribute("sessionInstitution", sessionInstitution);
+		// 渲染到 jsp 可用的 attribute
 	}
 
-	public void editUser(Integer userId, User user, String contact, String contactNumber, HttpSession session, Model model) {
-        User sessionData = (User) session.getAttribute("user");
+	public String editUser(String contact, String contactNumber, String password, HttpSession session, Model model,
+			RedirectAttributes redirectAttributes) {
+//		String password
+		User sessionData = (User) session.getAttribute("user");
+		String sessionInstitutionId = sessionData.getInstitutionId();
+		if (BCrypt.checkpw(password, sessionData.getPassword())) {
+			institutionDao.updateContactById(sessionInstitutionId, contact);
+			institutionDao.updateContactNumberById(sessionInstitutionId, contactNumber);
+			model.addAttribute("session", sessionData);
+			session.setAttribute("user", sessionData);
+		} else {
+			redirectAttributes.addFlashAttribute("editErrorMessage", "密碼錯誤");
+		}
+		return "/backend/edit";
 
-        if (sessionData != null) {
-            String sessionInstitutionId = sessionData.getInstitutionId();
+//		institutionDao.updateContactById(sessionInstitutionId, contact);
+//		institutionDao.updateContactNumberById(sessionInstitutionId, contactNumber);
+//		model.addAttribute("session", sessionData);
+//		return "/backend/edit";
+	}
 
-            institutionDao.updateContactById(sessionInstitutionId, contact);
-            institutionDao.updateContactNumberById(sessionInstitutionId, contactNumber);
-
-            model.addAttribute("user", user);
-            model.addAttribute("session", sessionData);
-        } else {
-            model.addAttribute("error", "Session data not found");
-        }
-    }
-
+	private void handleEditFailure(HttpSession session, Model model, String message) {
+		model.addAttribute("editErroMessage", message);
+	}
 }
 
 /*

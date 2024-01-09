@@ -1,8 +1,11 @@
 package scholarship.controller;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.faces.annotation.RequestCookieMap;
 import javax.mail.MessagingException;
@@ -27,6 +30,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.mysql.cj.Session;
 
 import scholarship.*;
 import scholarship.bean.Institution;
@@ -41,6 +47,7 @@ import scholarship.service.UserService;
 import scholarship.util.RandomNumberGenerator;
 
 import java.lang.StringBuilder;
+import java.net.HttpURLConnection;
 
 @Controller
 @RequestMapping("/scholarship")
@@ -86,25 +93,63 @@ public class ScholarshipMySQLController {
 		return userService.loginUser(username, password, session, model);
 	}
 
-//	@RequestMapping("/frontend/forgetpassword")
-//	public String forget(Model model) {
-//		
-//		return "/frontend/forgetpassword";
-//	}
+	@RequestMapping("/frontend/forgetpassword")
+	public String forget(Model model) {
+		return "/frontend/forgetpassword";
+	}
 
+	@PostMapping("/frontend/forgetpassword")
+	public String forgetVerificationCode(@RequestParam("username") String username, Model model, HttpSession session,
+			RedirectAttributes redirectAttributes) throws MessagingException {
+		List<User> users = userDao.findAllUsers();
+		List<String> usernames = users.stream().map(User::getUsername) // 把 username 抽出來
+				.collect(Collectors.toList());
+		if (usernames.contains(username)) {
+			session.setAttribute("userEmail", username);
+			String toEmail = username;
 
-
-	@GetMapping("/frontend/forgetpassword")
-	public String sendVerificationCode1(@RequestParam("username") String username, Model model)
-			throws MessagingException {
-		String toEmail = username;
-		String verificationCode = RandomNumberGenerator.generateRandomCode();
-		try {
-			EmailService.sendVerificationCode(toEmail, verificationCode);
-		} catch (MessagingException e) {
-			return "error";
+			String verificationCode = RandomNumberGenerator.generateRandomCode();
+			session.setAttribute("verificationCode", verificationCode);
+			try {
+				EmailService.sendVerificationCode(toEmail, verificationCode);
+			} catch (MessagingException e) {
+				redirectAttributes.addFlashAttribute("forgetErrorMessage", "信箱錯誤");
+			}
+			return "redirect:/mvc/scholarship/frontend/forgetpassword";
+		} else {
+			redirectAttributes.addFlashAttribute("forgetErrorMessage", "信箱錯誤");
+			return "redirect:/mvc/scholarship/frontend/forgetpassword";
 		}
-		return "redirect";
+	}
+
+	@PostMapping("/frontend/verify")
+	public String verifyCode(@RequestParam("verifyCode") String verifyCode, Model model, HttpSession session,
+			RedirectAttributes redirectAttributes) {
+		UUID uuid = UUID.randomUUID();
+		String strUUID = uuid.toString();
+		String verificationCode = (String) session.getAttribute("verificationCode");
+		if (verifyCode.equals(verificationCode)) {
+			session.setAttribute("strUUID", strUUID);
+			return "redirect:/mvc/scholarship/backend/reset/" + strUUID;
+		}
+		redirectAttributes.addFlashAttribute("forgetErrorMessage", "驗證碼錯誤");
+		return "redirect:/mvc/scholarship/frontend/forgetpassword";
+
+	}
+
+	@GetMapping("/backend/reset/{strUUID}")
+	public String showReset(@PathVariable("strUUID") String strUUID, Model model, HttpSession session) {
+		String sessionStrUUID = (String) session.getAttribute("strUUID");
+		model.addAttribute("strUUID",sessionStrUUID);
+		return "/backend/reset";
+	}
+
+	@PostMapping("/backend/reset/{strUUID}")
+	public String resetPassword(@PathVariable("strUUID") String strUUID,
+	                             @RequestParam("newPassword") String newPassword,
+	                             Model model, HttpSession session ) {
+	    userService.resetPassword( strUUID, newPassword, session, model);
+	    return "redirect:/mvc/scholarship/login";
 	}
 
 	@GetMapping(value = { "/register", "/register/" })
@@ -116,11 +161,10 @@ public class ScholarshipMySQLController {
 	public String register(@RequestParam("username") String username, @RequestParam("password") String password,
 			@RequestParam("institutionName") String institutionName,
 			@RequestParam("institutionId") String institutionId, @RequestParam("contact") String contact,
-			@RequestParam("contactNumber") String contactNumber, @RequestParam("verifyCode") String verifyCode,
-			Model model, HttpSession session) {
-
-		String SessionVerifiedCode = (String) session.getAttribute("VerificationCode");
-		if (verifyCode.equals(SessionVerifiedCode)) {
+			@RequestParam("contactNumber") String contactNumber,
+			@RequestParam("verificationCode") String verificationCode, Model model, HttpSession session) {
+		String sessionVerifiedCode = (String) session.getAttribute("verificationCode");
+		if (verificationCode.equals(sessionVerifiedCode)) {
 			try {
 				userService.registerUser(username, password, institutionName, institutionId, contact, contactNumber,
 						session);
@@ -134,12 +178,14 @@ public class ScholarshipMySQLController {
 		}
 		return "error";
 	}
-	
+
 	@GetMapping("/sendRegisterVerificationCode")
-	public String sendRegisterVerificationCode(String username)
+	public String sendRegisterVerificationCode(@RequestParam String username, HttpSession session)
 			throws MessagingException {
+
 		String toEmail = username;
 		String verificationCode = RandomNumberGenerator.generateRandomCode();
+		session.setAttribute("username", username);
 		try {
 			EmailService.sendVerificationCode(toEmail, verificationCode);
 		} catch (MessagingException e) {
@@ -148,28 +194,25 @@ public class ScholarshipMySQLController {
 		return "/frontend/register";
 	}
 
-	@PostMapping("/backend/edit")
-	public String sendMail(@ModelAttribute("user") User user, HttpSession session) {
-
-		return "/backend/edit";
-	}
-
 	/**
 	 * 透過後台進入帶有該會員資料的修改頁面
 	 */
 	@GetMapping("/backend/edit/{userId}")
 	public String showEditPage(@PathVariable("userId") Integer userId, Model model, HttpSession session) {
-		User user = userDao.findUserById(1).get();
+		User user = userDao.findUserById(userId).get();
 		userService.showEditUser(user, session, model);
 		return "/backend/edit";
 	}
 
-//	@PutMapping("/backend/edit/{userId}")
-//	public String editConfirmed(@PathVariable("userId") Integer userId, @ModelAttribute User user,
-//			@RequestParam String contact, @RequestParam String contactNumber, Model model, HttpSession session) {
-//		userService.editUser(userId, user, contact, contactNumber, session, model);
-//		return "redirect:/backend/edit/{userId}";
-//	}
+	@PostMapping("/backend/edit/{userId}")
+	public String editConfirmed(@ModelAttribute User user, @RequestParam String contact,
+			@RequestParam String contactNumber, @RequestParam String password, Model model, HttpSession session,
+			RedirectAttributes redirectAttributes) {
+		// @RequestParam String password
+		userService.editUser(contact, contactNumber, password, session, model, redirectAttributes);
+		// , password
+		return "redirect:/mvc/scholarship/backend/edit/" + user.getUserId();
+	}
 
 	/**
 	 * 前台首頁
