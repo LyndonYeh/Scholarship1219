@@ -2,6 +2,7 @@ package scholarship.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +52,7 @@ public class UserService {
 
 			if (BCrypt.checkpw(password, user.getPassword())) {
 				session.setAttribute("user", user);
+				session.setMaxInactiveInterval(1000*10);
 				return "redirect:/mvc/scholarship/backend";
 			} else {
 				handleLoginFailure(session, model, "密碼錯誤");
@@ -63,6 +65,7 @@ public class UserService {
 	}
 
 	private void handleLoginFailure(HttpSession session, Model model, String message) {
+		// 設定共用 session
 		session.invalidate();
 		model.addAttribute("loginMessage", message);
 	}
@@ -104,26 +107,44 @@ public class UserService {
 	}
 
 	// 先拿到 jsp username 比對 db username, 設定 user
-	public void sendRegisterVerificationCode(String username, HttpSession session) {
-
-		session.setAttribute("userEmail", username);
-
-		String verificationCode = RandomNumberGenerator.generateRandomCode();
-		String toEmail = (String) session.getAttribute("userEmail");
-		session.setAttribute("verificationCode", verificationCode);
-
-		try {
-			EmailService.sendVerificationCode(toEmail, verificationCode);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-			// Handle the exception as needed
+	public void sendRegisterVerificationCode(String username, HttpSession session, RedirectAttributes redirectAttributes) {
+	
+		List<User> users = userDao.findAllUsers();
+		List<String> usernames = users.stream().map(User::getUsername) // 把 username 抽出來
+				.collect(Collectors.toList()); 
+		
+		if (!usernames.contains(username)) {
+			session.setAttribute("userEmail", username);
+			String storedVerificationCode = (String) session.getAttribute("verificationCode");
+			String verificationCode = RandomNumberGenerator.generateRandomCode();
+			String toEmail = (String) session.getAttribute("userEmail");
+			session.setAttribute("verificationCode", verificationCode);			
+			try {
+				EmailService.sendVerificationCode(toEmail, verificationCode);
+			} catch (MessagingException e) {
+				redirectAttributes.addFlashAttribute("registerErrorMessage", "信箱錯誤");
+			}
+			redirectAttributes.addFlashAttribute("registerErrorMessage", "信箱錯誤");
 		}
+	}
+	
+	public Boolean  verifyRegisterVerificationCode(String verificationCode, HttpSession session, RedirectAttributes redirectAttributes) {
+
+			String to = (String) session.getAttribute("verificationCode");;
+			
+			
+			try {
+				EmailService.sendVerificationCode(toEmail, verificationCode);
+			} catch (MessagingException e) {
+				redirectAttributes.addFlashAttribute("registerVerifyMessage", "驗證碼錯誤");
+				// Handle the exception as needed
+			}
+			redirectAttributes.addFlashAttribute("registerVerifyMessage", "驗證碼錯誤");
 	}
 
 	public void showEditUser(User user, HttpSession session, Model model) {
-
 		User sessionData = user;
-		// user 被設定成 controller 的 session 抓取值: User user =
+		// user 被設定成 controller 的 session 抓取值: User user 
 		// userDao.findUserById(userId).get();
 		Optional<Institution> sessionInstitution = institutionDao
 				.findInstitutionByInstitutionId(sessionData.getInstitutionId());
@@ -149,32 +170,9 @@ public class UserService {
 		}
 		return "/backend/edit";
 
-//		institutionDao.updateContactById(sessionInstitutionId, contact);
-//		institutionDao.updateContactNumberById(sessionInstitutionId, contactNumber);
-//		model.addAttribute("session", sessionData);
-//		return "/backend/edit";
 	}
 
 	private void handleEditFailure(HttpSession session, Model model, String message) {
 		model.addAttribute("editErroMessage", message);
 	}
 }
-
-/*
- * @PostMapping("/login") public String login(@RequestParam("username") String
- * username, @RequestParam("password") String password, HttpSession session,
- * Model model) {
- * 
- * // 根據 username 查找 user 物件 Optional<User> userOpt =
- * userMySQL.findUserByUsername(username);
- * 
- * if (userOpt.isPresent()) { User user = userOpt.get(); // String
- * hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()); // 從
- * userDao 帶入 // 比對 password if (BCrypt.checkpw(password, user.getPassword())) {
- * 
- * session.setAttribute("user", user); // 將 user 物件放入到 session 變數中 return
- * "redirect:/mvc/scholarship/backend"; // OK, 導向後台首頁 } else {
- * session.invalidate(); // session 過期失效 model.addAttribute("loginMessage",
- * "密碼錯誤"); return "login"; } } else { session.invalidate(); // session 過期失效
- * model.addAttribute("loginMessage", "無此使用者"); return "login"; } }
- */

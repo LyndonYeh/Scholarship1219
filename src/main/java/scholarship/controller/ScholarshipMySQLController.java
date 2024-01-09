@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
 import com.mysql.cj.Session;
 
 import scholarship.*;
@@ -138,6 +140,7 @@ public class ScholarshipMySQLController {
 	}
 
 	@GetMapping("/backend/reset/{strUUID}")
+	// 設定 jwt token 時效
 	public String showReset(@PathVariable("strUUID") String strUUID, Model model, HttpSession session) {
 		String sessionStrUUID = (String) session.getAttribute("strUUID");
 		model.addAttribute("strUUID",sessionStrUUID);
@@ -179,7 +182,9 @@ public class ScholarshipMySQLController {
 		return "error";
 	}
 
-	@GetMapping("/sendRegisterVerificationCode")
+	// 對應到 Http Request Header 的 Accept 指定返回的内容類型
+	@GetMapping(value = "/sendRegisterVerificationCode", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
 	public String sendRegisterVerificationCode(@RequestParam String username, HttpSession session)
 			throws MessagingException {
 
@@ -189,9 +194,9 @@ public class ScholarshipMySQLController {
 		try {
 			EmailService.sendVerificationCode(toEmail, verificationCode);
 		} catch (MessagingException e) {
-			return "error";
+			return new Gson().toJson("fail");
 		}
-		return "/frontend/register";
+		return new Gson().toJson("success");
 	}
 
 	/**

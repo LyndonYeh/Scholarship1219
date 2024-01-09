@@ -79,6 +79,7 @@ public class InstitutionMySQL implements InstitutionDao {
         Institution institution = namedParameterJdbcTemplate.queryForObject(sql,params, new BeanPropertyRowMapper<>(Institution.class));
         return Optional.ofNullable(institution);
 	}
+	
 	@Override
 	public Optional<Institution> findInstitutionByInstitutionId(String institutionId) {
 		String sql = "SELECT * FROM scholarshipv1.institution where institutionId = :institutionId";

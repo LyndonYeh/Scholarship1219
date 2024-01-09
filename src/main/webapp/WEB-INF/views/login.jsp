@@ -57,7 +57,10 @@ form {
 			<div class=" d-flex justify-content-center my-3">
 				
 				<button class="btn btn-primary" type="submit" onclick="location.href='./backend/main.jsp';">登入</button>
-				<button class="btn btn-outline-danger ms-5" type="submit" onclick="location.href='./forgotPassword.jsp';">忘記密碼</button>
+				<a class="btn btn-outline-danger ms-5"
+					onclick="location.href='./frontend/forgetpassword';">忘記密碼</a>
+
+
 			</div>
 		
 			<div style="color: red">${ loginMessage }</div>
