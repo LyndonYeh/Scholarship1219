@@ -75,6 +75,14 @@ public class ScholarshipMySQLController {
 	}
 	
 	
+	@GetMapping("/loginGoogle")
+	public String loginGooglePage() {
+		
+		
+		return "/login";
+	}
+	
+	
 	/*
 	 * 驗證登入
 	 */
@@ -95,16 +103,6 @@ public class ScholarshipMySQLController {
 		session.invalidate();
 
 		return "redirect:/mvc/scholarship/frontend";
-	}
-
-	
-	/*
-	 * Google 登入存取 username
-	 */
-	@PostMapping("/googleLogin")
-	public String googleLogin(@RequestParam("username") String username, @RequestParam("password") String password,
-			HttpSession session, Model model) {
-		return userService.loginUser(username, password, session, model);
 	}
 
 	
@@ -185,6 +183,38 @@ public class ScholarshipMySQLController {
 		userService.resetPassword(strUUID, newPassword, session, model);
 		return "redirect:/mvc/scholarship/login";
 	}
+	
+	/*
+	 * 註冊信箱頁面
+	 */
+	@GetMapping("/frontend/mailconfirm")
+	public String mailConfirm(Model model, HttpSession session) {
+		return "/frontend/mailconfirm";
+	}
+	
+	/*
+	 * 比對註冊信箱驗證碼
+	 */
+	@PostMapping("/frontend/sendRegisterVerificationCode")
+	public String sendRegisterVerificationCode(@RequestParam String username, HttpSession session)
+			throws MessagingException {
+		List<User> users = userDao.findAllUsers();
+		List<String> usernames = users.stream().map(User::getUsername) // 把 username 抽出來
+				.collect(Collectors.toList());
+if(!usernames.contains(username)) {
+	String toEmail = username;
+	String verificationCode = RandomNumberGenerator.generateRandomCode();
+	session.setAttribute("username", username);
+	session.setAttribute("verificationCode", verificationCode);
+	try {
+		EmailService.sendVerificationCode(toEmail, verificationCode);
+	} catch (MessagingException e) {
+		return "error";
+	} 
+}else {
+		}
+		return "/frontend/register";
+	}
 
 	
 	/*
@@ -223,24 +253,7 @@ public class ScholarshipMySQLController {
 	}
 
 	
-	/*
-	 * 比對註冊信箱驗證碼
-	 */
-	@PostMapping("/frontend/sendRegisterVerificationCode")
-	public String sendRegisterVerificationCode(@RequestParam String username, HttpSession session)
-			throws MessagingException {
-
-		String toEmail = username;
-		String verificationCode = RandomNumberGenerator.generateRandomCode();
-		session.setAttribute("username", username);
-		session.setAttribute("verificationCode", verificationCode);
-		try {
-			EmailService.sendVerificationCode(toEmail, verificationCode);
-		} catch (MessagingException e) {
-			return "error";
-		}
-		return "/frontend/register";
-	}
+	
 
 	
 	/**

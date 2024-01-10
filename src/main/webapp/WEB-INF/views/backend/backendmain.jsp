@@ -78,8 +78,7 @@
 						<!-- &emsp;上傳時間:&nbsp;  --><sp:input path="updatedTime" type="hidden" /> 
 						&emsp;開始日期:&nbsp; <sp:input path="startDate" type="date" /> 
 						&emsp;結束日期:&nbsp; <sp:input path="endDate" type="date" />
-						<!--&emsp;身分別:&nbsp; <sp:input path="entity" type="number" />-->
-						 &emsp;身分別:&nbsp;<sp:select path="entity" >
+						 &emsp;身分別:&nbsp;<sp:select path="entityId" >
 						<sp:option value="1" label="幼稚園"></sp:option>
 						<sp:option value="2" label="小學"></sp:option>
 						<sp:option value="3" label="國中"></sp:option>
@@ -87,9 +86,7 @@
 						<sp:option value="5" label="大學"></sp:option>
 						<sp:option value="6" label="研究所"></sp:option>
 					</sp:select>  
-					<!--<sp:select path="entity" items="${ entity }" itemLabel="name"
-						itemValue="id" />-->
-					
+				
 						&emsp;額度:&nbsp; <sp:input path="scholarshipAmount" type="number" />
 						<p />
 						<p />

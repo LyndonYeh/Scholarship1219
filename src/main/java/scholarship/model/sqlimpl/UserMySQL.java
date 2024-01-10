@@ -49,7 +49,6 @@ public class UserMySQL implements UserDao {
     @Override
     public int addGoogleUser(User user) {
         String sql = "INSERT INTO User (username) VALUES (:username)";
-     
         Map<String, Object> params = new HashMap<>();
         params.put("username", user.getUsername());
         return namedParameterJdbcTemplate.update(sql, params);

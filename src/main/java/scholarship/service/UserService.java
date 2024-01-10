@@ -60,30 +60,34 @@ public class UserService {
 		}
 		return "login";
 	}
+
 	
-	public String loginGoogleUser(String username, String password, HttpSession session, Model model) {
-		Optional<User> userOpt = userDao.findUserByUsername(username);
-
-		if (userOpt.isPresent()) {
-			User user = userOpt.get();
-
-			if (BCrypt.checkpw(password, user.getPassword())) {
-				session.setAttribute("user", user);
-				session.setMaxInactiveInterval(60*30);
-				return "redirect:/mvc/scholarship/backend";
-			} else {
-				handleLoginFailure(session, model, "密碼錯誤");
-			}
-		} else {
-			handleLoginFailure(session, model, "無此使用者");
-		}
-		return "login";
-	}
-
 	private void handleLoginFailure(HttpSession session, Model model, String message) {
 		// 設定共用 session
 		session.invalidate();
 		model.addAttribute("loginMessage", message);
+	}
+
+	
+	public String loginGoogleUser(String email, HttpSession session) {
+		// 如果使用者未存在資料庫, 新建使用者存入 email 到資料庫, 導向後台
+		// 如果使用者已存在, 不新建使用者 不存入 email 到資料庫, 導向後台
+		// security.ODIC ODICcallback 中 有定義回傳好的 email
+		// google登入後重導至 ODICcallback 呼叫 loginGoogleUser 方法建立 session 
+		
+		Optional<User> userOpt = userDao.findUserByUsername(email);
+		if (!userOpt.isPresent()) {
+			User user = new User();
+			user.setUsername(email);
+			userDao.addUser(user);
+			session.setAttribute("user", user);
+			session.setMaxInactiveInterval(60*30);
+			return"redirect:/mvc/scholarship/backend";
+		} else {
+			session.setAttribute("email", email);
+			session.setMaxInactiveInterval(60*30);
+			return"redirect:/mvc/scholarship/backend";
+		}
 	}
 
 	public String resetPassword(String strUUID, String newpassword, HttpSession session, Model model) {

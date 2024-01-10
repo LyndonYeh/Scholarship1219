@@ -8,12 +8,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.nimbusds.jwt.JWTClaimsSet;
 
 import scholarship.model.dao.UserDao;
+import scholarship.service.UserService;
 import scholarship.util.OIDCUtil;
 
 
@@ -27,14 +29,24 @@ import scholarship.util.OIDCUtil;
 @WebServlet("/secure/callback/oidc")
 public class OIDCCallback extends HttpServlet {
 
-	@Autowired
-	private UserDao userDao;
+//	private UserService userService;
+//
+//	@Autowired
+//	public OIDCCallback(UserService userService) {
+//		this.userService = userService;
+//	}
+//	
+//	@Autowired
+//	UserDao userDao; 
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html;charset=UTF-8");
+		
+	
+		
 		// 取得授權碼
 		String code = req.getParameter("code");
 		resp.getWriter().println("code: " + code + "<p>");
@@ -47,6 +59,9 @@ public class OIDCCallback extends HttpServlet {
 			JWTClaimsSet claimsSet = OIDCUtil.getClaimsSetAndVerifyIdToken(idToken);
 			String email = claimsSet.getStringClaim("email");
 			resp.getWriter().println("email: " + email + "<p>");
+			
+//			HttpSession session = req.getSession();
+//	        userService.loginGoogleUser(email, session);
 			
 		} catch (Exception e) {
 			resp.getWriter().println("Exception: " + e);

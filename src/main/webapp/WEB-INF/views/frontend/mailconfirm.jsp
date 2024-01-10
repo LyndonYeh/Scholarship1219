@@ -39,7 +39,7 @@ form {
 <body>
 	<div class="d-flex justify-content-center align-items-center vh-100">
 		<form class="needs-validation" novalidate method="post"
-			action="./login">
+			action="./frontend/sendRegisterVerificationCode">
 			<h4 class="text-center">請輸入使用者帳號</h4>
 			<div>
 				<label for="username" class="form-label">註冊使用者帳號</label> <a
