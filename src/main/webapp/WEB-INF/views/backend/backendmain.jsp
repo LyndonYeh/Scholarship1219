@@ -130,11 +130,9 @@
 					<td>
 						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarship/backend/copy/${ scholarship.scholarshipId }">複製</a>
 					</td>
-					<!--  <td>&nbsp;<input type="checkbox" id="isLaunch" name="isLaunch" /></td>
-					<td>&nbsp;<input type="checkbox" id="pushrecycle" name="pushrecycle" /></td>-->
 					<td>
-					<button type="button" style="display: ${scholarship.isUpdated ? 'block' : 'block'}">
-    					${scholarship.isUpdated ? '上架中' : '未上架'}</button>
+						<a type="button" class="btn btn-warning" style="display: ${scholarship.isUpdated ? 'inlineblock' : 'inlineblock'}" href="${pageContext.request.contextPath}/mvc/scholarship/backend/copy/${ scholarship.scholarshipId }">
+    					 ${scholarship.isUpdated ? '上架中' : '未上架'}</a>
 					</td>
 					<td>
 						<a type="button" class="btn btn-warning" href="javascript:void(0);" onClick="deleteScholarship(${ scholarship.scholarshipId })">刪除</a>

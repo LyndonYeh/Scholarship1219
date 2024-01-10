@@ -75,7 +75,7 @@ ${amount}
 					&emsp;
 					<p />
 					&emsp;身分別:&nbsp;
-						<sp:select path="entity">
+						<sp:select path="entityId">
 						<sp:option value="0" label="請選擇"></sp:option> 
 						<sp:option value="1" label="幼稚園"></sp:option>
 						<sp:option value="2" label="小學"></sp:option>
@@ -150,9 +150,10 @@ ${amount}
 					<td>蔡先生 0977716665</td>
 					<td>0977716665</td>
 				</tr>
+				<tr th:each="scholarship, state : ${ scholarships }">
 				<c:forEach items="${scholarships}" var="scholarship">
 					<tr>
-					<td>${scholarship.scholarshipId }</td>
+					<td th:text=${scholarship.scholarshipId }></td>
 					<td>${scholarship.institution.institutionName }</td>
 					<td>${scholarship.scholarshipName } </td>
 					<td>${scholarship.scholarshipAmount} </td>

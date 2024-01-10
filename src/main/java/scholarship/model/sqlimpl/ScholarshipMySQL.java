@@ -51,7 +51,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
         params.put("institutionId", scholarship.getInstitutionId());
         params.put("scholarshipName", scholarship.getScholarshipName());
         params.put("scholarshipAmount", scholarship.getScholarshipAmount());
-        params.put("entity", scholarship.getEntity());
+        params.put("entityId", scholarship.getEntityId());
         
         //params.put("updatedTime", Date.valueOf(scholarship.getUpdatedTime()));
         params.put("updatedTime", format.format(System.currentTimeMillis()));
@@ -96,8 +96,9 @@ public class ScholarshipMySQL implements ScholarshipDao {
         String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE institutionId = :institutionId";
         Map<String, Object> params = new HashMap<>();
         params.put("institutionId", institutionId);
-
-        return namedParameterJdbcTemplate.query(sql, params, new BeanPropertyRowMapper<>(Scholarship.class));
+        List<Scholarship> scholarships=namedParameterJdbcTemplate.query(sql,params,new BeanPropertyRowMapper<>(Scholarship.class));
+        scholarships.forEach(this::enrichScholarshipWithDetails);
+        return scholarships;
     }
 
     
@@ -128,9 +129,9 @@ public class ScholarshipMySQL implements ScholarshipDao {
     public List<Scholarship> findScholarshipByEntityId(Integer entityId) {
         String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE entityId = :entityId";
         Map<String, Object> params = new HashMap<>();
-        params.put("entityId", entityId);
+        params.put("entityid", entityId);
 
-        return namedParameterJdbcTemplate.query(sql,params ,new BeanPropertyRowMapper<>(Scholarship.class));
+        return namedParameterJdbcTemplate.query(sql,params,new BeanPropertyRowMapper<>(Scholarship.class));
     }
 
     
@@ -179,7 +180,5 @@ public class ScholarshipMySQL implements ScholarshipDao {
 		Optional<Institution> addInstitution=institutionDao.findInstitutionByInstitutionId(scholarship.getInstitutionId());
 		scholarship.setInstitution(addInstitution.get());
 	}
-	
-	
 	
 }

@@ -82,7 +82,7 @@ public interface ScholarshipDao {
 	 * @return
 	 */
 	
-	List<Scholarship> findScholarshipByEntityId(Integer entityid);
+	List<Scholarship> findScholarshipByEntityId(Integer entityId);
 
 
 	/**
