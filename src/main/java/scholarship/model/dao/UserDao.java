@@ -30,10 +30,12 @@ public interface UserDao {
 		/**
 		 * 
 		 * 1. 註冊帳號密碼
+		 * 1.1 註冊 Google 使用者
 		 * 
 		 * @param user
 		 */
 		int addUser(User user);
+		int addGoogleUser(User user);
 
 		/**
 		 * 2. 修改使用者名稱

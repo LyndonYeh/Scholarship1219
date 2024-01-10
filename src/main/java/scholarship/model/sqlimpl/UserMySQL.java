@@ -28,23 +28,34 @@ public class UserMySQL implements UserDao {
     @Autowired
 	private JdbcTemplate jdbcTemplate;
 
+    
+    
     @Override
     public int addUser(User user) {
         String sql = "INSERT INTO User (username, password, institutionId) VALUES (:username, :password, :institutionId)";
         
         String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         Map<String, Object> params = new HashMap<>();
-        // 可使用 MapSqlParameterSource params = new MapSqlParameterSource();
-        // https://matthung0807.blogspot.com/2020/04/spring-jdbc-mapsqlparametersource.html
+
         params.put("username", user.getUsername());
         params.put("password", hashedPassword);
         params.put("institutionId", user.getInstitution().getInstitutionId());
 
         return namedParameterJdbcTemplate.update(sql, params);
     }
-/*
- * 
- */
+    
+    
+    
+    @Override
+    public int addGoogleUser(User user) {
+        String sql = "INSERT INTO User (username) VALUES (:username)";
+     
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", user.getUsername());
+        return namedParameterJdbcTemplate.update(sql, params);
+    }
+    
+
     @Override
     public Boolean updateUsernameById(Integer userId, String password, String newUserName) {
         String sql = "UPDATE User SET userName = :newUserName WHERE userId = :userId AND password = :password";
@@ -57,6 +68,8 @@ public class UserMySQL implements UserDao {
         return rowsUpdated > 0;
     }
 
+    
+    
     @Override
     public Boolean updateUserPasswordById(Integer userId, String oldPassword, String newPassword) {
         String sql = "UPDATE User SET password = :newPassword WHERE userId = :userId AND password = :oldPassword";
@@ -69,6 +82,8 @@ public class UserMySQL implements UserDao {
         return rowsUpdated > 0;
     }
     
+    
+    
     @Override
     public Boolean updateUserPasswordById(Integer userId, String newPassword) {
         String sql = "UPDATE User SET password = :newPassword WHERE userId = :userId";
@@ -80,14 +95,16 @@ public class UserMySQL implements UserDao {
         return rowsUpdated > 0;
     }
 
+    
+    
     @Override
     public List<User> findAllUsers() {
         String sql = "SELECT * FROM User";
         return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
     }
 
-    //  namedJdbc 登入用
-    
+
+  
     @Override
     public Optional<User> findUserByUsername(String username) {
         String sql = "SELECT userId, institutionId, username, password FROM scholarshipv1.user WHERE username = :username";
@@ -103,21 +120,7 @@ public class UserMySQL implements UserDao {
     }
 
 
-    
-    /* jdbcTemplate 登入用 還是有保留
-	@Override
-	public Optional<User> findUserByUsername(String username) {
-		String sql = "select userId, username, password, level from user where username = ?";
-		try {
-			User user = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), username);
-			return Optional.ofNullable(user);
-		} catch (EmptyResultDataAccessException e) {
-			return Optional.empty();
-		}
-	}
-	*/
-    
-    
+  
 	@Override
 	public Optional<User> findUserById(Integer userId) {
 		String sql = "SELECT * FROM scholarshipv1.user where userId = :userId";

@@ -20,6 +20,7 @@ public class InstitutionMySQL implements InstitutionDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+    
     @Override
     public int addInstitution(Institution institution) {
         String sql = "INSERT INTO scholarshipv1.institution (institutionId, institutionName, contact, contactNumber) " +
@@ -34,6 +35,7 @@ public class InstitutionMySQL implements InstitutionDao {
     }
     
 
+    
     @Override
     public Boolean updateContactById(String institutionId, String newContact) {
         String sql = "UPDATE scholarshipv1.institution SET contact = :newContact WHERE institutionId = :institutionId";
@@ -45,6 +47,8 @@ public class InstitutionMySQL implements InstitutionDao {
         return rowsUpdated > 0;
     }
 
+    
+    
     @Override
     public Boolean updateContactNumberById(String institutionId, String newContactNumber) {
         String sql = "UPDATE scholarshipv1.institution  SET contactNumber = :newContactNumber WHERE institutionId = :institutionId";
@@ -56,6 +60,8 @@ public class InstitutionMySQL implements InstitutionDao {
         return rowsUpdated > 0;
     }
 
+    
+    
     @Override
     public Boolean checkIfInstitutionExist(String institutionId) {
         String sql = "SELECT COUNT(*) FROM scholarshipv1.institution WHERE institutionId = :institutionId";
@@ -65,12 +71,16 @@ public class InstitutionMySQL implements InstitutionDao {
         return namedParameterJdbcTemplate.queryForObject(sql, params, Integer.class) > 0;
     }
 
+    
+    
     @Override
     public List<Institution> findAllInstitutions() {
         String sql = "SELECT * FROM scholarshipv1.institution";
         return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Institution.class));
     }
 
+    
+    
 	@Override
 	public Optional<Institution> findInstitutionByInstitutionName(String institutionName) {
         String sql = "SELECT * FROM scholarshipv1.institution where institutionName = :institutionName";
@@ -79,6 +89,8 @@ public class InstitutionMySQL implements InstitutionDao {
         Institution institution = namedParameterJdbcTemplate.queryForObject(sql,params, new BeanPropertyRowMapper<>(Institution.class));
         return Optional.ofNullable(institution);
 	}
+	
+	
 	
 	@Override
 	public Optional<Institution> findInstitutionByInstitutionId(String institutionId) {
@@ -90,4 +102,5 @@ public class InstitutionMySQL implements InstitutionDao {
 	}
 
 
+	
 }

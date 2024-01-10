@@ -36,8 +36,6 @@ public class UserService {
 	@Autowired
 	private InstitutionDao institutionDao;
 
-	private EmailService emailService;
-
 	@Autowired
 	public UserService(UserDao userDao, InstitutionDao institutionDao) {
 		this.userDao = userDao;
@@ -52,7 +50,7 @@ public class UserService {
 
 			if (BCrypt.checkpw(password, user.getPassword())) {
 				session.setAttribute("user", user);
-				session.setMaxInactiveInterval(1000*10);
+				session.setMaxInactiveInterval(60*30);
 				return "redirect:/mvc/scholarship/backend";
 			} else {
 				handleLoginFailure(session, model, "密碼錯誤");
@@ -60,7 +58,25 @@ public class UserService {
 		} else {
 			handleLoginFailure(session, model, "無此使用者");
 		}
+		return "login";
+	}
+	
+	public String loginGoogleUser(String username, String password, HttpSession session, Model model) {
+		Optional<User> userOpt = userDao.findUserByUsername(username);
 
+		if (userOpt.isPresent()) {
+			User user = userOpt.get();
+
+			if (BCrypt.checkpw(password, user.getPassword())) {
+				session.setAttribute("user", user);
+				session.setMaxInactiveInterval(60*30);
+				return "redirect:/mvc/scholarship/backend";
+			} else {
+				handleLoginFailure(session, model, "密碼錯誤");
+			}
+		} else {
+			handleLoginFailure(session, model, "無此使用者");
+		}
 		return "login";
 	}
 
@@ -98,7 +114,6 @@ public class UserService {
 		User user = new User();
 
 		user.setInstitution(institution);
-
 		user.setUsername(username);
 		user.setPassword(password);
 

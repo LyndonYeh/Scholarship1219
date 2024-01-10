@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.nimbusds.jwt.JWTClaimsSet;
 
+import scholarship.model.dao.UserDao;
 import scholarship.util.OIDCUtil;
 
 
@@ -19,9 +22,14 @@ import scholarship.util.OIDCUtil;
  * 它將解析授權碼，獲取ID令牌，然後驗證令牌的有效性。
  * 如果令牌有效，它將從ID令牌中提取用戶信息，並將令牌發送到報告服務。
  */
+
+
 @WebServlet("/secure/callback/oidc")
 public class OIDCCallback extends HttpServlet {
 
+	@Autowired
+	private UserDao userDao;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
