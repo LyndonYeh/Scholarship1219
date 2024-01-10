@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,36 +52,6 @@
 <meta charset="UTF-8">
 <title>獎學網首頁</title>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('.pure-table').DataTable({
-			// 設定語言為繁體中文
-			"language" : {
-				"url" : "/js/datatables_zh_tw.json"
-			},
-			// 設定匯出功能
-			dom : 'lBfrtip',
-			buttons : [ {
-				extend : 'copy',
-				text : '複製',
-				className : 'pure-button pure-button-primary'
-			}, {
-				extend : 'csv',
-				text : 'CSV',
-				className : 'pure-button'
-			}, {
-				extend : 'excel',
-				text : 'EXCEL',
-				className : 'pure-button'
-			}, {
-				extend : 'print',
-				text : 'PDF/列印',
-				className : 'pure-button pure-button-primary'
-			} ]
-
-		});
-	});
-</script>
 
 </head>
 <body>
@@ -146,12 +117,12 @@
 				</tr>
 				<c:forEach items="${scholarships}" var="scholarship">
 					<tr>
-						<td>${scholarship.scholarshipId }</td>
-						<td>${scholarship.institution.name }名稱需注入</td>
-						<td>${scholarship.scholarshipName }</td>
-						<td>${scholarship.scholarshipAmount}</td>
-						<td>${scholarship.institution.contact }聯絡人需注入</td>
-						<td>${scholarship.institution.contactNumber }聯絡電話需注入</td>
+					<td>${scholarship.scholarshipId }</td>
+					<td>${scholarship.institution.institutionName }</td>
+					<td>${scholarship.scholarshipName } </td>
+					<td>${scholarship.scholarshipAmount} </td>
+					<td>${scholarship.institution.contact }</td>
+					<td>${scholarship.institution.contactNumber }</td>
 
 					</tr>
 				</c:forEach>
