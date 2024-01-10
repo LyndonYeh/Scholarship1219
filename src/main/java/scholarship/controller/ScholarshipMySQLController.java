@@ -257,16 +257,16 @@ public class ScholarshipMySQLController {
 	        Model model) {
 
 	    // Validate the form input
-	    if (result.hasErrors()) {
-	        // Handle validation errors, if any
-	        return "frontend/scholarmain"; // Return to the main view
-	    }
+//	    if (result.hasErrors()) {
+//	        // Handle validation errors, if any
+//	        return "frontend/scholarmain"; // Return to the main view
+//	    }
 
 	    // Set the entity and amount based on the path variables or form input
 	   // Integer amount = (scholarshipAmount != null) ? scholarshipAmount : scholarship.getScholarshipAmount();
 
 	    // Add the entity and amount to the model for use in the view
-	    model.addAttribute("entId", Integer.valueOf(entity));
+	    model.addAttribute("entId", entity);
 	    Integer entId=Integer.valueOf(entity);
 	    //model.addAttribute("amount", amount);
 
@@ -305,34 +305,40 @@ public class ScholarshipMySQLController {
 
 
 
-//	@PostMapping("/frontend/{entityId}/{scholarshipAmount}")
-//	public String findScholarship(@PathVariable(required = false) Integer entityId,
-//			@PathVariable(required = false) Integer scholarshipAmount, @Valid Scholarship scholarship,
-//			BindingResult result, Model model) {
-//
-//		Integer entId = Integer.parseInt(scholarship.getEntity());
-//		Integer amount = scholarship.getScholarshipAmount();
-//		model.addAttribute("entId", entId);
-//		model.addAttribute("amount", amount);
-//
-//		List<Scholarship> scholarships;
-//
+	@PostMapping("/frontend")
+	public String findScholarship( @Valid Scholarship scholarship,BindingResult result, Model model) {
+
+		Integer entId = Integer.valueOf(scholarship.getEntity());
+		//Integer amount = scholarship.getScholarshipAmount();
+		model.addAttribute("entity",scholarship.getEntity());
+		//model.addAttribute("amount", amount);
+		
+		
+
+		if (entId !=0 ) {
+			addBasicModel3(model,(Integer)3);
+			return "frontend/scholarmain";
+		} addBasicModel2(model);
+			return "frontend/scholarmain";
+		}
+
+
 //		if (entId != null && amount != null) {
 //			scholarships = scholarshipDao.findScholarshipByEntityIdAndAmount(entId, amount);
 //			model.addAttribute("scholarships", scholarships);
-//			return "frontend/scholarmain/{entityId}/{scholarshipAmount}";
+//			return "frontend/scholarmain";
 //		} else if (entId != null) {
 //			scholarships = scholarshipDao.findScholarshipByEntityId(entId);
 //			model.addAttribute("scholarships", scholarships);
-//			return "frontend/scholarmain/{entityId}";
+//			return "frontend/scholarmain";
 //		} else if (amount != null) {
 //			scholarships = scholarshipDao.findScholarshipByAmount(amount);
 //			model.addAttribute("scholarships", scholarships);
-//			return "frontend/scholarmain/{scholarshipAmount}";
+//			return "frontend/scholarmain";
 //		} else {
-//			return "frontend/scholarmain/";
+//			return "frontend/scholarmain";
 //		}
-//	}
+	
 
 //	@PostMapping("/backend") // 新增 scholarship
 //	public String addScholarship(@Valid Scholarship scholarship, BindingResult result, Model model,

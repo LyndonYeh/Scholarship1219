@@ -124,11 +124,11 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public List<Scholarship> findScholarshipByEntityId(Integer entityId) {
-        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE entityid = :entityid AND isUpdated = true";
+        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE entityid = :entityid";
         Map<String, Object> params = new HashMap<>();
         params.put("entityId", entityId);
 
-        return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
+        return namedParameterJdbcTemplate.query(sql,params ,new BeanPropertyRowMapper<>(Scholarship.class));
     }
 
     @Override

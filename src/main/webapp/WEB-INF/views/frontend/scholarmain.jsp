@@ -64,11 +64,13 @@
 
 	<tr>
 
-</p>
+${entId}</p>
+${amount}
+
 		<td valign="top"><legend class="m-3">請輸入查詢條件</legend>
 			<div class="p-3 border border-2 border-warning bg bg-warning">
-				<sp:form modelAttribute="scholarship" method="get"
-					action="${pageContext.request.contextPath}/mvc/scholarship/frontend/${entity}"
+				<sp:form modelAttribute="scholarship" method="post"
+					action="${pageContext.request.contextPath}/mvc/scholarship/frontend/"
 					class="mb-3  ">
 					&emsp;
 					<p />
