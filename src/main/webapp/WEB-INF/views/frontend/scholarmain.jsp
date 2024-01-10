@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,8 +85,37 @@
 
 </head>
 <body>
-<!-- menu -->
-		<%@include file="../include/menu_frontend.jspf" %>
+	<!-- menu -->
+	<%@include file="../include/menu_frontend.jspf"%>
+
+	<tr>
+
+</p>
+		<td valign="top"><legend class="m-3">請輸入查詢條件</legend>
+			<div class="p-3 border border-2 border-warning bg bg-warning">
+				<sp:form modelAttribute="scholarship" method="get"
+					action="${pageContext.request.contextPath}/mvc/scholarship/frontend/${entity}"
+					class="mb-3  ">
+					&emsp;
+					<p />
+					&emsp;身分別:&nbsp;
+						<sp:select path="entity">
+						<sp:option value="0" label="請選擇"></sp:option> 
+						<sp:option value="1" label="幼稚園"></sp:option>
+						<sp:option value="2" label="小學"></sp:option>
+						<sp:option value="3" label="國中"></sp:option>
+						<sp:option value="4" label="高中"></sp:option>
+						<sp:option value="5" label="大學"></sp:option>
+						<sp:option value="6" label="研究所"></sp:option>
+					</sp:select>
+							
+						&emsp;獎學金額度:&nbsp; <sp:input type="number" path="scholarshipAmount"
+						 placeholder="例:50000" />
+					<button type="submit">送出</button>
+				</sp:form>
+			</div></td>
+	<tr>
+		<!--
 	<tr>
 		<td valign="top"><legend class="m-3">請輸入查詢條件</legend>
 			<div class="p-3 border border-2 border-warning bg bg-warning">
@@ -107,7 +137,7 @@
 						<button type="submit">送出</button></form>
 			</div></td>
 	<tr>
-
+-->
 		<table class="table table-warning">
 			<thead>
 				<tr>
