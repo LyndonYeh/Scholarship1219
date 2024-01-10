@@ -94,7 +94,7 @@
 						<p />
 						<p />
 						&emsp;聯絡人:&nbsp; <sp:input path="institution.contact" type="text" />
-						&emsp;聯絡電話:&nbsp; <sp:input path="institution.contactNumber" type="text" />-->
+						&emsp;聯絡電話:&nbsp; <sp:input path="institution.contactNumber" type="text" />
 					<button type="submit">${ submitBtnName }</button>
 				</sp:form>
 			</div>

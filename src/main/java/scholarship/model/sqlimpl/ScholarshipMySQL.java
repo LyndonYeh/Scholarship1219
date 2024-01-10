@@ -124,21 +124,21 @@ public class ScholarshipMySQL implements ScholarshipDao {
    
 
     @Override
-    public List<Scholarship> findScholarshipByEntity(String entity) {
-        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE entity = :entity";
+    public List<Scholarship> findScholarshipByEntityId(Integer entityId) {
+        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE entityid = :entityid";
         Map<String, Object> params = new HashMap<>();
-        params.put("entity", entity);
+        params.put("entityId", entityId);
 
-        return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
+        return namedParameterJdbcTemplate.query(sql,params ,new BeanPropertyRowMapper<>(Scholarship.class));
     }
 
     @Override
-    public List<Scholarship> findScholarshipByEntityAndAmount(String entity, Integer scholarshipAmount) {
+    public List<Scholarship> findScholarshipByEntityIdAndAmount(Integer entityId, Integer scholarshipAmount) {
 
-        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE entity = :entity AND scholarshipAmount = :scholarshipAmount";
+        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE entityid = :entity AND scholarshipAmount > :scholarshipAmount AND isUpdated = true";
         Map<String, Object> params = new HashMap<>();
         
-        params.put("entity", entity);
+        params.put("entityId", entityId);
         params.put("scholarshipAmount", scholarshipAmount);
 
         return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
@@ -146,12 +146,13 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
     @Override
     public List<Scholarship> findScholarshipByAmount(Integer scholarshipAmount) {
-        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE scholarshipAmount = :scholarshipAmount";
+        String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE scholarshipAmount > :scholarshipAmount AND isUpdated = true";
         Map<String, Object> params = new HashMap<>();
         params.put("scholarshipAmount", scholarshipAmount);
 
         return namedParameterJdbcTemplate.query(sql, params, new BeanPropertyRowMapper<>(Scholarship.class));
     }
+    
     @Override
     public Optional<Scholarship> findScholarshipById(Integer scholarshipId) {
     	String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE scholarshipId = :scholarshipId";

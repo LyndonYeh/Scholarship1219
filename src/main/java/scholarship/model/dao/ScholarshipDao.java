@@ -82,7 +82,7 @@ public interface ScholarshipDao {
 	 * @return
 	 */
 	
-	List<Scholarship> findScholarshipByEntity(String entity);
+	List<Scholarship> findScholarshipByEntityId(Integer entityid);
 
 
 	/**
@@ -92,7 +92,7 @@ public interface ScholarshipDao {
 	 * @return
 	 */
 	
-	List<Scholarship> findScholarshipByEntityAndAmount(String entity,  Integer scholarshipAmount);
+	List<Scholarship> findScholarshipByEntityIdAndAmount(Integer entityid,  Integer scholarshipAmount);
 	
 	/**
 	 *  8. 根據條件查詢獎學金
