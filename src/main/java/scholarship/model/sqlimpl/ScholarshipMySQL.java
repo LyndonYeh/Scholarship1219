@@ -100,8 +100,9 @@ public class ScholarshipMySQL implements ScholarshipDao {
         String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord WHERE institutionId = :institutionId";
         Map<String, Object> params = new HashMap<>();
         params.put("institutionId", institutionId);
-
-        return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
+        List<Scholarship> scholarships=namedParameterJdbcTemplate.query(sql,params,new BeanPropertyRowMapper<>(Scholarship.class));
+        scholarships.forEach(this::enrichScholarshipWithDetails);
+        return scholarships;
     }
 
     @Override

@@ -300,6 +300,17 @@ public class ScholarshipMySQLController {
 		model.addAttribute("_method", "POST");
 		return "/backend/backendmain";
 	}
+	@GetMapping("/backend/changeLunch/{scholarshipId}")
+	public String changeLunch(@PathVariable("scholarshipId") Integer scholarshipId, Model model, HttpSession session) {
+		
+		addBasicModel(model, session);
+		
+		Scholarship scholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
+		model.addAttribute("scholarship", scholarship);
+		model.addAttribute("submitBtnName", "新增");
+		model.addAttribute("_method", "POST");
+		return "/backend/backendmain";
+	}
 
 	/**
 	 * 刪除獎學金資料
@@ -316,10 +327,14 @@ public class ScholarshipMySQLController {
 	 * 首頁基礎資料 !!!!  後台 根據Institution顯示資料
 	 */
 	private void addBasicModel(Model model, HttpSession session) {
-		List<Institution> instiutions = institutionDao.findAllInstitutions();
-		List<Scholarship> scholarships = scholarshipDao.findAllscholarship();
-		List<User> users = userDao.findAllUsers();
 		User sessionData = (User) session.getAttribute("user");
+		
+		
+		
+		List<Institution> instiutions = institutionDao.findAllInstitutions();
+		List<Scholarship> scholarships = scholarshipDao.findScholarshipByInstitutionId(sessionData.getInstitutionId());
+		List<User> users = userDao.findAllUsers();
+		
 		Optional<Institution> sessionInstitution = institutionDao
 				.findInstitutionByInstitutionId(sessionData.getInstitutionId());
 
