@@ -42,31 +42,9 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <meta charset="UTF-8">
 <title>獎學網後台</title>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="#">獎學網後台</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-			data-bs-target="#navbarSupportedContent"
-			aria-controls="navbarSupportedContent" aria-expanded="false"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="./frontend">前台首頁</a></li>
-				<!--<li class="nav-item"><a class="nav-link disabled">Disabled</a>
-				</li>-->
-			</ul>
-			<form class="d-flex" action="./login">
-				<button class="btn btn-outline-light" type="submit">登出</button>
-			</form>
-		</div>
-	</div>
-</nav>
-
 </head>
 <body>
+<%@include file="../include/menu_backend.jspf" %>
 	<tr>
 		<td valign="top">
 			<table class="table">

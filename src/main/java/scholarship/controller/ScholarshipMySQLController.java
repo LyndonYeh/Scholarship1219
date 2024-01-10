@@ -79,6 +79,14 @@ public class ScholarshipMySQLController {
 	public String loginPage() {
 		return "/login";
 	}
+	
+	@GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate(); 
+
+        return "redirect:/mvc/scholarship/login";
+    }
 
 	@GetMapping("/pass")
 	@ResponseBody
