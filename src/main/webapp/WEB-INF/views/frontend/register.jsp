@@ -40,44 +40,18 @@ form {
 </head>
 <body>
 
-	<div class="d-flex justify-content-center  align-items-center vh-100 "
-		class="">
-<!--  
+	<div class="d-flex justify-content-center  align-items-center vh-100 ">
 
 		<form class="row g-3 needs-validation " method="post"
 			action="./register">
-			<h4 class="text-center">註冊會員</h4>
-			<label for="username" class="form-label">使用者電子郵件</label>
-			<div class="input-group">
-				<input type="text" class="form-control" id="username"
-					name="username" value="jyzz4088840503@gmail.com" required
-				<button id="send" class="btn btn-outline-primary" type="button">發送驗證碼至信箱</button>-->
-<
-		<form class="row g-3 needs-validation" method="post"
-			action="./sendRegisterVerificationCode">
-			<h4 class="text-center">註冊會員</h4>
-			<div class="mb-3">
-				<label for="username" class="form-label">使用者電子郵件</label>
-				<div class="input-group">
-					<input type="text" class="form-control" id="username"
-						name="username" value="" required>
-					<button id="send" class="btn btn-outline-primary" type="submit">發送驗證碼至信箱</button>
-				</div>
-				<div class="invalid-feedback">請輸入電子郵件</div>
-			</div>
-		</form>
-		<form class="row g-3 needs-validation " method="post"
-			action="./register">
-			<h4 class="text-center">註冊會員</h4>
->>>>>>> adaa03cce4636c6fa7626bc702f1b6d4d66decbd
+			<h4 class="text-center">註冊會員 ${username}</h4>
 
 			<div class="mb-3">
 				<label for="verificationCode" class="form-label">請輸入6位數驗證碼</label>
 				<div class="input-group" id="verificationCode">
 					<input type="text" class="form-control digit-input"
 						id="verificationCode" name="verificationCode" maxlength="6">
-					<button id="verifyCode" class="btn btn-outline-primary"
-						type="submit" onclick="sendMail()">驗證</button>
+
 				</div>
 			</div>
 
@@ -127,45 +101,7 @@ form {
 			</div>
 		</form>
 	</div>
-	<script>
-// 要有 function mail 驗證方法才會作動
-    function sendVerificationCode() {
-        // Get the email value
-        var email = document.getElementById('username').value;
 
-        // Validate the email (you can add additional validation as needed)
 
-        // Perform AJAX request to send verification code
-        // Example using fetch API
-        // ajax 請求 to controller
-        // 使用 button; type = ?
-        // ajax 對應的 controller url?
-        // 把 return 路徑留在 controller, service 返回邏輯結果
-        fetch('/Scholarship/mvc/scholarship/sendRegisterVerificationCode?username=' + encodeURIComponent(email), {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response data as needed
-            console.log(data);
-        })
-        .catch(error => {
-            // Handle errors
-            console.error('Error:', error);
-        });
-    }
-    
-    document.getElementById('send').addEventListener('click', function(e) {
-        e.preventDefault(); // Prevent the default form submission
-
-        // Call the function to send the AJAX request
-        sendVerificationCode();
-    });
-    
-   
-</script>
 </body>
 </html>

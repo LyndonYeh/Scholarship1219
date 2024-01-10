@@ -25,14 +25,14 @@
                     <div class="mb-3">
                         <label for="confirmPassword" class="form-label">確認新密碼</label>
 
-                        <div class="input-group" id="confirmPasswordDiv">
+                        <div id="confirmPasswordDiv">
                             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
                             <div id="passwordMatch" style="color: red;"></div>
-                            <button id="resetPassword" class="btn btn-outline-primary" type="submit" onclick="validatePassword()">重設密碼</button>
                         </div>
-
+                        
                     </div>
                     <div style="color: red">${resetPasswordErrorMessage}</div>
+                    <button id="resetPassword" class="btn btn-outline-primary" type="submit" onclick="validatePassword()">重設密碼</button>
                 </form>
             </div>
         </div>

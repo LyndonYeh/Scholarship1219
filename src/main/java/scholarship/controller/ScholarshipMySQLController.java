@@ -143,16 +143,15 @@ public class ScholarshipMySQLController {
 	// 設定 jwt token 時效
 	public String showReset(@PathVariable("strUUID") String strUUID, Model model, HttpSession session) {
 		String sessionStrUUID = (String) session.getAttribute("strUUID");
-		model.addAttribute("strUUID",sessionStrUUID);
+		model.addAttribute("strUUID", sessionStrUUID);
 		return "/backend/reset";
 	}
 
 	@PostMapping("/backend/reset/{strUUID}")
 	public String resetPassword(@PathVariable("strUUID") String strUUID,
-	                             @RequestParam("newPassword") String newPassword,
-	                             Model model, HttpSession session ) {
-	    userService.resetPassword( strUUID, newPassword, session, model);
-	    return "redirect:/mvc/scholarship/login";
+			@RequestParam("newPassword") String newPassword, Model model, HttpSession session) {
+		userService.resetPassword(strUUID, newPassword, session, model);
+		return "redirect:/mvc/scholarship/login";
 	}
 
 	@GetMapping(value = { "/register", "/register/" })
@@ -167,7 +166,7 @@ public class ScholarshipMySQLController {
 			@RequestParam("contactNumber") String contactNumber,
 			@RequestParam("verificationCode") String verificationCode, Model model, HttpSession session) {
 		String sessionVerifiedCode = (String) session.getAttribute("verificationCode");
-		String username =(String)session.getAttribute("username");
+		String username = (String) session.getAttribute("username");
 		if (verificationCode.equals(sessionVerifiedCode)) {
 			try {
 				userService.registerUser(username, password, institutionName, institutionId, contact, contactNumber,
@@ -183,12 +182,12 @@ public class ScholarshipMySQLController {
 		return "error";
 	}
 
+	@GetMapping(value = { "/frontend/mailconfirm", "/frontend/mailconfirm/" })
+	public String RegisterVerificationCodePage() throws MessagingException {
+		return "/frontend/mailconfirm";
+	}
 
-	// 對應到 Http Request Header 的 Accept 指定返回的内容類型
-	@GetMapping(value = "/sendRegisterVerificationCode", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ResponseBody
-
-	@PostMapping("/sendRegisterVerificationCode")
+	@PostMapping("/frontend/sendRegisterVerificationCode")
 	public String sendRegisterVerificationCode(@RequestParam String username, HttpSession session)
 			throws MessagingException {
 
@@ -199,9 +198,9 @@ public class ScholarshipMySQLController {
 		try {
 			EmailService.sendVerificationCode(toEmail, verificationCode);
 		} catch (MessagingException e) {
-			return new Gson().toJson("fail");
+			return "error";
 		}
-		return new Gson().toJson("success");
+		return "/frontend/register";
 	}
 
 	/**
@@ -307,7 +306,19 @@ public class ScholarshipMySQLController {
 	/**
 	 * 首頁基礎資料 !!!!根據Institution顯示資料
 	 */
-
+	/** 230109 data_table 測試 首頁基礎資料
+	 * 搜尋
+	 * 根據欄位排序 : #	獎助機構	獎學金名稱	獎學金額度	聯絡人	聯絡電話
+	 * Search bar
+	 * 分頁顯示筆數功能
+	 * 選擇顯示筆數功能
+	 * 左下顯示 showing 筆數功能
+	 * 根據欄位搜尋 **
+	 * 檔案輸出
+	 * 
+	 * @param model
+	 * @param session
+	 */
 	private void addBasicModel(Model model, HttpSession session) {
 		List<Institution> instiutions = institutionDao.findAllInstitutions();
 		List<Scholarship> scholarships = scholarshipDao.findAllscholarship();
@@ -322,6 +333,24 @@ public class ScholarshipMySQLController {
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
 		model.addAttribute("users", users); // 取得目前最新 users 資料
 	}
+
+	
+	/* data table 修改前方法
+	private void addBasicModel(Model model, HttpSession session) {
+		List<Institution> instiutions = institutionDao.findAllInstitutions();
+		List<Scholarship> scholarships = scholarshipDao.findAllscholarship();
+		List<User> users = userDao.findAllUsers();
+		User sessionData = (User) session.getAttribute("user");
+		Optional<Institution> sessionInstitution = institutionDao
+				.findInstitutionByInstitutionId(sessionData.getInstitutionId());
+
+		model.addAttribute("sessionInstitution", sessionInstitution.get());
+
+		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
+		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
+		model.addAttribute("users", users); // 取得目前最新 users 資料
+	}
+	*/
 
 	@GetMapping("/hello")
 	@ResponseBody
