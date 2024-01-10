@@ -238,8 +238,8 @@ public class ScholarshipMySQLController {
 	 */
 
 	@GetMapping("/frontend")
-	public String indexFront(@ModelAttribute Scholarship scholarship, Model model, HttpSession session) {
-		addBasicModel(model, session);
+	public String indexFront(@ModelAttribute Scholarship scholarship, Model model) {
+		addBasicModel2(model);
 		model.addAttribute("submitBtnName", "新增");
 		model.addAttribute("_method", "POST");
 		return "frontend/scholarmain";
@@ -274,8 +274,10 @@ public class ScholarshipMySQLController {
 	    List<Scholarship> scholarships;
 	    if (entId!=0) {
 	    	scholarships = scholarshipDao.findScholarshipByEntityId(entId);
+	    	addBasicModel3(model,entId);
 	    	return "frontend/scholarmain";
 	    }scholarships = scholarshipDao.findAllscholarship();
+	    	addBasicModel2(model);
 	     	return "frontend/scholarmain";
 	}
 	    
@@ -371,6 +373,7 @@ public class ScholarshipMySQLController {
 		if (result.hasErrors()) { // 有錯誤發生
 			// 自動會將 errors 的資料放在 model 中
 
+
 			model.addAttribute("submitBtnName", "建立");
 			model.addAttribute("_method", "POST");
 			model.addAttribute("scholarship", scholarship); // 給 form 表單用的 (ModelAttribute)
@@ -414,6 +417,7 @@ public class ScholarshipMySQLController {
 	}
 
 	/**
+
 	 * 首頁基礎資料 !!!!根據Institution顯示資料
 	 */
 	/**
@@ -422,6 +426,8 @@ public class ScholarshipMySQLController {
 	 * 
 	 * @param model
 	 * @param session
+	 * 首頁基礎資料 !!!!  後台 根據Institution顯示資料
+>>>>>>> e59bc49b33c81ef15a67cafaef804ab4fb3f33ae
 	 */
 	private void addBasicModel(Model model, HttpSession session) {
 		List<Institution> instiutions = institutionDao.findAllInstitutions();
@@ -437,6 +443,39 @@ public class ScholarshipMySQLController {
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
 		model.addAttribute("users", users); // 取得目前最新 users 資料
 	}
+	
+	/**
+	 * 首頁基礎資料 前台
+	 */
+	private void addBasicModel2(Model model) {
+		List<Institution> instiutions = institutionDao.findAllInstitutions();
+		List<Scholarship> scholarships = scholarshipDao.findAllscholarshipisUpdated();
+		List<User> users = userDao.findAllUsers();
+		
+		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
+		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
+		model.addAttribute("users", users); // 取得目前最新 users 資料
+	}
+	private void addBasicModel3(Model model,Integer  entId) {
+		List<Institution> instiutions = institutionDao.findAllInstitutions();
+		List<Scholarship> scholarships = scholarshipDao.findScholarshipByEntityId(entId);
+		List<User> users = userDao.findAllUsers();
+		
+		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
+		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
+		model.addAttribute("users", users); // 取得目前最新 users 資料
+	}
+	
+	private void addBasicModel4(Model model) {
+		List<Institution> instiutions = institutionDao.findAllInstitutions();
+		List<Scholarship> scholarships = scholarshipDao.findAllscholarshipisUpdated();
+		List<User> users = userDao.findAllUsers();
+		
+		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
+		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
+		model.addAttribute("users", users); // 取得目前最新 users 資料
+	}
+
 
 	/*
 	 * data table 修改前方法 private void addBasicModel(Model model, HttpSession session)
@@ -453,6 +492,30 @@ public class ScholarshipMySQLController {
 	 * model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
 	 * model.addAttribute("users", users); // 取得目前最新 users 資料 }
 	 */
+
+	
+	/** 230109 data_table 測試 首頁基礎資料
+	 * 搜尋
+	 * 根據欄位排序 : #	獎助機構	獎學金名稱	獎學金額度	聯絡人	聯絡電話
+	 * Search bar
+	 * 分頁顯示筆數功能
+	 * 選擇顯示筆數功能
+	 * 左下顯示 showing 筆數功能
+	 * 根據欄位搜尋 **
+	 * 檔案輸出
+	 * 
+	 * @param model
+	 * @param session
+	 */
+	/* data table 修改前方法
+	private void addBasicModel(Model model, HttpSession session) {
+		List<Institution> instiutions = institutionDao.findAllInstitutions();
+		List<Scholarship> scholarships = scholarshipDao.findAllscholarship();
+		List<User> users = userDao.findAllUsers();
+		User sessionData = (User) session.getAttribute("user");
+		Optional<Institution> sessionInstitution = institutionDao
+				.findInstitutionByInstitutionId(sessionData.getInstitutionId());*/
+
 
 //	@PostMapping("/frontend")
 //	public String filterScholarships(@RequestParam(required = false) Integer entityId,
@@ -485,10 +548,5 @@ public class ScholarshipMySQLController {
 //	  }
 //	
 
-	@GetMapping("/hello")
-	@ResponseBody
-	public String hello(HttpServletRequest req, HttpServletResponse resp) {
-		// logger.info("hello, spirng 來了!!!");
-		return "Hello, Spring12345 !!";
-	}
+
 }

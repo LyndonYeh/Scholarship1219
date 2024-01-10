@@ -70,6 +70,11 @@ public interface ScholarshipDao {
    */
 
 	List<Scholarship> findAllscholarship();
+	/**
+	 * 
+	 * @return 所有獎學金列表(以上架)
+	 */
+	 List<Scholarship> findAllscholarshipisUpdated();
 	
 	/**
 	 *  6. 根據條件查詢獎學金

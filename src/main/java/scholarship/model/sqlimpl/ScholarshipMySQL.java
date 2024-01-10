@@ -112,6 +112,14 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
         return scholarships;
     }
+    @Override
+    public List<Scholarship> findAllscholarshipisUpdated() {
+    	String sql = "SELECT * FROM  scholarshipv1.scholarshiprecord where isUpdated = true";
+    	List<Scholarship> scholarships = namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Scholarship.class));
+    	scholarships.forEach(this::enrichScholarshipWithDetails);
+    	
+    	return scholarships;
+    }
    
 
     @Override
