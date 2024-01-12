@@ -16,116 +16,110 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 
 import scholarship.bean.Institution;
+import scholarship.bean.Service;
 import scholarship.bean.User;
 import scholarship.model.dao.UserDao;
 
 @Repository
 public class UserMySQL implements UserDao {
 
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    
-    @Autowired
+	@Autowired
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-    
-    
-    @Override
-    public int addUser(User user) {
-        String sql = "INSERT INTO User (username, password, institutionId) VALUES (:username, :password, :institutionId)";
-        
-        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-        Map<String, Object> params = new HashMap<>();
+	@Override
+	public int addUser(User user) {
+		String sql = "INSERT INTO User (username, password, institutionId, level) VALUES (:username, :password, :institutionId, :level)";
 
-        params.put("username", user.getUsername());
-        params.put("password", hashedPassword);
-        params.put("institutionId", user.getInstitution().getInstitutionId());
+		String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+		Map<String, Object> params = new HashMap<>();
 
-        return namedParameterJdbcTemplate.update(sql, params);
-    }
-    
-    
-    
-    @Override
-    public int addGoogleUser(User user) {
-        String sql = "INSERT INTO User (username) VALUES (:username)";
-        Map<String, Object> params = new HashMap<>();
-        params.put("username", user.getUsername());
-        return namedParameterJdbcTemplate.update(sql, params);
-    }
-    
+		params.put("username", user.getUsername());
+		params.put("password", hashedPassword);
+		params.put("institutionId", user.getInstitution().getInstitutionId());
+		params.put("level", user.getLevel());
 
-    @Override
-    public Boolean updateUsernameById(Integer userId, String password, String newUserName) {
-        String sql = "UPDATE User SET userName = :newUserName WHERE userId = :userId AND password = :password";
-        Map<String, Object> params = new HashMap<>();
-        params.put("userId", userId);
-        params.put("password", password);
-        params.put("newUserName", newUserName);
+		return namedParameterJdbcTemplate.update(sql, params);
+	}
 
-        int rowsUpdated = namedParameterJdbcTemplate.update(sql, params);
-        return rowsUpdated > 0;
-    }
+	@Override
+	public int addGoogleUser(User user) {
+		String sql = "INSERT INTO User (username) VALUES (:username)";
+		Map<String, Object> params = new HashMap<>();
+		params.put("username", user.getUsername());
+		return namedParameterJdbcTemplate.update(sql, params);
+	}
 
-    
-    
-    @Override
-    public Boolean updateUserPasswordById(Integer userId, String oldPassword, String newPassword) {
-        String sql = "UPDATE User SET password = :newPassword WHERE userId = :userId AND password = :oldPassword";
-        Map<String, Object> params = new HashMap<>();
-        params.put("userId", userId);
-        params.put("oldPassword", oldPassword);
-        params.put("newPassword", newPassword);
+	@Override
+	public Boolean updateUsernameById(Integer userId, String password, String newUserName) {
+		String sql = "UPDATE User SET userName = :newUserName WHERE userId = :userId AND password = :password";
+		Map<String, Object> params = new HashMap<>();
+		params.put("userId", userId);
+		params.put("password", password);
+		params.put("newUserName", newUserName);
 
-        int rowsUpdated = namedParameterJdbcTemplate.update(sql, params);
-        return rowsUpdated > 0;
-    }
-    
-    
-    
-    @Override
-    public Boolean updateUserPasswordById(Integer userId, String newPassword) {
-        String sql = "UPDATE User SET password = :newPassword WHERE userId = :userId";
-        Map<String, Object> params = new HashMap<>();
-        params.put("userId", userId);
-        params.put("newPassword", newPassword);
+		int rowsUpdated = namedParameterJdbcTemplate.update(sql, params);
+		return rowsUpdated > 0;
+	}
 
-        int rowsUpdated = namedParameterJdbcTemplate.update(sql, params);
-        return rowsUpdated > 0;
-    }
+	@Override
+	public Boolean updateUserPasswordById(Integer userId, String oldPassword, String newPassword) {
+		String sql = "UPDATE User SET password = :newPassword WHERE userId = :userId AND password = :oldPassword";
+		Map<String, Object> params = new HashMap<>();
+		params.put("userId", userId);
+		params.put("oldPassword", oldPassword);
+		params.put("newPassword", newPassword);
 
-    
-    
-    @Override
-    public List<User> findAllUsers() {
-        String sql = "SELECT * FROM User";
-        return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
-    }
+		int rowsUpdated = namedParameterJdbcTemplate.update(sql, params);
+		return rowsUpdated > 0;
+	}
 
+	@Override
+	public Boolean updateUserPasswordById(Integer userId, String newPassword) {
+		String sql = "UPDATE User SET password = :newPassword WHERE userId = :userId";
+		Map<String, Object> params = new HashMap<>();
+		params.put("userId", userId);
+		params.put("newPassword", newPassword);
 
-  
-    @Override
-    public Optional<User> findUserByUsername(String username) {
-        String sql = "SELECT userId, institutionId, username, password FROM scholarshipv1.user WHERE username = :username";
+		int rowsUpdated = namedParameterJdbcTemplate.update(sql, params);
+		return rowsUpdated > 0;
+	}
 
-        Map<String, Object> paramMap = Collections.singletonMap("username", username);
+	@Override
+	public List<User> findAllUsers() {
+		String sql = "SELECT * FROM User";
+		return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
+	}
 
-        try {
-            User user = namedParameterJdbcTemplate.queryForObject(sql, paramMap, new BeanPropertyRowMapper<>(User.class));
-            return Optional.ofNullable(user);
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
-    }
+	@Override
+	public Optional<User> findUserByUsername(String username) {
+		String sql = "SELECT userId, institutionId, username, password, level FROM scholarshipv1.user WHERE username = :username";
 
+		Map<String, Object> paramMap = Collections.singletonMap("username", username);
 
-  
+		try {
+			User user = namedParameterJdbcTemplate.queryForObject(sql, paramMap,
+					new BeanPropertyRowMapper<>(User.class));
+			String sql2 = "select s.serviceId, s.serviceLocation, s.serviceName, s.serviceUrl "
+					+ "from level_ref_service r " + "left join service s on s.serviceId = r.serviceId "
+					+ "where r.levelId = ? order by r.sort";
+			List<Service> services = jdbcTemplate.query(sql2, new BeanPropertyRowMapper<>(Service.class),
+					user.getLevel());
+			user.setServices(services);
+			return Optional.ofNullable(user);
+		} catch (EmptyResultDataAccessException e) {
+			return Optional.empty();
+		}
+	}
+
 	@Override
 	public Optional<User> findUserById(Integer userId) {
 		String sql = "SELECT * FROM scholarshipv1.user where userId = :userId";
 		Map<String, Object> params = new HashMap<>();
 		params.put("userId", userId);
-		User user = namedParameterJdbcTemplate.queryForObject(sql,params, new BeanPropertyRowMapper<>(User.class));
+		User user = namedParameterJdbcTemplate.queryForObject(sql, params, new BeanPropertyRowMapper<>(User.class));
 		return Optional.of(user);
 
 	}

@@ -1,5 +1,7 @@
 package scholarship.bean;
 
+import java.util.List;
+
 import com.google.gson.Gson;
 
 /*
@@ -18,16 +20,25 @@ public class User {
 	private String institutionId; // 機構 id
 	private String username; // 使用者名稱
 	private String password; // 使用者密碼
+	private Integer level;// 使用者權限, 目前只有一組, 預設1
 	private Institution institution;
-	public User(Integer userId, String username, String password, String institutionId) {
+	
+	// 提供權限訪問的服務列表
+	private List<Service> services;
+	
+	
+	public User(Integer userId, String username, String password, String institutionId, Integer level) {
 		this.userId = userId;
 		this.username = username;
 		this.institutionId = institutionId;
 		this.password = password;
+		this.level=level;
 	}
+	
 	public void setInstitutionId(String institutionId) {
 		this.institutionId = institutionId;
 	}
+	
 	public User() {
 		
 	}
@@ -56,7 +67,7 @@ public class User {
 	public String getUsername() {
 		return username;
 	}
-
+	
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -68,6 +79,24 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+	
+
+	public List<Service> getServices() {
+		return services;
+	}
+
+	public void setServices(List<Service> services) {
+		this.services = services;
+	}
+	
 	
 	public String toString() {
 		return new Gson().toJson(this);

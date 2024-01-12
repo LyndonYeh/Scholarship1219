@@ -43,6 +43,7 @@ public class Scholarship {
 	private Integer entityId;
 	
 	private Institution institution;
+	private Entity entity;
 	
 	
 	
@@ -155,15 +156,24 @@ public class Scholarship {
 		this.institution = institution;
 	}
 	
+	public Institution getInstitution() {
+		return institution;
+	}
+	
+	public void setEntity(Entity entity) {
+		this.entity = entity;
+	}
+	
 	public Integer getEntityId() {
 		return entityId;
 	}
+	
 	public void setEntityId(Integer entityId) {
 		this.entityId = entityId;
 	}
 	
-	public Institution getInstitution() {
-		return institution;
+	public Entity getEntity() {
+		return entity;
 	}
 
 	public String toString() {

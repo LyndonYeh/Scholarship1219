@@ -100,7 +100,7 @@ public class UserService {
 
 	@Transactional
 	public void registerUser(String username, String password, String institutionName, String institutionId,
-			String contact, String contactNumber, HttpSession session) throws Exception {
+			String contact, String contactNumber, Integer level) throws Exception {
 
 		Optional<User> existingUserOpt = userDao.findUserByUsername(username);
 		if (existingUserOpt.isPresent()) {
@@ -120,46 +120,34 @@ public class UserService {
 		user.setInstitution(institution);
 		user.setUsername(username);
 		user.setPassword(password);
+		user.setLevel(level);
 
 		userDao.addUser(user);
 
 	}
 
-	// 先拿到 jsp username 比對 db username, 設定 user
-	public void sendRegisterVerificationCode(String username, HttpSession session, RedirectAttributes redirectAttributes) {
-	
-		List<User> users = userDao.findAllUsers();
-		List<String> usernames = users.stream().map(User::getUsername) // 把 username 抽出來
-				.collect(Collectors.toList()); 
-		
-		if (!usernames.contains(username)) {
-			session.setAttribute("userEmail", username);
-			String storedVerificationCode = (String) session.getAttribute("verificationCode");
-			String verificationCode = RandomNumberGenerator.generateRandomCode();
-			String toEmail = (String) session.getAttribute("userEmail");
-			session.setAttribute("verificationCode", verificationCode);			
-			try {
-				EmailService.sendVerificationCode(toEmail, verificationCode);
-			} catch (MessagingException e) {
-				redirectAttributes.addFlashAttribute("registerErrorMessage", "信箱錯誤");
-			}
-			redirectAttributes.addFlashAttribute("registerErrorMessage", "信箱錯誤");
-		}
-	}
-	
-//	public Boolean  verifyRegisterVerificationCode(String verificationCode, HttpSession session, RedirectAttributes redirectAttributes) {
-//
-//			String to = (String) session.getAttribute("verificationCode");;
-//			
-//			
+//	// 先拿到 jsp username 比對 db username, 設定 user
+//	public void sendRegisterVerificationCode(String username, HttpSession session, RedirectAttributes redirectAttributes) {
+//	
+//		List<User> users = userDao.findAllUsers();
+//		List<String> usernames = users.stream().map(User::getUsername) // 把 username 抽出來
+//				.collect(Collectors.toList()); 
+//		
+//		if (!usernames.contains(username)) {
+//			String toEmail = (String) session.getAttribute("userEmail");
+//			String verificationCode = RandomNumberGenerator.generateRandomCode();
+//			String storedVerificationCode = (String) session.getAttribute("verificationCode");
+//			session.setAttribute("userEmail", username);
+//			session.setAttribute("verificationCode", verificationCode);			
 //			try {
-//				EmailService.sendVerificationCode(toEmail, verificationCode);
+//				EmailService.sendVerificationCode(toEmail, verificationCode);				
 //			} catch (MessagingException e) {
-//				redirectAttributes.addFlashAttribute("registerVerifyMessage", "驗證碼錯誤");
-//				// Handle the exception as needed
+//				redirectAttributes.addFlashAttribute("registerErrorMessage", "信箱錯誤");
 //			}
-//			redirectAttributes.addFlashAttribute("registerVerifyMessage", "驗證碼錯誤");
+//			redirectAttributes.addFlashAttribute("registerErrorMessage", "信箱錯誤");
+//		}
 //	}
+	
 
 	public void showEditUser(User user, HttpSession session, Model model) {
 		User sessionData = user;

@@ -36,6 +36,7 @@ import scholarship.*;
 import scholarship.bean.Institution;
 import scholarship.bean.Scholarship;
 import scholarship.bean.User;
+import scholarship.model.dao.EntityDao;
 import scholarship.model.dao.InstitutionDao;
 import scholarship.model.dao.ScholarshipDao;
 import scholarship.model.dao.UserDao;
@@ -64,7 +65,8 @@ public class ScholarshipMySQLController {
 	private UserDao userDao;
 	@Autowired
 	private ScholarshipDao scholarshipDao;
-
+	@Autowired
+	private EntityDao entityDao;
 
 	/*
 	 * 登入頁
@@ -73,16 +75,13 @@ public class ScholarshipMySQLController {
 	public String loginPage() {
 		return "/login";
 	}
-	
-	
+
 	@GetMapping("/loginGoogle")
 	public String loginGooglePage() {
-		
-		
+
 		return "/login";
 	}
-	
-	
+
 	/*
 	 * 驗證登入
 	 */
@@ -92,8 +91,7 @@ public class ScholarshipMySQLController {
 		userService.loginUser(username, password, session, model);
 		return "redirect:/mvc/scholarship/backend";
 	}
-	
-	
+
 	/*
 	 * 登出
 	 */
@@ -105,7 +103,6 @@ public class ScholarshipMySQLController {
 		return "redirect:/mvc/scholarship/frontend";
 	}
 
-	
 	/*
 	 * 忘記密碼頁面
 	 */
@@ -114,7 +111,6 @@ public class ScholarshipMySQLController {
 		return "/frontend/forgetpassword";
 	}
 
-	
 	/*
 	 * 忘記密碼傳送驗證碼頁面
 	 */
@@ -135,18 +131,22 @@ public class ScholarshipMySQLController {
 			} catch (MessagingException e) {
 				redirectAttributes.addFlashAttribute("forgetErrorMessage", "信箱錯誤");
 			}
-			return "redirect:/mvc/scholarship/frontend/forgetpassword";
+			return "redirect:/mvc/scholarship/frontend/forgetpasswordverify";
 		} else {
 			redirectAttributes.addFlashAttribute("forgetErrorMessage", "信箱錯誤");
 			return "redirect:/mvc/scholarship/frontend/forgetpassword";
 		}
 	}
 
-	
+	@RequestMapping("/frontend/forgetpasswordverify")
+	public String verifyCode(Model model) {
+		return "/frontend/forgetpasswordverify";
+	}
+
 	/*
 	 * 忘記密碼驗證驗證碼
 	 */
-	@PostMapping("/frontend/verify")
+	@PostMapping("/frontend/forgetpasswordverify")
 	public String verifyCode(@RequestParam("verifyCode") String verifyCode, Model model, HttpSession session,
 			RedirectAttributes redirectAttributes) {
 		UUID uuid = UUID.randomUUID();
@@ -157,11 +157,10 @@ public class ScholarshipMySQLController {
 			return "redirect:/mvc/scholarship/backend/reset/" + strUUID;
 		}
 		redirectAttributes.addFlashAttribute("forgetErrorMessage", "驗證碼錯誤");
-		return "redirect:/mvc/scholarship/frontend/forgetpassword";
+		return "redirect:/mvc/scholarship/frontend/forgetpasswordverify";
 
 	}
 
-	
 	/*
 	 * 重設密碼頁面
 	 */
@@ -173,7 +172,6 @@ public class ScholarshipMySQLController {
 		return "/backend/reset";
 	}
 
-	
 	/*
 	 * 重設密碼
 	 */
@@ -183,65 +181,68 @@ public class ScholarshipMySQLController {
 		userService.resetPassword(strUUID, newPassword, session, model);
 		return "redirect:/mvc/scholarship/login";
 	}
-	
+
 	/*
 	 * 註冊信箱頁面
 	 */
-	@GetMapping("/frontend/mailconfirm")
-	public String mailConfirm(Model model, HttpSession session) {
-		return "/frontend/mailconfirm";
+	@GetMapping("/frontend/register")
+	public String checkedRegisteredmailPage(Model model, HttpSession session) {
+		return "/frontend/register";
 	}
+
 	
 	/*
 	 * 比對註冊信箱驗證碼
 	 */
-	@PostMapping("/frontend/sendRegisterVerificationCode")
-	public String sendRegisterVerificationCode(@RequestParam String username, HttpSession session)
+	@PostMapping("/frontend/register")
+	public String sendRegisterVerificationCode(@RequestParam String username, HttpSession session, Model model, RedirectAttributes redirectAttributes)
 			throws MessagingException {
 		List<User> users = userDao.findAllUsers();
 		List<String> usernames = users.stream().map(User::getUsername) // 把 username 抽出來
 				.collect(Collectors.toList());
-if(!usernames.contains(username)) {
-	String toEmail = username;
-	String verificationCode = RandomNumberGenerator.generateRandomCode();
-	session.setAttribute("username", username);
-	session.setAttribute("verificationCode", verificationCode);
-	try {
-		EmailService.sendVerificationCode(toEmail, verificationCode);
-	} catch (MessagingException e) {
-		return "error";
-	} 
-}else {
+		if (!usernames.contains(username)) {
+			String toEmail = username;
+			String verificationCode = RandomNumberGenerator.generateRandomCode();
+			session.setAttribute("username", username);
+			session.setAttribute("verificationCode", verificationCode);
+			try {
+				EmailService.sendVerificationCode(toEmail, verificationCode);
+				return "redirect:/mvc/scholarship/frontend/registerconfirm";
+			} catch (MessagingException e) {
+				MessagingException Erro = e;
+				System.out.println(e);
+				return "error";
+			}
+		} else {
+			redirectAttributes.addFlashAttribute("registerErrorMessage", "信箱錯誤");
 		}
-		return "/frontend/register";
+		redirectAttributes.addFlashAttribute("registerErrorMessage", "信箱錯誤");
+		return "register";
 	}
 
-	
 	/*
 	 * 註冊頁面
 	 */
-	@GetMapping(value = { "/register", "/register/" })
+	@GetMapping("/frontend/registerconfirm")
 	public String registerPage() {
-		return "/frontend/register";
+		return "/frontend/registerconfirm";
 	}
 
-	
 	/*
 	 * 使用者註冊
 	 */
-	@PostMapping("/register")
+	@PostMapping("/registerconfirm")
 	public String register(@RequestParam("password") String password,
 			@RequestParam("institutionName") String institutionName,
 			@RequestParam("institutionId") String institutionId, @RequestParam("contact") String contact,
 			@RequestParam("contactNumber") String contactNumber,
+			@RequestParam("username") String username,
 			@RequestParam("verificationCode") String verificationCode, Model model, HttpSession session) {
 		String sessionVerifiedCode = (String) session.getAttribute("verificationCode");
-		String username = (String) session.getAttribute("username");
 		if (verificationCode.equals(sessionVerifiedCode)) {
 			try {
-				userService.registerUser(username, password, institutionName, institutionId, contact, contactNumber,
-						session);
-				return "redirect:login";
+				userService.registerUser(username, password, institutionName, institutionId, contact, contactNumber, 1);
+				return "redirect:/mvc/scholarship/login";
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("error", "Error occurred during registration.");
@@ -252,10 +253,6 @@ if(!usernames.contains(username)) {
 		return "error";
 	}
 
-	
-	
-
-	
 	/**
 	 * 透過後台進入帶有該會員資料的修改頁面
 	 */
@@ -265,8 +262,7 @@ if(!usernames.contains(username)) {
 		userService.showEditUser(user, session, model);
 		return "/backend/edit";
 	}
-	
-	
+
 	/**
 	 * 修改會員資料
 	 */
@@ -280,64 +276,39 @@ if(!usernames.contains(username)) {
 		return "redirect:/mvc/scholarship/backend/edit/" + user.getUserId();
 	}
 
-	
 	/**
 	 * 前台首頁
 	 */
 	@GetMapping("/frontend")
 	public String indexFront(@ModelAttribute Scholarship scholarship, Model model) {
-		addBasicModel2(model);
+		addBasicModelFrontEnd(model);
 		model.addAttribute("submitBtnName", "新增");
 		model.addAttribute("_method", "POST");
 		return "frontend/scholarmain";
 	}
 
-	
-	/*
-	 * 前台查找已上架獎學金 根據 身分別 根據 金額下限
-	 */
-
-	@GetMapping(value ={"/frontend/","/frontend/{entity}"})
-	public String findScholarship(
-	        @PathVariable(required = false) String entity,
-	        @Valid Scholarship scholarship,
-	        BindingResult result,
-	        Model model) {
-
-	    model.addAttribute("entId", entity);
-	    Integer entId=Integer.valueOf(entity);
-	    //model.addAttribute("amount", amount);
-
-	    // Retrieve scholarships based on the conditions
-	    List<Scholarship> scholarships;
-	    if (entId!=0) {
-	    	scholarships = scholarshipDao.findScholarshipByEntityId(entId);
-	    	addBasicModel3(model,entId);
-	    	return "frontend/scholarmain";
-	    }scholarships = scholarshipDao.findAllscholarship();
-	    	addBasicModel2(model);
-	     	return "frontend/scholarmain";
-	}
-
-
 	@PostMapping("/frontend")
-	public String findScholarship( @Valid Scholarship scholarship,BindingResult result, Model model) {
+	public String findScholarship(@Valid Scholarship scholarship, BindingResult result, Model model) {
 
 		int entId = scholarship.getEntityId();
-		//Integer amount = scholarship.getScholarshipAmount();
-		model.addAttribute("entId",entId);
-		//model.addAttribute("amount", amount);
+		Integer amount = scholarship.getScholarshipAmount();
 
-		if (entId!=0) {
-			List<Scholarship> scholarships = scholarshipDao.findScholarshipByEntityId(3);
-			model.addAttribute("scholarships", scholarships);
+		if (entId != 0 && amount != null) {
+			addBasicModelEntityAndAmount(model, entId, amount);
 			return "frontend/scholarmain";
-		} 
-		addBasicModel2(model);
+		} else if (entId != 0) {
+			addBasicModelEntity(model, entId);
+			return "frontend/scholarmain";
+		} else if (amount != null) {
+			addBasicModelAmount(model, amount);
+			return "frontend/scholarmain";
+		} else {
 			return "frontend/scholarmain";
 		}
 
-/*
+	}
+
+	/*
 	 * 後台首頁
 	 */
 	@GetMapping("/backend")
@@ -351,7 +322,6 @@ if(!usernames.contains(username)) {
 		return "backend/backendmain";
 	}
 
-	
 	/**
 	 * 新增獎學金資料
 	 */
@@ -379,7 +349,6 @@ if(!usernames.contains(username)) {
 		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁
 	}
 
-	
 	/**
 	 * 複製獎學金資料
 	 */
@@ -394,11 +363,12 @@ if(!usernames.contains(username)) {
 		model.addAttribute("_method", "POST");
 		return "/backend/backendmain";
 	}
+
 	@GetMapping("/backend/changeLunch/{scholarshipId}")
 	public String changeLunch(@PathVariable("scholarshipId") Integer scholarshipId, Model model, HttpSession session) {
-		
+
 		addBasicModel(model, session);
-		
+
 		Scholarship scholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
 		model.addAttribute("scholarship", scholarship);
 		model.addAttribute("submitBtnName", "新增");
@@ -406,7 +376,6 @@ if(!usernames.contains(username)) {
 		return "/backend/backendmain";
 	}
 
-	
 	/**
 	 * 刪除獎學金資料
 	 */
@@ -418,27 +387,21 @@ if(!usernames.contains(username)) {
 		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁
 	}
 
-	
 	/**
-
+	 * 
 	 * 首頁基礎資料 !!!!根據Institution顯示資料
+	 * 
 	 * @param model
-	 * @param session
-	 * 首頁基礎資料 !!!!  後台 根據Institution顯示資料
-<<<<<<< HEAD
-
-=======
->>>>>>> b274efe5159234c295907b72519dd44b4b376108
+	 * @param session 首頁基礎資料 !!!! 後台 根據Institution顯示資料
+	 * 
 	 */
 	private void addBasicModel(Model model, HttpSession session) {
 		User sessionData = (User) session.getAttribute("user");
-		
-		
-		
+
 		List<Institution> instiutions = institutionDao.findAllInstitutions();
 		List<Scholarship> scholarships = scholarshipDao.findScholarshipByInstitutionId(sessionData.getInstitutionId());
 		List<User> users = userDao.findAllUsers();
-		
+
 		Optional<Institution> sessionInstitution = institutionDao
 				.findInstitutionByInstitutionId(sessionData.getInstitutionId());
 
@@ -448,53 +411,42 @@ if(!usernames.contains(username)) {
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
 		model.addAttribute("users", users); // 取得目前最新 users 資料
 	}
-	
-	
+
 	/**
 	 * 首頁基礎資料 前台
 	 */
-	private void addBasicModel2(Model model) {
+
+	private void addBasicModelFrontEnd(Model model) {
 		List<Institution> instiutions = institutionDao.findAllInstitutions();
 		List<Scholarship> scholarships = scholarshipDao.findAllscholarshipisUpdated();
 		List<User> users = userDao.findAllUsers();
-		
+
 		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
 		model.addAttribute("users", users); // 取得目前最新 users 資料
 	}
 
-	
-	private void addBasicModel3(Model model,Integer entId) {
-		List<Institution> instiutions = institutionDao.findAllInstitutions();
+	private void addBasicModelEntity(Model model, Integer entId) {
 		List<Scholarship> scholarships = scholarshipDao.findScholarshipByEntityId(entId);
-		List<User> users = userDao.findAllUsers();
-		
-		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
-		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
-		model.addAttribute("users", users); // 取得目前最新 users 資料
-	}
-	
-	
-	private void addBasicModel4(Model model) {
-		List<Institution> instiutions = institutionDao.findAllInstitutions();
-		List<Scholarship> scholarships = scholarshipDao.findAllscholarshipisUpdated();
-		List<User> users = userDao.findAllUsers();
-		
-		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
-		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
-		model.addAttribute("users", users); // 取得目前最新 users 資料
+		model.addAttribute("scholarships", scholarships);
+
 	}
 
-	
-	/**data_table 測試 data_table 用註解
-	 * 搜尋
-	 * 根據欄位排序 : #	獎助機構	獎學金名稱	獎學金額度	聯絡人	聯絡電話
-	 * Search bar
-	 * 分頁顯示筆數功能
-	 * 選擇顯示筆數功能
-	 * 左下顯示 showing 筆數功能
-	 * 根據欄位搜尋 **
-	 * 檔案輸出
+	private void addBasicModelAmount(Model model, Integer amount) {
+		List<Scholarship> scholarships = scholarshipDao.findScholarshipByAmount(amount);
+		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
+
+	}
+
+	private void addBasicModelEntityAndAmount(Model model, Integer entId, Integer amount) {
+		List<Scholarship> scholarships = scholarshipDao.findScholarshipByEntityIdAndAmount(entId, amount);
+		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
+
+	}
+
+	/**
+	 * data_table 測試 data_table 用註解 搜尋 根據欄位排序 : # 獎助機構 獎學金名稱 獎學金額度 聯絡人 聯絡電話 Search
+	 * bar 分頁顯示筆數功能 選擇顯示筆數功能 左下顯示 showing 筆數功能 根據欄位搜尋 ** 檔案輸出
 	 */
-	
+
 }

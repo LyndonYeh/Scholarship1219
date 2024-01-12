@@ -26,12 +26,11 @@
                         <label for="confirmPassword" class="form-label">確認新密碼</label>
 
                         <div id="confirmPasswordDiv">
-                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-                            <div id="passwordMatch" style="color: red;"></div>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>                       
                         </div>
                         
                     </div>
-                    <div style="color: red">${resetPasswordErrorMessage}</div>
+                    <div  id="passwordMatch">${resetPasswordErrorMessage}</div>
                     <button id="resetPassword" class="btn btn-outline-primary" type="submit" onclick="validatePassword()">重設密碼</button>
                 </form>
             </div>
@@ -45,9 +44,11 @@
 
             if (newPassword !== confirmPassword) {
                 passwordMatch.innerHTML = "密碼不一致";
+                passwordMatch.style.color = "red";
                 return false;
             } else {
-                passwordMatch.innerHTML = "密碼不一致";
+                passwordMatch.innerHTML = "驗證成功";
+                passwordMatch.style.color = "green";
                 return true;
             }
         }

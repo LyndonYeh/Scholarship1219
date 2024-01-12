@@ -27,21 +27,6 @@
 						</div>
 					</form>					
 				</div>
-
-				<div class="mb-3">
-					<label for="verificationCode" class="form-label">請輸入6位數驗證碼</label>
-					<form action="${pageContext.request.contextPath}/mvc/scholarship/frontend/verify" method="post">
-						<div class="input-group" id="verificationCode">
-							<input type="text" class="form-control digit-input" id="verifyCode"
-								name="verifyCode" maxlength="6" required> 
-							<button id="verifyCode" class="btn btn-outline-primary"
-								type="submit">驗證</button>
-								<!-- 比對 session 驗證碼; yes : 導至 reset password page no :  -->
-						</div>
-					</form>
-				</div>
-				<div style="color: red">${forgetErrorMessage}</div>
-
 			</div>
 		</div>
 	</div>
