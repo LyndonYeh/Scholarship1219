@@ -404,7 +404,9 @@ public class ScholarshipMySQLController {
 
 		Optional<Institution> sessionInstitution = institutionDao
 				.findInstitutionByInstitutionId(sessionData.getInstitutionId());
-
+		
+		model.addAttribute("username", sessionData.getUsername());
+		model.addAttribute("userId", sessionData.getUserId());
 		model.addAttribute("sessionInstitution", sessionInstitution.get());
 
 		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp

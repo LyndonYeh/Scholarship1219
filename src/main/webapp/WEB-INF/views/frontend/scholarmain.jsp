@@ -68,7 +68,7 @@
 </head>
 <body>
 	<!-- menu -->
-	<%@include file="../include/menu_backend.jspf"%>
+	<%@include file="../include/menu.jspf"%>
 
 	<tr>
 		<td valign="top"><legend class="m-3">請輸入查詢條件</legend>

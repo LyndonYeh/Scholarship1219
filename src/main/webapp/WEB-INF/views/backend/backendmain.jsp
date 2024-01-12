@@ -44,7 +44,7 @@
 <title>獎學網後台</title>
 </head>
 <body>
-<%@include file="../include/menu_backend.jspf" %>
+<%@include file="../include/menu.jspf" %>
 	<tr>
 		<td valign="top">
 			<table class="table">
@@ -57,7 +57,6 @@
 					</tr>
 				</thead>
 				<tbody>
-				${ sessionInstitution }
 					<td scope="row">${ sessionInstitution.institutionId}</td>
 					<td>${ sessionInstitution.institutionName}</td>
 					<td>${ sessionInstitution.contact}</td>

@@ -78,15 +78,18 @@
 		transaction-manager="transactionManager"></tx:annotation-driven>
 
 
-	<bean id="loginInterceptor"
-		class="scholarship.interceptor.LoginInterceptor" />
 
+
+	<!-- 配置攔截器 防止使用者透過路徑進入後台相關的url -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/mvc/**" />
-			<mvc:exclude-mapping path="/mvc/login" />
-			<mvc:exclude-mapping path="/mvc/login/*" />
-			<bean class="scholarship.interceptor.LoginInterceptor" />
+			<mvc:mapping path="/scholarship/**" />
+			<mvc:exclude-mapping
+				path="/scholarship/frontend/**" />
+			<mvc:exclude-mapping path="/scholarship/login" />
+			<mvc:exclude-mapping path="/scholarship/login/*" />
+			<bean id="loginInterceptor"
+				class="scholarship.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 
@@ -122,15 +125,6 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
-	<!-- 配置攔截器 防止使用者透過路徑進入後台相關的url-->
-	  <mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/scholarship/**" />
-			<mvc:exclude-mapping path="/scholarship/frontend" />
-			<mvc:exclude-mapping path="/scholarship/login" />
-			<mvc:exclude-mapping path="/scholarship/login/*" />
-			<bean class="scholarship.interceptor.LoginInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
+
 
 </beans>		

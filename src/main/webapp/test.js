@@ -47,7 +47,7 @@
 					value="password1" required>
 				<div class="invalid-feedback">請輸入密碼</div>
 			</div>
-            <div class="d-flex justify-content-around align-items-center mt-3">
+            <div class="d-flex justify-content-between align-items-center mt-3">
                 <button class="btn btn-primary" type="submit" onclick="location.href='./backend/main.jsp';">登入</button>
                 <a class="btn btn-outline-danger" onclick="location.href='./frontend/forgetpassword';">忘記密碼</a>
                 <form action="./secure/oidc/google_login" class="form-inline">
