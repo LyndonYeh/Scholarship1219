@@ -87,7 +87,7 @@ form {
 					href="${pageContext.request.contextPath}/mvc/scholarship/frontend/forgetpassword">
 					重設密碼 </a>
 			</div>
-			<button class="btn btn-danger-outline" type="submit">確認修改</button>
+			<button class="btn btn-outline-danger" type="submit">確認修改</button>
 
 		</form>
 		<!-- 測試訊息<div>

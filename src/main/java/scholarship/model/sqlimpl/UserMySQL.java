@@ -31,7 +31,7 @@ public class UserMySQL implements UserDao {
 
 	@Override
 	public int addUser(User user) {
-		String sql = "INSERT INTO User (username, password, institutionId, level) VALUES (:username, :password, :institutionId, :level)";
+		String sql = "INSERT INTO User (username, password, institutionId) VALUES (:username, :password, :institutionId)";
 
 		String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		Map<String, Object> params = new HashMap<>();
@@ -39,7 +39,7 @@ public class UserMySQL implements UserDao {
 		params.put("username", user.getUsername());
 		params.put("password", hashedPassword);
 		params.put("institutionId", user.getInstitution().getInstitutionId());
-		params.put("level", user.getLevel());
+//		params.put("level", user.getLevel());
 
 		return namedParameterJdbcTemplate.update(sql, params);
 	}
@@ -95,19 +95,19 @@ public class UserMySQL implements UserDao {
 
 	@Override
 	public Optional<User> findUserByUsername(String username) {
-		String sql = "SELECT userId, institutionId, username, password, level FROM scholarshipv1.user WHERE username = :username";
+		String sql = "SELECT userId, institutionId, username, password FROM scholarshipv1.user WHERE username = :username";
 
 		Map<String, Object> paramMap = Collections.singletonMap("username", username);
 
 		try {
 			User user = namedParameterJdbcTemplate.queryForObject(sql, paramMap,
 					new BeanPropertyRowMapper<>(User.class));
-			String sql2 = "select s.serviceId, s.serviceLocation, s.serviceName, s.serviceUrl "
-					+ "from level_ref_service r " + "left join service s on s.serviceId = r.serviceId "
-					+ "where r.levelId = ? order by r.sort";
-			List<Service> services = jdbcTemplate.query(sql2, new BeanPropertyRowMapper<>(Service.class),
-					user.getLevel());
-			user.setServices(services);
+//			String sql2 = "select s.serviceId, s.serviceLocation, s.serviceName, s.serviceUrl "
+//					+ "from level_ref_service r " + "left join service s on s.serviceId = r.serviceId "
+//					+ "where r.levelId = ? order by r.sort";
+//			List<Service> services = jdbcTemplate.query(sql2, new BeanPropertyRowMapper<>(Service.class),
+//					user.getLevel());
+//			user.setServices(services);
 			return Optional.ofNullable(user);
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();

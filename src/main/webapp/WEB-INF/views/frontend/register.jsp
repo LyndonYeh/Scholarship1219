@@ -32,8 +32,7 @@ form {
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	width: 500px;
 	height: auto;
-	margin-top: 50px; /* Adjusted margin for better visibility */
-}
+	margin-top: 50px;
 </style>
 </head>
 <body>

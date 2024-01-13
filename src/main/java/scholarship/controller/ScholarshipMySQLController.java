@@ -231,7 +231,7 @@ public class ScholarshipMySQLController {
 	/*
 	 * 使用者註冊
 	 */
-	@PostMapping("/registerconfirm")
+	@PostMapping("/frontend/registerconfirm")
 	public String register(@RequestParam("password") String password,
 			@RequestParam("institutionName") String institutionName,
 			@RequestParam("institutionId") String institutionId, @RequestParam("contact") String contact,
@@ -239,9 +239,11 @@ public class ScholarshipMySQLController {
 			@RequestParam("username") String username,
 			@RequestParam("verificationCode") String verificationCode, Model model, HttpSession session) {
 		String sessionVerifiedCode = (String) session.getAttribute("verificationCode");
+		System.out.println(sessionVerifiedCode);
+		System.out.println(verificationCode);
 		if (verificationCode.equals(sessionVerifiedCode)) {
 			try {
-				userService.registerUser(username, password, institutionName, institutionId, contact, contactNumber, 1);
+				userService.registerUser(username, password, institutionName, institutionId, contact, contactNumber);
 				return "redirect:/mvc/scholarship/login";
 			} catch (Exception e) {
 				e.printStackTrace();

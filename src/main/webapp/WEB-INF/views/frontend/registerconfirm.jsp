@@ -43,7 +43,7 @@ form {
 	<div class="d-flex justify-content-center  align-items-center vh-100 ">
 
 		<form class="row g-3 needs-validation " method="post"
-			action="./register">
+			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/registerconfirm">
 			<h4 class="text-center">註冊會員 ${username}</h4>
 
 			<div class="mb-3">
@@ -65,9 +65,7 @@ form {
 				</div>
 				<div class="mb-3">
 					<input type="text" class="form-control" id="username"
-						name="username" value="${username}" style="display: none;"
-						required>
-					<div class="invalid-feedback">請輸入密碼</div>
+						name="username" value="${username}" style="display: none;">
 				</div>
 
 				<div class="mb-3">

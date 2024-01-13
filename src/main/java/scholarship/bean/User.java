@@ -20,19 +20,19 @@ public class User {
 	private String institutionId; // 機構 id
 	private String username; // 使用者名稱
 	private String password; // 使用者密碼
-	private Integer level;// 使用者權限, 目前只有一組, 預設1
+//	private Integer level;// 使用者權限, 目前只有一組, 預設1
 	private Institution institution;
 	
 	// 提供權限訪問的服務列表
 	private List<Service> services;
 	
 	
-	public User(Integer userId, String username, String password, String institutionId, Integer level) {
+	public User(Integer userId, String username, String password, String institutionId) {
 		this.userId = userId;
 		this.username = username;
 		this.institutionId = institutionId;
 		this.password = password;
-		this.level=level;
+//		this.level=level;
 	}
 	
 	public void setInstitutionId(String institutionId) {
@@ -80,14 +80,14 @@ public class User {
 		this.password = password;
 	}
 	
-	public Integer getLevel() {
-		return level;
-	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-	
+//	public Integer getLevel() {
+//		return level;
+//	}
+//
+//	public void setLevel(Integer level) {
+//		this.level = level;
+//	}
+//	
 
 	public List<Service> getServices() {
 		return services;

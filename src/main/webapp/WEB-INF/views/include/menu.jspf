@@ -14,17 +14,21 @@
 
 				<c:choose>
 					<c:when test="${currentURL.contains('backend')}">
-						<li class="navbar-brand" href=><a class="nav-link active"
+						<li class="navbar-brand"><a class="nav-link active"
 							aria-current="page"
 							href="${pageContext.request.contextPath}/mvc/scholarship/frontend">獎學金列表</a></li>
-						<li class="nav-item  d-flex justify-content-center align-items-center" style="color: white;"><a class="nav-link active"
-							aria-current="page"
+						<li
+							class="nav-item  d-flex justify-content-center align-items-center"><a
+							class="nav-link active" aria-current="page"
 							href="${pageContext.request.contextPath}/mvc/scholarship/backend/edit/${userId}">修改會員資料</a></li>
 					</c:when>
 					<c:when
 						test="${currentURL.contains('frontend') and not empty sessionScope.user}">
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="./backend">後台首頁</a></li>
+						<li class="navbar-brand"><a class="nav-link active"
+							aria-current="page"
+							href="${pageContext.request.contextPath}/mvc/scholarship/frontend">獎學金列表</a></li>
+						<li class="nav-item justify-content-center align-items-center"><a class="nav-link active"
+							aria-current="page" href="${pageContext.request.contextPath}/mvc/scholarship/backend">後台首頁</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="navbar-brand"><a class="nav-link active"
@@ -35,12 +39,13 @@
 			</ul>
 			<c:choose>
 				<c:when test="${not empty sessionScope.user}">
-					<li class="nav-item">  <a class="nav-link d-flex justify-content-center align-items-center" style="color: white;">Hi, ${username}</a>Hi, ${username}</a></li>
-						<form class="form-inline"
-							action="${pageContext.request.contextPath}/mvc/scholarship/logout">
-							<button class="btn btn-outline-success my-2 my-sm-0"
-								type="submit">Logout</button>
-						</form>
+					<li class="nav-item"><a
+						class="nav-link d-flex justify-content-center align-items-center"
+						style="color: white;">Hi, ${username}</a>Hi, ${username}</a></li>
+					<form class="form-inline"
+						action="${pageContext.request.contextPath}/mvc/scholarship/logout">
+						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+					</form>
 					</li>
 				</c:when>
 				<c:otherwise>
