@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form"%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -16,27 +13,47 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
 	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- 引入 PureCSS -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
-<!-- 引入 DataTables CSS scholarship 參考 -->
+<!-- 引入 DataTables CSS -->
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+<!-- 引入 jQuery -->
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- 引入 DataTables -->
 <script type="text/javascript"
 	src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<!-- 引入 DataTables 匯出列印功能 -->
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.pure-table').DataTable({
+			// 設定語言為繁體中文
 			"language" : {
 				"url" : "/js/datatables_zh_tw.json"
 			},
+			// 設定匯出功能
 			dom : 'lBfrtip',
 			buttons : [ {
-				extend : 'copy',
-				text : '複製',
-				className : 'pure-button pure-button-primary'
-			}, {
 				extend : 'csv',
 				text : 'CSV',
 				className : 'pure-button'
@@ -49,6 +66,7 @@
 				text : 'PDF/列印',
 				className : 'pure-button pure-button-primary'
 			} ]
+
 		});
 	});
 
@@ -69,7 +87,6 @@
 <body>
 	<!-- menu -->
 	<%@include file="../include/menu.jspf"%>
-
 	<tr>
 		<td valign="top"><legend class="m-3">請輸入查詢條件</legend>
 			<div class="p-3 border border-2 border-warning bg bg-warning">
@@ -79,7 +96,7 @@
 					&emsp;
 					<p />
 					&emsp;身分別:&nbsp;
-						<sp:select path="entityId">
+						<sp:select path="entityId" >
 						<sp:option value="0" label="全選"></sp:option>
 						<sp:option value="1" label="幼稚園"></sp:option>
 						<sp:option value="2" label="小學"></sp:option>
@@ -103,8 +120,7 @@
 				</sp:form>
 			</div></td>
 	<tr>
-
-		<table class="table table-warning">
+		<table class="pure-table pure-table-bordered">
 			<thead>
 				<tr>
 					<th scope="col">#</th>
@@ -117,18 +133,20 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="scholarship, state : ${ scholarships }">
 					<c:forEach items="${scholarships}" var="scholarship">
-						<tr>
-							<td>${scholarship.scholarshipId }</td>
-							<td>${scholarship.institution.institutionName }</td>
-							<td>${scholarship.entity.entityName}</td>
-							<td>${scholarship.scholarshipName }</td>
-							<td>${scholarship.scholarshipAmount}${contact}</td>
-							<td>${scholarship.institution.contact }</td>
-							<td>${scholarship.institution.contactNumber }</td>
-						</tr>
+				<tr>
+
+						<td>${scholarship.scholarshipId }</td>
+						<td>${scholarship.institution.institutionName }</td>
+						<td>${scholarship.entity.entityName}</td>
+						<td>${scholarship.scholarshipName }</td>
+						<td>${scholarship.scholarshipAmount}${contact}</td>
+						<td>${scholarship.institution.contact }</td>
+						<td>${scholarship.institution.contactNumber }</td>
+
+				</tr>
 					</c:forEach>
 			</tbody>
 		</table>
+</body>
 </html>

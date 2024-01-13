@@ -33,12 +33,14 @@ form {
 	width: 500px;
 	height: auto;
 	margin-top: 50px;
+}
 </style>
 </head>
 <body>
 	<div class="d-flex justify-content-center align-items-center vh-100">
-		<form class="needs-validation" novalidate 
-			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/register" method="post">
+		<form class="needs-validation" novalidate
+			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/register"
+			method="post">
 			<h4 class="text-center">請輸入使用者帳號</h4>
 			<div>
 				<label for="username" class="form-label">註冊使用者帳號</label> <a
@@ -47,7 +49,9 @@ form {
 					value="dave.wenyu@gmail.com" required>
 			</div>
 			<div class="d-flex justify-content-evenly my-3">
-				<button class="btn btn-primary" type="submit">註冊</button>
+				<a href="${pageContext.request.contextPath}/mvc/scholarship/frontend"
+					class="btn btn-outline-secondary">回首頁</a>
+				<button class="btn btn-outline-primary" type="submit">註冊</button>
 			</div>
 		</form>
 	</div>
@@ -69,5 +73,4 @@ form {
 			}, false)
 		})
 	})()
-
 </script>

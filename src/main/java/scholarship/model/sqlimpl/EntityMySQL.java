@@ -13,7 +13,7 @@ import scholarship.bean.Entity;
 import scholarship.bean.Institution;
 import scholarship.model.dao.EntityDao;
 
-//
+
 @Repository
 public class EntityMySQL implements EntityDao {
 	

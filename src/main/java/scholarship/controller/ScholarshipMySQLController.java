@@ -190,13 +190,12 @@ public class ScholarshipMySQLController {
 		return "/frontend/register";
 	}
 
-	
 	/*
 	 * 比對註冊信箱驗證碼
 	 */
 	@PostMapping("/frontend/register")
-	public String sendRegisterVerificationCode(@RequestParam String username, HttpSession session, Model model, RedirectAttributes redirectAttributes)
-			throws MessagingException {
+	public String sendRegisterVerificationCode(@RequestParam String username, HttpSession session, Model model,
+			RedirectAttributes redirectAttributes) throws MessagingException {
 		List<User> users = userDao.findAllUsers();
 		List<String> usernames = users.stream().map(User::getUsername) // 把 username 抽出來
 				.collect(Collectors.toList());
@@ -235,8 +234,7 @@ public class ScholarshipMySQLController {
 	public String register(@RequestParam("password") String password,
 			@RequestParam("institutionName") String institutionName,
 			@RequestParam("institutionId") String institutionId, @RequestParam("contact") String contact,
-			@RequestParam("contactNumber") String contactNumber,
-			@RequestParam("username") String username,
+			@RequestParam("contactNumber") String contactNumber, @RequestParam("username") String username,
 			@RequestParam("verificationCode") String verificationCode, Model model, HttpSession session) {
 		String sessionVerifiedCode = (String) session.getAttribute("verificationCode");
 		System.out.println(sessionVerifiedCode);
@@ -282,7 +280,17 @@ public class ScholarshipMySQLController {
 	 * 前台首頁
 	 */
 	@GetMapping("/frontend")
-	public String indexFront(@ModelAttribute Scholarship scholarship, Model model) {
+	public String indexFront(@ModelAttribute Scholarship scholarship, Model model, HttpSession session) {
+		if (session.getAttribute("user") instanceof User) {
+			User sessionData = (User) session.getAttribute("user");
+			model.addAttribute("username", sessionData.getUsername());
+			// 如果有 user 在 session, 存入 attribute 登入狀態的給前台渲染 username\
+		} else {
+			addBasicModelFrontEnd(model);
+			model.addAttribute("submitBtnName", "新增");
+			model.addAttribute("_method", "POST");
+			return "frontend/scholarmain";
+		}
 		addBasicModelFrontEnd(model);
 		model.addAttribute("submitBtnName", "新增");
 		model.addAttribute("_method", "POST");
@@ -315,7 +323,7 @@ public class ScholarshipMySQLController {
 	 */
 	@GetMapping("/backend")
 	public String indexBackend(@ModelAttribute Scholarship scholarship, Model model, HttpSession session) {
-		addBasicModel(model, session);
+		addBasicModelBackEnd(model, session);
 
 		model.addAttribute("submitBtnName", "新增");
 		model.addAttribute("_method", "POST");
@@ -342,7 +350,7 @@ public class ScholarshipMySQLController {
 			return "backendmain";
 		}
 
-		addBasicModel(model, session);
+		addBasicModelBackEnd(model, session);
 		User sessionData = (User) session.getAttribute("user");
 		scholarship.setInstitutionId(sessionData.getInstitutionId());
 		scholarship.setUserId(sessionData.getUserId());
@@ -357,7 +365,7 @@ public class ScholarshipMySQLController {
 	@GetMapping("/backend/copy/{scholarshipId}")
 	public String getUser(@PathVariable("scholarshipId") Integer scholarshipId, Model model, HttpSession session) {
 
-		addBasicModel(model, session);
+		addBasicModelBackEnd(model, session);
 
 		Scholarship scholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
 		model.addAttribute("scholarship", scholarship);
@@ -369,7 +377,7 @@ public class ScholarshipMySQLController {
 	@GetMapping("/backend/changeLunch/{scholarshipId}")
 	public String changeLunch(@PathVariable("scholarshipId") Integer scholarshipId, Model model, HttpSession session) {
 
-		addBasicModel(model, session);
+		addBasicModelBackEnd(model, session);
 
 		Scholarship scholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
 		model.addAttribute("scholarship", scholarship);
@@ -397,7 +405,7 @@ public class ScholarshipMySQLController {
 	 * @param session 首頁基礎資料 !!!! 後台 根據Institution顯示資料
 	 * 
 	 */
-	private void addBasicModel(Model model, HttpSession session) {
+	private void addBasicModelBackEnd(Model model, HttpSession session) {
 		User sessionData = (User) session.getAttribute("user");
 
 		List<Institution> instiutions = institutionDao.findAllInstitutions();
@@ -406,7 +414,7 @@ public class ScholarshipMySQLController {
 
 		Optional<Institution> sessionInstitution = institutionDao
 				.findInstitutionByInstitutionId(sessionData.getInstitutionId());
-		
+
 		model.addAttribute("username", sessionData.getUsername());
 		model.addAttribute("userId", sessionData.getUserId());
 		model.addAttribute("sessionInstitution", sessionInstitution.get());
@@ -425,9 +433,9 @@ public class ScholarshipMySQLController {
 		List<Scholarship> scholarships = scholarshipDao.findAllscholarshipisUpdated();
 		List<User> users = userDao.findAllUsers();
 
-		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
+//		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
-		model.addAttribute("users", users); // 取得目前最新 users 資料
+//		model.addAttribute("users", users); // 取得目前最新 users 資料
 	}
 
 	private void addBasicModelEntity(Model model, Integer entId) {

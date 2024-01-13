@@ -45,7 +45,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
     @Override
     public void addScholarship(Scholarship scholarship) {
         String sql = "INSERT INTO scholarshipv1.scholarshiprecord (scholarshipId, userId, institutionId, scholarshipName, scholarshipAmount, entityId, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated) " +
-                "VALUES (:scholarshipId, :userId, :institutionId, :scholarshipName, :scholarshipAmount, :entity, :updatedTime, :startDate, :endDate, :isExpired, :webUrl, :isUpdated)";
+                "VALUES (:scholarshipId, :userId, :institutionId, :scholarshipName, :scholarshipAmount, :entityId, :updatedTime, :startDate, :endDate, :isExpired, :webUrl, :isUpdated)";
        
         int scholarshipId = getNextScholarshipId();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss"); 

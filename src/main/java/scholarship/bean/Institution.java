@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 /**
  * 1. 獎助機構
 +--------------------------------------------------------------+
-| institutionId  | institutionName | contact | contact number  |  
+| institutionId     |     institutionName     | contact    | contact number  |  
 +--------------------------------------------------------------+
 |    25570111    |   行天宮助寒獎學金  | 陳小姐    |  0912345678     |
 +--------------------------------------------------------------+
@@ -24,22 +24,15 @@ import com.google.gson.Gson;
 public class Institution {
 
     private String institutionId;
-
-
     private String institutionName;
-
-
     private String contactNumber;
-
     private String contact;
 	
 	// 設定關聯
 	private User user;
 	private List<Scholarship> scholarships;
-	
-
 	private List<User> users;
-	
+
 	public Institution() {
 	
 	}
@@ -59,32 +52,20 @@ public class Institution {
 		this.user = user;
 	}
 
-	
-
-
-
-//	public Institution(Integer scholoarshipId, Integer userId, List<String> scholarshipItems, int scholarshipMaxAmount, String unit, String contact, String contactNumber) {
-//
-//	}
-
-
 
 	public String getInstitutionName() {
 		return institutionName;
 	}
 
 
-
 	public void setInstitutionName(String institutionName) {
 		this.institutionName = institutionName;
 	}
 
-
-
+	
 	public String getInstitutionId() {
 		return institutionId;
 	}
-
 
 
 	public void setInstitutionId(String institutionId) {
@@ -92,17 +73,14 @@ public class Institution {
 	}
 
 
-
 	public String getContactNumber() {
 		return contactNumber;
 	}
 
 
-
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
 	}
-
 
 
 	public String getContact() {
@@ -114,10 +92,11 @@ public class Institution {
 		this.contact = contact;
 	}
 
+	
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);
 	}
 	
-
+	
 }

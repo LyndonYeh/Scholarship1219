@@ -29,6 +29,7 @@ import scholarship.util.OIDCUtil;
 @WebServlet("/secure/callback/oidc")
 public class OIDCCallback extends HttpServlet {
 
+// Google 登入
 //	private UserService userService;
 //
 //	@Autowired

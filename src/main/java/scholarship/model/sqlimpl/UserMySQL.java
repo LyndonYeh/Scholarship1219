@@ -16,9 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 
 import scholarship.bean.Institution;
-import scholarship.bean.Service;
 import scholarship.bean.User;
 import scholarship.model.dao.UserDao;
+
 
 @Repository
 public class UserMySQL implements UserDao {
@@ -39,7 +39,6 @@ public class UserMySQL implements UserDao {
 		params.put("username", user.getUsername());
 		params.put("password", hashedPassword);
 		params.put("institutionId", user.getInstitution().getInstitutionId());
-//		params.put("level", user.getLevel());
 
 		return namedParameterJdbcTemplate.update(sql, params);
 	}
@@ -52,6 +51,7 @@ public class UserMySQL implements UserDao {
 		return namedParameterJdbcTemplate.update(sql, params);
 	}
 
+	
 	@Override
 	public Boolean updateUsernameById(Integer userId, String password, String newUserName) {
 		String sql = "UPDATE User SET userName = :newUserName WHERE userId = :userId AND password = :password";
@@ -64,6 +64,7 @@ public class UserMySQL implements UserDao {
 		return rowsUpdated > 0;
 	}
 
+	
 	@Override
 	public Boolean updateUserPasswordById(Integer userId, String oldPassword, String newPassword) {
 		String sql = "UPDATE User SET password = :newPassword WHERE userId = :userId AND password = :oldPassword";
@@ -76,6 +77,7 @@ public class UserMySQL implements UserDao {
 		return rowsUpdated > 0;
 	}
 
+	
 	@Override
 	public Boolean updateUserPasswordById(Integer userId, String newPassword) {
 		String sql = "UPDATE User SET password = :newPassword WHERE userId = :userId";
@@ -87,12 +89,14 @@ public class UserMySQL implements UserDao {
 		return rowsUpdated > 0;
 	}
 
+	
 	@Override
 	public List<User> findAllUsers() {
 		String sql = "SELECT * FROM User";
 		return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
 	}
 
+	
 	@Override
 	public Optional<User> findUserByUsername(String username) {
 		String sql = "SELECT userId, institutionId, username, password FROM scholarshipv1.user WHERE username = :username";
@@ -102,18 +106,13 @@ public class UserMySQL implements UserDao {
 		try {
 			User user = namedParameterJdbcTemplate.queryForObject(sql, paramMap,
 					new BeanPropertyRowMapper<>(User.class));
-//			String sql2 = "select s.serviceId, s.serviceLocation, s.serviceName, s.serviceUrl "
-//					+ "from level_ref_service r " + "left join service s on s.serviceId = r.serviceId "
-//					+ "where r.levelId = ? order by r.sort";
-//			List<Service> services = jdbcTemplate.query(sql2, new BeanPropertyRowMapper<>(Service.class),
-//					user.getLevel());
-//			user.setServices(services);
 			return Optional.ofNullable(user);
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
 		}
 	}
 
+	
 	@Override
 	public Optional<User> findUserById(Integer userId) {
 		String sql = "SELECT * FROM scholarshipv1.user where userId = :userId";
@@ -123,4 +122,6 @@ public class UserMySQL implements UserDao {
 		return Optional.of(user);
 
 	}
+	
+	
 }

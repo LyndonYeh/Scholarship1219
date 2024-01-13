@@ -27,8 +27,10 @@
 						<li class="navbar-brand"><a class="nav-link active"
 							aria-current="page"
 							href="${pageContext.request.contextPath}/mvc/scholarship/frontend">獎學金列表</a></li>
-						<li class="nav-item justify-content-center align-items-center"><a class="nav-link active"
-							aria-current="page" href="${pageContext.request.contextPath}/mvc/scholarship/backend">後台首頁</a></li>
+						<li
+							class="nav-item  d-flex justify-content-center align-items-center"><a
+							class="nav-link active" aria-current="page"
+							href="${pageContext.request.contextPath}/mvc/scholarship/backend">後台首頁</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="navbar-brand"><a class="nav-link active"
@@ -41,21 +43,32 @@
 				<c:when test="${not empty sessionScope.user}">
 					<li class="nav-item"><a
 						class="nav-link d-flex justify-content-center align-items-center"
-						style="color: white;">Hi, ${username}</a>Hi, ${username}</a></li>
-					<form class="form-inline"
-						action="${pageContext.request.contextPath}/mvc/scholarship/logout">
-						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
-					</form>
+						style="color: white;">Hi,${username}</a></li>
+					<li class="nav-item">
+						<form class="form-inline"
+							action="${pageContext.request.contextPath}/mvc/scholarship/logout">
+							<button class="btn btn-outline-success my-2 my-sm-0"
+								type="submit">Logout</button>
+						</form>
 					</li>
 				</c:when>
 				<c:otherwise>
-
+					<form class="d-flex"
+						action="${pageContext.request.contextPath}/mvc/scholarship/frontend/register">
+						<button class="btn btn-outline-danger ms-5" type="submit">註冊</button>
+					</form>
 					<form class="d-flex"
 						action="${pageContext.request.contextPath}/mvc/scholarship/login">
 						<button class="btn btn-outline-success ms-5" type="submit">Login</button>
 					</form>
+					<form class="d-flex"
+						action="${pageContext.request.contextPath}/secure/oidc/google_login">
+						<button class="btn btn-outline-success ms-5" type="submit">Google
+							Login</button>
+					</form>
 				</c:otherwise>
 			</c:choose>
+
 		</div>
 	</div>
 </nav>
