@@ -21,6 +21,10 @@
 							class="nav-item  d-flex justify-content-center align-items-center"><a
 							class="nav-link active" aria-current="page"
 							href="${pageContext.request.contextPath}/mvc/scholarship/backend/edit/${userId}">修改會員資料</a></li>
+						<li
+							class="nav-item  d-flex justify-content-center align-items-center"><a
+							class="nav-link active" aria-current="page"
+							href="${pageContext.request.contextPath}/mvc/scholarship/backend/garbageCollection">資源回收桶</a></li>
 					</c:when>
 					<c:when
 						test="${currentURL.contains('frontend') and not empty sessionScope.user}">

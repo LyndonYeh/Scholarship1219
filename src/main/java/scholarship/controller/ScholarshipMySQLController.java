@@ -339,6 +339,7 @@ public class ScholarshipMySQLController {
 
 		model.addAttribute("_method", "POST");
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
+		model.addAttribute("username", sessionData.getUsername());
 
 		return "backend/garbageCollection";
 	}
@@ -434,7 +435,7 @@ public class ScholarshipMySQLController {
 		
 		boolean rowcount = scholarshipDao.removeScholarshipByIdFromGarbageCollection(scholarshipId);
 		System.out.println("delete User rowcount = " + rowcount);
-		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁
+		return "redirect:/mvc/scholarship/backend/garbageCollection"; 
 	}
 
 	/**
