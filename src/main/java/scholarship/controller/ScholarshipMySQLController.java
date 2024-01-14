@@ -340,6 +340,7 @@ public class ScholarshipMySQLController {
 		model.addAttribute("_method", "POST");
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
 		model.addAttribute("username", sessionData.getUsername());
+		model.addAttribute("userId", sessionData.getUserId());
 
 		return "backend/garbageCollection";
 	}
