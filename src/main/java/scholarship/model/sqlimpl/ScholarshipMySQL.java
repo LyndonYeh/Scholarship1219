@@ -44,8 +44,8 @@ public class ScholarshipMySQL implements ScholarshipDao {
     
     @Override
     public void addScholarship(Scholarship scholarship) {
-        String sql = "INSERT INTO scholarshipv1.scholarshiprecord (scholarshipId, userId, institutionId, scholarshipName, scholarshipAmount, entityId, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated) " +
-                "VALUES (:scholarshipId, :userId, :institutionId, :scholarshipName, :scholarshipAmount, :entityId, :updatedTime, :startDate, :endDate, :isExpired, :webUrl, :isUpdated)";
+        String sql = "INSERT INTO scholarshipv1.scholarshiprecord (scholarshipId, userId, institutionId, scholarshipName, scholarshipAmount, entityId, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated, contact, contactNumber) " +
+                "VALUES (:scholarshipId, :userId, :institutionId, :scholarshipName, :scholarshipAmount, :entityId, :updatedTime, :startDate, :endDate, :isExpired, :webUrl, :isUpdated, :contact, :contactNumber)";
        
         int scholarshipId = getNextScholarshipId();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss"); 
@@ -65,15 +65,46 @@ public class ScholarshipMySQL implements ScholarshipDao {
         params.put("isExpired", false);
         params.put("webUrl", scholarship.getWebUrl());
         params.put("isUpdated", false);
+        params.put("contact", scholarship.getContact());
+        params.put("contactNumber", scholarship.getContactNumber());
 
         namedParameterJdbcTemplate.update(sql, params);
+    }
+    //這個是垃圾桶的新增
+    @Override
+    public void addScholarshipToGarbageCollection(Scholarship scholarship) {
+    	String sql = "INSERT INTO scholarshipv1.garbageCollection ( userId, institutionId, scholarshipName, scholarshipAmount, entityId, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated, contact, contactNumber) " +
+    			"VALUES ( :userId, :institutionId, :scholarshipName, :scholarshipAmount, :entityId, :updatedTime, :startDate, :endDate, :isExpired, :webUrl, :isUpdated, :contact, :contactNumber)";
+    	
+    	
+    	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss"); 
+    	
+    	Map<String, Object> params = new HashMap<>();
+    	
+    	params.put("userId", scholarship.getUserId());
+    	params.put("institutionId", scholarship.getInstitutionId());
+    	params.put("scholarshipName", scholarship.getScholarshipName());
+    	params.put("scholarshipAmount", scholarship.getScholarshipAmount());
+    	params.put("entityId", scholarship.getEntityId());
+    	
+    	//params.put("updatedTime", Date.valueOf(scholarship.getUpdatedTime()));
+    	params.put("updatedTime", format.format(System.currentTimeMillis()));
+    	params.put("startDate", scholarship.getStartDate());
+    	params.put("endDate", Date.valueOf(scholarship.getEndDate()));
+    	params.put("isExpired", false);
+    	params.put("webUrl", scholarship.getWebUrl());
+    	params.put("isUpdated", false);
+    	params.put("contact", scholarship.getContact());
+    	params.put("contactNumber", scholarship.getContactNumber());
+    	
+    	namedParameterJdbcTemplate.update(sql, params);
     }
 
     
     
     @Override
     public Boolean updateLauchStatusbyId(Integer scholarshipId, Boolean isUpdated) {
-        String sql = "UPDATE scholarshipv1.cholarshiprecord SET isUpdated = :isUpdated WHERE scholarshipId = :scholarshipId";
+        String sql = "UPDATE scholarshipv1.scholarshiprecord SET isUpdated = :isUpdated WHERE scholarshipId = :scholarshipId";
         Map<String, Object> params = new HashMap<>();
         params.put("isUpdated", isUpdated);
         params.put("scholarshipId", scholarshipId);
@@ -93,6 +124,16 @@ public class ScholarshipMySQL implements ScholarshipDao {
         int rowsDeleted = namedParameterJdbcTemplate.update(sql, params);
         return rowsDeleted > 0;
     }
+    //這是垃圾桶的刪除(復原)
+    @Override
+    public Boolean removeScholarshipByIdFromGarbageCollection(Integer scholarshipId) {
+    	String sql = "DELETE FROM  scholarshipv1.GarbageCollection WHERE scholarshipId = :scholarshipId";
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("scholarshipId", scholarshipId);
+    	
+    	int rowsDeleted = namedParameterJdbcTemplate.update(sql, params);
+    	return rowsDeleted > 0;
+    }
 
     
     
@@ -104,6 +145,15 @@ public class ScholarshipMySQL implements ScholarshipDao {
         List<Scholarship> scholarships=namedParameterJdbcTemplate.query(sql,params,new BeanPropertyRowMapper<>(Scholarship.class));
         scholarships.forEach(this::enrichScholarshipWithDetails);
         return scholarships;
+    }
+    @Override
+    public List<Scholarship> findScholarshipByInstitutionIdFromGarbageCollection(String institutionId) {
+    	String sql = "SELECT * FROM  scholarshipv1.garbageCollection WHERE institutionId = :institutionId";
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("institutionId", institutionId);
+    	List<Scholarship> scholarships=namedParameterJdbcTemplate.query(sql,params,new BeanPropertyRowMapper<>(Scholarship.class));
+    	scholarships.forEach(this::enrichScholarshipWithDetails);
+    	return scholarships;
     }
 
     
@@ -180,6 +230,16 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
         Scholarship scholarship = namedParameterJdbcTemplate.queryForObject(sql,params, new BeanPropertyRowMapper<>(Scholarship.class));
         return Optional.ofNullable(scholarship);
+    }
+    
+    @Override
+    public Optional<Scholarship> findScholarshipByIdFromGarbageCollection(Integer scholarshipId) {
+    	String sql = "SELECT * FROM  scholarshipv1.garbageCollection WHERE scholarshipId = :scholarshipId";
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("scholarshipId", scholarshipId);
+    	
+    	Scholarship scholarship = namedParameterJdbcTemplate.queryForObject(sql,params, new BeanPropertyRowMapper<>(Scholarship.class));
+    	return Optional.ofNullable(scholarship);
     }
     
     

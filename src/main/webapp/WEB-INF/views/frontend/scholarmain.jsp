@@ -139,7 +139,9 @@
 						<td>${scholarship.scholarshipId }</td>
 						<td>${scholarship.institution.institutionName }</td>
 						<td>${scholarship.entity.entityName}</td>
-						<td>${scholarship.scholarshipName }</td>
+						<td>
+						<a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
+						</td>
 						<td>${scholarship.scholarshipAmount}${contact}</td>
 						<td>${scholarship.institution.contact }</td>
 						<td>${scholarship.institution.contactNumber }</td>

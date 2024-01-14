@@ -27,6 +27,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			if (URI.equals("/Scholarship/mvc/scholarship/backend")) {
 				return true;
 			}
+			
 
 			// 修改資料頁 session userId 等於網址userId : 給過
 			if (URI.contains("/mvc/scholarship/backend/edit/" + urlUserId)) {
@@ -35,6 +36,18 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 			// 後台包含 copy url : 給過
 			if (URI.contains("/mvc/scholarship/backend/copy/")) {
+				return true;
+			}
+			if (URI.contains("/mvc/scholarship/backend/garbageCollection")) {
+				return true;
+			}
+			// 後台包含 change url : 給過
+			if (URI.contains("/mvc/scholarship/backend/changeLunch/")) {
+				return true;
+			}
+			
+			// 後台包含 change url : 給過
+			if (URI.contains("/mvc/scholarship/backend/delete/")) {
 				return true;
 			}
 

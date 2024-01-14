@@ -41,6 +41,8 @@ public class Scholarship {
 	private String webUrl;
 	private Boolean isUpdated;
 	private Integer entityId;
+    private String contactNumber;
+    private String contact;
 	
 	private Institution institution;
 	private Entity entity;
@@ -64,6 +66,32 @@ public class Scholarship {
 		this.endDate = endDate;
 		this.webUrl = webUrl;
 	}
+	
+	
+	
+	public Scholarship(Integer scholarshipId, Integer userId, String institutionId, String scholarshipName,
+			Integer scholarshipAmount, String updatedTime, String startDate, String endDate, Boolean isExpired,
+			String webUrl, Boolean isUpdated, Integer entityId, String contactNumber, String contact,
+			Institution institution, Entity entity) {
+		super();
+		this.scholarshipId = scholarshipId;
+		this.userId = userId;
+		this.institutionId = institutionId;
+		this.scholarshipName = scholarshipName;
+		this.scholarshipAmount = scholarshipAmount;
+		this.updatedTime = updatedTime;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.isExpired = isExpired;
+		this.webUrl = webUrl;
+		this.isUpdated = isUpdated;
+		this.entityId = entityId;
+		this.contactNumber = contactNumber;
+		this.contact = contact;
+		this.institution = institution;
+		this.entity = entity;
+	}
+
 	//---------------------------方法----------------------------------------
 	public Integer getScholarshipId() {
 		return scholarshipId;
@@ -174,6 +202,23 @@ public class Scholarship {
 	
 	public Entity getEntity() {
 		return entity;
+	}
+	
+
+	public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
 	}
 
 	public String toString() {
