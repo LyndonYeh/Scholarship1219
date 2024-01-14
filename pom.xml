@@ -248,11 +248,17 @@
    </dependency>
 
 
-   <dependency>
-   	<groupId>GroupBuy</groupId>
-   	<artifactId>GroupBuy</artifactId>
-   	<version>0.0.1-SNAPSHOT</version>
-   </dependency>
+	<dependency>
+			<groupId>JavaCryptography</groupId>
+			<artifactId>JavaCryptography</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+ <dependency>
+   <groupId>org.springframework.security</groupId>
+   <artifactId>spring-security-crypto</artifactId>
+   <version>6.2.1</version>
+  </dependency>
  </dependencies>
+
 
 </project>

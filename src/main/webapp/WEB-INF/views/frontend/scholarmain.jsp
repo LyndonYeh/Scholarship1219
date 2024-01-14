@@ -108,7 +108,7 @@
 						&emsp;獎學金額度(金額為以上):&nbsp; <select id="amountSelect"
 						onchange="copySelectedValue()">
 						<option value="0">全選</option>
-						<option value="10000">5,000</option>
+						<option value="5000">5,000</option>
 						<option value="10000">10,000</option>
 						<option value="20000">20,000</option>
 						<option value="50000">50,000</option>

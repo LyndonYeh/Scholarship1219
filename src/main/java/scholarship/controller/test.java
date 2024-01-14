@@ -2,8 +2,6 @@ package scholarship.controller;
 
 import java.util.Random;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
 public class test {
 
 	public static void main(String[] args) {
