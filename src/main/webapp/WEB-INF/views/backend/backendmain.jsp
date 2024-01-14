@@ -1,4 +1,4 @@
-<!--%@page import="Scholarship.entity.ScholarshipUpdateRecord"%> -->
+
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -42,31 +42,9 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <meta charset="UTF-8">
 <title>獎學網後台</title>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="#">獎學網後台</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-			data-bs-target="#navbarSupportedContent"
-			aria-controls="navbarSupportedContent" aria-expanded="false"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="./frontend">前台首頁</a></li>
-				<!--<li class="nav-item"><a class="nav-link disabled">Disabled</a>
-				</li>-->
-			</ul>
-			<form class="d-flex" action="./login">
-				<button class="btn btn-outline-light" type="submit">登出</button>
-			</form>
-		</div>
-	</div>
-</nav>
-
 </head>
 <body>
+<%@include file="../include/menu.jspf" %>
 	<tr>
 		<td valign="top">
 			<table class="table">
@@ -79,7 +57,6 @@
 					</tr>
 				</thead>
 				<tbody>
-				${ sessionInstitution }
 					<td scope="row">${ sessionInstitution.institutionId}</td>
 					<td>${ sessionInstitution.institutionName}</td>
 					<td>${ sessionInstitution.contact}</td>
@@ -100,8 +77,7 @@
 						<!-- &emsp;上傳時間:&nbsp;  --><sp:input path="updatedTime" type="hidden" /> 
 						&emsp;開始日期:&nbsp; <sp:input path="startDate" type="date" /> 
 						&emsp;結束日期:&nbsp; <sp:input path="endDate" type="date" />
-						<!--&emsp;身分別:&nbsp; <sp:input path="entity" type="number" />-->
-						 &emsp;身分別:&nbsp;<sp:select path="entity" >
+						 &emsp;身分別:&nbsp;<sp:select path="entityId" >
 						<sp:option value="1" label="幼稚園"></sp:option>
 						<sp:option value="2" label="小學"></sp:option>
 						<sp:option value="3" label="國中"></sp:option>
@@ -109,14 +85,12 @@
 						<sp:option value="5" label="大學"></sp:option>
 						<sp:option value="6" label="研究所"></sp:option>
 					</sp:select>  
-					<!--<sp:select path="entity" items="${ entity }" itemLabel="name"
-						itemValue="id" />-->
-					
+				
 						&emsp;額度:&nbsp; <sp:input path="scholarshipAmount" type="number" />
 						<p />
 						<p />
 						&emsp;聯絡人:&nbsp; <sp:input path="institution.contact" type="text" />
-						&emsp;聯絡電話:&nbsp; <sp:input path="institution.contactNumber" type="text" />-->
+						&emsp;聯絡電話:&nbsp; <sp:input path="institution.contactNumber" type="text" />
 					<button type="submit">${ submitBtnName }</button>
 				</sp:form>
 			</div>
@@ -152,11 +126,9 @@
 					<td>
 						<a type="button" class="btn btn-warning" href="${pageContext.request.contextPath}/mvc/scholarship/backend/copy/${ scholarship.scholarshipId }">複製</a>
 					</td>
-					<!--  <td>&nbsp;<input type="checkbox" id="isLaunch" name="isLaunch" /></td>
-					<td>&nbsp;<input type="checkbox" id="pushrecycle" name="pushrecycle" /></td>-->
 					<td>
-					<button type="button" style="display: ${scholarship.isUpdated ? 'block' : 'block'}">
-    					${scholarship.isUpdated ? '上架中' : '未上架'}</button>
+						<a type="button" class="btn btn-warning" style="display: ${scholarship.isUpdated ? 'inlineblock' : 'inlineblock'}" href="${pageContext.request.contextPath}/mvc/scholarship/backend/copy/${ scholarship.scholarshipId }">
+    					 ${scholarship.isUpdated ? '上架中' : '未上架'}</a>
 					</td>
 					<td>
 						<a type="button" class="btn btn-warning" href="javascript:void(0);" onClick="deleteScholarship(${ scholarship.scholarshipId })">刪除</a>

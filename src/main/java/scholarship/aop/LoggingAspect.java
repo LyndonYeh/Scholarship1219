@@ -7,10 +7,12 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
+// AOP controller : 回傳 方法與jsp輸入參數到 consolog debug 用
+//servlet.xml 如有定義, @ annotation 可省略
 @Aspect
 @Component
 public class LoggingAspect {
-	@Before("execution(* spring.mvc.group_buy.controller.*.*(..))")
+	@Before("execution(* scholarship.controller.*.*(..))")
 	public void logMethodParams(JoinPoint joinPoint) {
 		String methodName = joinPoint.getSignature().getName();
 		Object[] args = joinPoint.getArgs();

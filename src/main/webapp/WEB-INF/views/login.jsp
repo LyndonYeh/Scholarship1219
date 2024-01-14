@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon"
 	href="../../images/icon.png">
-
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -33,20 +32,22 @@ form {
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	width: 500px;
 	height: auto;
+	margin: auto; /* Center the form horizontally */
+	margin-top: 50px; /* Add some top margin */
 }
 </style>
 </head>
 <body>
-	<div class="d-flex justify-content-center  align-items-center vh-100 "
-		class="">
-		<form class="needs-validation " novalidate method="post"
+	<div class="vh-100 d-flex justify-content-center align-items-center">
+		<form class="needs-validation" novalidate method="post"
 			action="./login">
 			<h4 class="text-center">請登入</h4>
 			<div class="">
-				<label for="username" class="form-label">使用者帳號</label> <input
-					type="text" class="form-control" id="username" name="username"
+				<label for="username" class="form-label">使用者帳號</label> <a
+					style="color: red">${forgetErrorMessage}</a><input type="text"
+					class="form-control" id="username" name="username"
 					value="dave.wenyu@gmail.com" required>
-				
+
 			</div>
 			<div class="">
 				<label for="password" class="form-label">密碼</label> <input
@@ -54,16 +55,18 @@ form {
 					value="password1" required>
 				<div class="invalid-feedback">請輸入密碼</div>
 			</div>
-			<div class=" d-flex justify-content-center my-3">
-				
-				<button class="btn btn-primary" type="submit" onclick="location.href='./backend/main.jsp';">登入</button>
-				<button class="btn btn-outline-danger ms-5" type="submit" onclick="location.href='./forgotPassword.jsp';">忘記密碼</button>
+			<div class="d-flex justify-content-around align-items-center mt-3">
+				<button class="btn btn-primary" type="submit"
+					onclick="location.href='./backend/main.jsp';">登入</button>
+				<a class="btn btn-outline-danger"
+					onclick="location.href='./frontend/forgetpassword';">忘記密碼</a> <a
+					class="btn btn-outline-primary"
+					onclick="location.href='./frontend';">回到首頁</a>
 			</div>
-		
+
 			<div style="color: red">${ loginMessage }</div>
 		</form>
 	</div>
-
 </body>
 </html>
 <script type="text/javascript">

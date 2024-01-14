@@ -7,19 +7,61 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import scholarship.bean.User;
+
 public class LoginInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		// 檢查 session 中是否有 user 的物件資料(意味著用戶已經登入)
-		if(session.getAttribute("user") != null) {
-			return true; // 放行
+		String URI = request.getRequestURI();
+
+		// 有 session 的資料
+		if (session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			String urlUserId = String.valueOf(user.getUserId());
+
+			// 處理 backend 網址授權
+			// 等於後台首頁 : 給過
+			if (URI.equals("/Scholarship/mvc/scholarship/backend")) {
+				return true;
+			}
+
+			// 修改資料頁 session userId 等於網址userId : 給過
+			if (URI.contains("/mvc/scholarship/backend/edit/" + urlUserId)) {
+				return true;
+			}
+
+			// 後台包含 copy url : 給過
+			if (URI.contains("/mvc/scholarship/backend/copy/")) {
+				return true;
+			}
+
+			// logout: 給過
+			if (URI.contains("/mvc/scholarship/logout")) {
+				return true;
+			}
+
+		} else {
+			// 處理 frontend 網址授權
+			if (URI.contains("/Scholarship/mvc/scholarship/frontend/")) {
+				return true;
+			}
+
+			if (URI.contains("/mvc/scholarship/login")) {
+				return true;
+			}
+
+			// 處理 backend reset 網址授權
+			if (URI.contains("/mvc/scholarship/backend/reset/")) {
+				return true;
+			}
 		}
-		// 未登入, 導入到登入頁面
-		response.sendRedirect(request.getServletContext().getContextPath() + "/mvc/login");
-		return false; // 不放行
+		System.err.println(request.getContextPath());
+		response.sendRedirect(request.getContextPath() + "/mvc/scholarship/login");
+		return false;
+
 	}
 
 	@Override
@@ -31,5 +73,5 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 	}
-	
+
 }

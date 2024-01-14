@@ -10,11 +10,12 @@ public interface UserDao {
 	
 	/*
 	 * 2. 使用者
+	 * google 登入 
 +--------+----------+--------------------------+-----------+
-| userId | institutionId | userName | password | garbageId | 
+| userId | institutionId | userName | password | garbageId | authType | authId
 +--------+----------+--------------------------+-----------+
-|  101   | 25575888		 | jojo123  | pass123  |    901    |
-|  102   | 25575889		 | Nono456  | pass456  |    902    |
+|  101   | 25575888		 | jojo123  | pass123  |    901    | google | 123456
+|  102   | 25575889		 | Nono456  | pass456  |    902    | 
 |  103   | 25575881 	 | Kiki789  | pass789  |    903    |
 +--------+----------+--------------------------+-----------+
 使用者-Client:
@@ -29,10 +30,12 @@ public interface UserDao {
 		/**
 		 * 
 		 * 1. 註冊帳號密碼
+		 * 1.1 註冊 Google 使用者
 		 * 
 		 * @param user
 		 */
 		int addUser(User user);
+		int addGoogleUser(User user);
 
 		/**
 		 * 2. 修改使用者名稱
@@ -50,6 +53,7 @@ public interface UserDao {
 		 * @return 是否刪除成功
 		 */
 		Boolean updateUserPasswordById(Integer userId, String oldPassword, String newPassword);
+		Boolean updateUserPasswordById(Integer userId, String newPassword);
 
 		/**
 		 * 4. 查詢所有使用者
@@ -71,6 +75,7 @@ public interface UserDao {
 		 */
 		
 		Optional<User> findUserById(Integer userId);
+
 
 
 

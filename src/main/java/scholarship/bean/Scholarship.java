@@ -40,9 +40,10 @@ public class Scholarship {
 	private Boolean isExpired;
 	private String webUrl;
 	private Boolean isUpdated;
-	private String entity;
+	private Integer entityId;
 	
 	private Institution institution;
+	private Entity entity;
 	
 	
 	
@@ -51,12 +52,12 @@ public class Scholarship {
 
 	}
 
-	public Scholarship(Integer scholarshipId, Integer userId, String scholarshipName, String entity,
+	public Scholarship(Integer scholarshipId, Integer userId, String scholarshipName, Integer entityId,
 			Integer scholarshipAmount, String updatedTime, String startDate, String endDate, String webUrl) {
 		this.scholarshipId = scholarshipId;
 		this.userId = userId;
 		this.scholarshipName = scholarshipName;
-		this.entity = entity;
+		this.entityId = entityId;
 		this.scholarshipAmount = scholarshipAmount;
 		this.updatedTime = updatedTime; // now time
 		this.startDate = startDate;
@@ -155,15 +156,24 @@ public class Scholarship {
 		this.institution = institution;
 	}
 	
-	public String getEntity() {
-		return entity;
+	public Institution getInstitution() {
+		return institution;
 	}
-	public void setEntity(String entity) {
+	
+	public void setEntity(Entity entity) {
 		this.entity = entity;
 	}
 	
-	public Institution getInstitution() {
-		return institution;
+	public Integer getEntityId() {
+		return entityId;
+	}
+	
+	public void setEntityId(Integer entityId) {
+		this.entityId = entityId;
+	}
+	
+	public Entity getEntity() {
+		return entity;
 	}
 
 	public String toString() {
