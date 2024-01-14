@@ -47,7 +47,7 @@
 					<li class="nav-item">
 						<form class="form-inline"
 							action="${pageContext.request.contextPath}/mvc/scholarship/logout">
-							<button class="btn btn-outline-success my-2 my-sm-0"
+							<button class="btn btn-outline-light my-2 my-sm-0"
 								type="submit">Logout</button>
 						</form>
 					</li>
@@ -55,15 +55,15 @@
 				<c:otherwise>
 					<form class="d-flex"
 						action="${pageContext.request.contextPath}/mvc/scholarship/frontend/register">
-						<button class="btn btn-outline-danger ms-5" type="submit">註冊</button>
+						<button class="btn btn-outline-light ms-5" type="submit">註冊</button>
 					</form>
 					<form class="d-flex"
 						action="${pageContext.request.contextPath}/mvc/scholarship/login">
-						<button class="btn btn-outline-success ms-5" type="submit">Login</button>
+						<button class="btn btn-outline-light ms-5" type="submit">Login</button>
 					</form>
 					<form class="d-flex"
 						action="${pageContext.request.contextPath}/secure/oidc/google_login">
-						<button class="btn btn-outline-success ms-5" type="submit">Google
+						<button class="btn btn-outline-light ms-5" type="submit">Google
 							Login</button>
 					</form>
 				</c:otherwise>

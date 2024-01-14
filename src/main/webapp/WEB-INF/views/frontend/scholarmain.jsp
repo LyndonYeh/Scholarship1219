@@ -64,12 +64,11 @@
 			}, {
 				extend : 'print',
 				text : 'PDF/列印',
-				className : 'pure-button pure-button-primary'
+				className : 'pure-button'
 			} ]
 
 		});
 	});
-
 	function copySelectedValue() {
 		// Get the selected value from the dropdown
 		var selectedValue = document.getElementById("amountSelect").value;
@@ -87,66 +86,70 @@
 <body>
 	<!-- menu -->
 	<%@include file="../include/menu.jspf"%>
-	<tr>
-		<td valign="top"><legend class="m-3">請輸入查詢條件</legend>
-			<div class="p-3 border border-2 border-warning bg bg-warning">
-				<sp:form modelAttribute="scholarship" method="post"
-					action="${pageContext.request.contextPath}/mvc/scholarship/frontend/"
-					class="mb-3  ">
-					&emsp;
-					<p />
-					&emsp;身分別:&nbsp;
-						<sp:select path="entityId" >
-						<sp:option value="0" label="全選"></sp:option>
+	<div id="main" class="p-3 bg bg-light">
+		<sp:form modelAttribute="scholarship" method="post"
+			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/"
+			class="mb-3">
+			<div class="row g-3">
+				<div class="col-md-auto">
+					<sp:select class="form-select" 
+						path="entityId">
+						<sp:option value="0" style="color: grey; font-style: italic;"
+							label="身分別:全選"></sp:option>
 						<sp:option value="1" label="幼稚園"></sp:option>
 						<sp:option value="2" label="小學"></sp:option>
 						<sp:option value="3" label="國中"></sp:option>
 						<sp:option value="4" label="高中"></sp:option>
 						<sp:option value="5" label="大學"></sp:option>
 						<sp:option value="6" label="研究所"></sp:option>
-					</sp:select>							
-						&emsp;獎學金額度(金額為以上):&nbsp; <select id="amountSelect"
+					</sp:select>
+				</div>
+				<div class="col-md-auto">
+					<select id="amountSelect" class="form-select"
 						onchange="copySelectedValue()">
-						<option value="0">全選</option>
-						<option value="10000">5,000</option>
+						<option value="0" style="color: grey; font-style: italic;">獎學金額度(以上):全選</option>
+						<option value="5000">5,000</option>
 						<option value="10000">10,000</option>
 						<option value="20000">20,000</option>
 						<option value="50000">50,000</option>
 						<option value="100000">100,000</option>
 					</select>
+				</div>
+				<div class="col-md-auto">
 					<sp:input type="number" path="scholarshipAmount"
-						placeholder="例:50000"/>
-					<button type="submit">送出</button>
-				</sp:form>
-			</div></td>
-	<tr>
-		<table class="pure-table pure-table-bordered">
-			<thead>
+						class="form-control rounded" placeholder="或:手動輸入搜尋" />
+				</div>
+				<div class="col-md-auto">
+					<button type="submit" class="btn btn-outline-secondary">送出</button>
+				</div>
+			</div>
+		</sp:form>
+	</div>
+	<table class="pure-table pure-table-bordered">
+		<thead>
+			<tr>
+				<th scope="col">編號#</th>
+				<th scope="col">獎助機構</th>
+				<th scope="col">身分別</th>
+				<th scope="col">獎學金名稱</th>
+				<th scope="col">獎學金額度</th>
+				<th scope="col">聯絡人</th>
+				<th scope="col">聯絡電話</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${scholarships}" var="scholarship">
 				<tr>
-					<th scope="col">#</th>
-					<th scope="col">獎助機構</th>
-					<th scope="col">身分別</th>
-					<th scope="col">獎學金名稱</th>
-					<th scope="col">獎學金額度</th>
-					<th scope="col">聯絡人</th>
-					<th scope="col">聯絡電話</th>
+					<td>${scholarship.scholarshipId }</td>
+					<td>${scholarship.institution.institutionName }</td>
+					<td>${scholarship.entity.entityName}</td>
+					<td>${scholarship.scholarshipName }</td>
+					<td>${scholarship.scholarshipAmount}${contact}</td>
+					<td>${scholarship.institution.contact }</td>
+					<td>${scholarship.institution.contactNumber }</td>
 				</tr>
-			</thead>
-			<tbody>
-					<c:forEach items="${scholarships}" var="scholarship">
-				<tr>
-
-						<td>${scholarship.scholarshipId }</td>
-						<td>${scholarship.institution.institutionName }</td>
-						<td>${scholarship.entity.entityName}</td>
-						<td>${scholarship.scholarshipName }</td>
-						<td>${scholarship.scholarshipAmount}${contact}</td>
-						<td>${scholarship.institution.contact }</td>
-						<td>${scholarship.institution.contactNumber }</td>
-
-				</tr>
-					</c:forEach>
-			</tbody>
-		</table>
+			</c:forEach>
+		</tbody>
+	</table>
 </body>
 </html>
