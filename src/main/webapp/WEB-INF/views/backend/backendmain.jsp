@@ -68,7 +68,7 @@
 				<sp:form modelAttribute="scholarship" method="post"
 					class="mb-3"
 					action="${pageContext.request.contextPath}/mvc/scholarship/backend">
-					<!-- 名稱旁要有上傳檔案的按鈕 -->
+					
 					<div class="row g-3">
 					<sp:input path="scholarshipId" type="hidden" />
 					<input name="_method" type="hidden" value="${ _method }" />
@@ -78,9 +78,9 @@
 							placeholder="請輸入獎學金名稱" class="form-control rounded"/>
 					</div>
 					<div class="col-md-auto">
-					<sp:input path="webUrl" type="text" class="form-control rounded" laceholder="請輸入獎學金網址，例:https://tw.yahoo.com/" style="width: 300px"/>
+					<sp:input path="webUrl" type="text" class="form-control rounded" placeholder="請輸入獎學金網址，例:https://tw.yahoo.com/" style="width: 350px"/>
 					</div>
-					<!-- &emsp;上傳時間:&nbsp;  -->
+				
 					<sp:input path="updatedTime" type="hidden" />
 
 					<div class="col-md-auto">
@@ -110,12 +110,12 @@
 					</div>
 
 					<div class="col-md-auto">
-						<sp:input class="form-control rounded" path="institution.contact" type="text"
+						<sp:input class="form-control rounded" path="contact" type="text"
 							placeholder="請輸入聯絡人" />
 					</div>
 
 					<div class="col-md-auto">
-						<sp:input class="form-control rounded" path="institution.contactNumber" type="text"
+						<sp:input class="form-control rounded" path="contactNumber" type="text"
 							placeholder="請輸入聯絡電話" />
 					</div>
 
