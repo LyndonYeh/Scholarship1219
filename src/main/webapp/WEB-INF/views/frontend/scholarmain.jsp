@@ -126,35 +126,36 @@
 			</div>
 		</sp:form>
 	</div>
-	<table class="pure-table pure-table-bordered">
-		<thead>
-			<tr>
-				<th scope="col">編號#</th>
-				<th scope="col">獎助機構</th>
-				<th scope="col">身分別</th>
-				<th scope="col">獎學金名稱</th>
-				<th scope="col">獎學金額度</th>
-				<th scope="col">聯絡人</th>
-				<th scope="col">聯絡電話</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${scholarships}" var="scholarship">
+	<div class="mt-3">
+		<table class="pure-table pure-table-bordered">
+			<thead>
 				<tr>
-					<td>${scholarship.scholarshipId }</td>
-					<td>${scholarship.institution.institutionName }</td>
-					<td>${scholarship.entity.entityName}</td>
-					<td>
-					<a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
-					</td>
-					<td>${scholarship.scholarshipName }</td>
-					<td>${scholarship.scholarshipAmount}${contact}</td>
-					<td>${scholarship.institution.contact }</td>
-					<td>${scholarship.institution.contactNumber }</td>
+					<th scope="col">編號#</th>
+					<th scope="col">獎學金機構</th>
+					<th scope="col">身分別</th>
+					<th scope="col">網址</th>
+					<th scope="col">名稱</th>
+					<th scope="col">額度</th>
+					<th scope="col">聯絡人</th>
+					<th scope="col">聯絡電話</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-
+			</thead>
+			<tbody>
+				<c:forEach items="${scholarships}" var="scholarship">
+					<tr>
+						<td>${scholarship.scholarshipId }</td>
+						<td>${scholarship.institution.institutionName }</td>
+						<td>${scholarship.entity.entityName}</td>
+						<td><a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
+						</td>
+						<td>${scholarship.scholarshipName }</td>
+						<td>${scholarship.scholarshipAmount}${contact}</td>
+						<td>${scholarship.institution.contact }</td>
+						<td>${scholarship.institution.contactNumber }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>

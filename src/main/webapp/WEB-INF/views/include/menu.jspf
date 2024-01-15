@@ -59,15 +59,15 @@
 				<c:otherwise>
 					<form class="d-flex"
 						action="${pageContext.request.contextPath}/mvc/scholarship/frontend/register">
-						<button class="btn btn-outline-light ms-5" type="submit">註冊</button>
+						<button class="btn btn-outline-light ms-1" type="submit">註冊</button>
 					</form>
 					<form class="d-flex"
 						action="${pageContext.request.contextPath}/mvc/scholarship/login">
-						<button class="btn btn-outline-light ms-5" type="submit">Login</button>
+						<button class="btn btn-outline-light ms-1" type="submit">Login</button>
 					</form>
 					<form class="d-flex"
 						action="${pageContext.request.contextPath}/secure/oidc/google_login">
-						<button class="btn btn-outline-light ms-5" type="submit">Google
+						<button class="btn btn-outline-light ms-1" type="submit">Google
 							Login</button>
 					</form>
 				</c:otherwise>

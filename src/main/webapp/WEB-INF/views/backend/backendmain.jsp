@@ -78,7 +78,7 @@
 							placeholder="請輸入獎學金名稱" class="form-control rounded"/>
 					</div>
 					<div class="col-md-auto">
-					&emsp;獎學金連結:&nbsp;<sp:input path="webUrl" type="text" placeholder="例:https://tw.yahoo.com/" style="width: 300px"/>
+					<sp:input path="webUrl" type="text" class="form-control rounded" laceholder="請輸入獎學金網址，例:https://tw.yahoo.com/" style="width: 300px"/>
 					</div>
 					<!-- &emsp;上傳時間:&nbsp;  -->
 					<sp:input path="updatedTime" type="hidden" />
