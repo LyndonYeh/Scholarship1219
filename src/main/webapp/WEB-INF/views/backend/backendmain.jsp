@@ -134,7 +134,7 @@
 		<table class="table table-light">
 			<thead>
 				<tr>
-					<th scope="col">#</th>
+					<th scope="col">編號</th>
 					<th scope="col">獎助機構</th>
 					<th scope="col">獎學金名稱</th>
 					<th scope="col">獎學金額度</th>
