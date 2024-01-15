@@ -40,7 +40,7 @@ form {
 </head>
 <body>
 
-	<div class="d-flex justify-content-center  align-items-center vh-100 ">
+	<div class="d-flex justify-content-center  align-items-center vh-80 ">
 
 		<form class="row g-3 needs-validation " method="post"
 			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/registerconfirm">

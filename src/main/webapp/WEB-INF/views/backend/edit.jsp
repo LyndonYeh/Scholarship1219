@@ -47,33 +47,59 @@ form {
 		<form class="row g-3 needs-validation" novalidate method="post"
 			action="${pageContext.request.contextPath}/mvc/scholarship/backend/edit/${session.userId}">
 			<h4 class="text-center">修改資訊</h4>
+
+
+			<div class="input-group mb-3">
+				<span class="input-group-text">目前使用者</span><input type="text"
+					class="form-control" aria-label="currentUsername"
+					value="${session.username}" readonly>
+			</div>
+
+
 			<div class="input-group mb-3">
 				<span class="input-group-text">目前預設聯絡人</span><input type="text"
-					class="form-control"
-					aria-label="Dollar amount (with dot and two decimal places)"
+					class="form-control" aria-label="currentContact"
 					value="${sessionInstitution.get().getContact()}" readonly>
 			</div>
 
-			<div class="col-md-5">
-				<label for="currentContact" class="form-label">目前預設聯絡人</label> <input
-					type="text" class="form-control" id="currentContact"
-					value="${sessionInstitution.get().getContact()}" readonly>
-				<label for="contact" class="form-label">預設聯絡人</label> <input
-					type="text" class="form-control" id="contact" name="contact"
-					value="" required maxlength="50">
-				<div class="invalid-feedback">請輸入修改聯絡人姓名</div>
+
+			<div class="input-group mb-3">
+				<span class="input-group-text">欲修改聯絡人</span><input type="text"
+					class="form-control" aria-label="Contact" id="contact"
+					name="contact" value="" required maxlength="50">
 			</div>
-			<div class="col-md-7">
-				<label for="currentContactNumber" class="form-label">目前聯絡電話</label>
-				<input type="text" class="form-control" id="currentContactNumber"
+
+
+			<div class="input-group mb-3">
+				<span class="input-group-text">目前預設聯絡電話</span><input type="text"
+					class="form-control" aria-label="currentContactNumber"
 					value="${sessionInstitution.get().getContactNumber()}" readonly>
-				<label for="contactNumber" class="form-label">欲修改聯絡電話</label> <input
-					type="text" class="form-control" id="contactNumber"
+			</div>
+
+
+			<div class="input-group mb-3">
+				<span class="input-group-text">欲修改連絡電話</span><input type="text"
+					class="form-control" aria-label="currentContact" id="contactNumber"
 					name="contactNumber" value="" required maxlength="10">
 				<div class="invalid-feedback">請輸入聯絡電話(最大長度10碼)</div>
 			</div>
 
+			<div class="input-group mb-3">
+				<span class="input-group-text">請輸入密碼</span><input type="text"
+					class="form-control" aria-label="password" id="password"
+					name="password" value="" required>
 
+				<div style="color: red">${editErrorMessage}</div>
+			</div>
+			<p>
+				如欲修改密碼請至<a class="fw-light"
+					href="${pageContext.request.contextPath}/mvc/scholarship/frontend/forgetpassword">重設密碼</a>
+			</p>
+			<!-- 
+			<p class="mt-4">
+				修改密碼請至<a class="fw-light"
+					href="${pageContext.request.contextPath}/mvc/scholarship/frontend/forgetpassword">重設密碼</a>
+			</p>
 			<div class="col-md-5">
 				<label for="password" class="form-label">請輸入密碼 </label>
 				<div class="form-group">
@@ -89,6 +115,7 @@ form {
 						href="${pageContext.request.contextPath}/mvc/scholarship/frontend/forgetpassword">重設密碼</a>
 				</p>
 			</div>
+			 -->
 			<button class="btn btn-outline-danger" type="submit">確認修改</button>
 
 		</form>
