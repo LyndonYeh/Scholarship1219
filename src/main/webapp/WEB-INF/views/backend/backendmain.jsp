@@ -64,7 +64,6 @@
 
 				</tbody>
 			</table>
-<<<<<<< HEAD
 			<div id="main" class="p-3 bg bg-light">
 				<sp:form modelAttribute="scholarship" method="post"
 					class="mb-3"
@@ -77,6 +76,9 @@
 					<div class="col-md-auto">
 						<sp:input path="scholarshipName" type="text"
 							placeholder="請輸入獎學金名稱" class="form-control rounded"/>
+					</div>
+					<div class="col-md-auto">
+					&emsp;獎學金連結:&nbsp;<sp:input path="webUrl" type="text" placeholder="例:https://tw.yahoo.com/" style="width: 300px"/>
 					</div>
 					<!-- &emsp;上傳時間:&nbsp;  -->
 					<sp:input path="updatedTime" type="hidden" />
@@ -123,36 +125,8 @@
 					</div>
 			</div> 
 			</sp:form>
-=======
-			<div class="p-3 border border-2 border-warning bg bg-warning">
-				<sp:form modelAttribute="scholarship" method="post"
-					cssClass="width:auto"
-					action="${pageContext.request.contextPath}/mvc/scholarship/backend">
 
-					<h2>新增獎學金項目</h2>
-					<sp:input path="scholarshipId" type="hidden" />
-					<input name="_method" type="hidden" value="${ _method }" />
-						
-						&emsp;獎學金名稱:&nbsp;<sp:input path="scholarshipName" type="text" />
-						&emsp;獎學金連結:&nbsp;<sp:input path="webUrl" type="text" placeholder="例:https://tw.yahoo.com/" style="width: 300px"/>
-						&emsp;開始日期:&nbsp; <sp:input path="startDate" type="date" /> 
-						&emsp;結束日期:&nbsp; <sp:input path="endDate" type="date" />
-						 &emsp;身分別:&nbsp;<sp:select path="entityId">
-						<sp:option value="1" label="幼稚園"></sp:option>
-						<sp:option value="2" label="小學"></sp:option>
-						<sp:option value="3" label="國中"></sp:option>
-						<sp:option value="4" label="高中"></sp:option>
-						<sp:option value="5" label="大學"></sp:option>
-						<sp:option value="6" label="研究所"></sp:option>
-					</sp:select>  
-				</P>
-						&emsp;額度:&nbsp; <sp:input path="scholarshipAmount" type="number" />
-						&emsp;聯絡人:&nbsp; <sp:input path="contact" type="text" />
-						&emsp;聯絡電話:&nbsp; <sp:input path="contactNumber"
-						type="text" />
-					<button type="submit">${ submitBtnName }</button>
-				</sp:form>
->>>>>>> a02273e21c2696432bc0c520670e9e50a3956574
+
 			</div>
 		</td>
 	<tr>
@@ -173,29 +147,12 @@
 				</tr>
 			</thead>
 			<tbody>
-<<<<<<< HEAD
-				${ scholarships }
-=======
->>>>>>> a02273e21c2696432bc0c520670e9e50a3956574
 
 				<c:forEach items="${scholarships}" var="scholarship">
 					<tr>
 						<td>${scholarship.scholarshipId }</td>
 						<td>${scholarship.institution.institutionName }</td>
-<<<<<<< HEAD
-						<td>${scholarship.scholarshipName }</td>
-						<td>${scholarship.scholarshipAmount}</td>
-						<td>${scholarship.institution.contact }</td>
-						<td>${scholarship.institution.contactNumber }</td>
-						<td><a type="button" class="btn btn-outline-secondary"
-							href="${pageContext.request.contextPath}/mvc/scholarship/backend/copy/${ scholarship.scholarshipId }">複製</a>
-						</td>
-						<td><a type="button" class="btn btn-outline-secondary"
-							style="display: ${scholarship.isUpdated ? 'inlineblock' : 'inlineblock'}"
-							href="${pageContext.request.contextPath}/mvc/scholarship/backend/copy/${ scholarship.scholarshipId }">
-								${scholarship.isUpdated ? '上架中' : '未上架'}</a></td>
-						<td><a type="button" class="btn btn-outline-danger"
-=======
+
 						<td>
 						<a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
 						</td>
@@ -211,7 +168,6 @@
 							style="display: inline-block;"> ${scholarship.isUpdated ? '上架中...' : '未上架'}
 						</a></td>
 						<td><a type="button" class="btn btn-warning"
->>>>>>> a02273e21c2696432bc0c520670e9e50a3956574
 							href="javascript:void(0);"
 							onClick="deleteScholarship(${ scholarship.scholarshipId })">刪除</a>
 						</td>

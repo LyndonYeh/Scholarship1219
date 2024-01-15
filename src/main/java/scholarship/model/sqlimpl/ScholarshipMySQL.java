@@ -48,7 +48,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
                 "VALUES (:scholarshipId, :userId, :institutionId, :scholarshipName, :scholarshipAmount, :entityId, :updatedTime, :startDate, :endDate, :isExpired, :webUrl, :isUpdated, :contact, :contactNumber)";
        
         int scholarshipId = getNextScholarshipId();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss"); 
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
         
         Map<String, Object> params = new HashMap<>();
         params.put("scholarshipId", scholarshipId);
@@ -77,7 +77,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
     			"VALUES ( :userId, :institutionId, :scholarshipName, :scholarshipAmount, :entityId, :updatedTime, :startDate, :endDate, :isExpired, :webUrl, :isUpdated, :contact, :contactNumber)";
     	
     	
-    	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss"); 
+    	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
     	
     	Map<String, Object> params = new HashMap<>();
     	

@@ -92,8 +92,7 @@
 			class="mb-3">
 			<div class="row g-3">
 				<div class="col-md-auto">
-					<sp:select class="form-select" 
-						path="entityId">
+					<sp:select class="form-select" path="entityId">
 						<sp:option value="0" style="color: grey; font-style: italic;"
 							label="身分別:全選"></sp:option>
 						<sp:option value="1" label="幼稚園"></sp:option>
@@ -107,11 +106,9 @@
 				<div class="col-md-auto">
 					<select id="amountSelect" class="form-select"
 						onchange="copySelectedValue()">
-<<<<<<< HEAD
+
 						<option value="0" style="color: grey; font-style: italic;">獎學金額度(以上):全選</option>
-=======
-						<option value="0">全選</option>
->>>>>>> a02273e21c2696432bc0c520670e9e50a3956574
+
 						<option value="5000">5,000</option>
 						<option value="10000">10,000</option>
 						<option value="20000">20,000</option>
@@ -147,35 +144,17 @@
 					<td>${scholarship.scholarshipId }</td>
 					<td>${scholarship.institution.institutionName }</td>
 					<td>${scholarship.entity.entityName}</td>
+					<td>
+					<a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
+					</td>
 					<td>${scholarship.scholarshipName }</td>
 					<td>${scholarship.scholarshipAmount}${contact}</td>
 					<td>${scholarship.institution.contact }</td>
 					<td>${scholarship.institution.contactNumber }</td>
 				</tr>
-<<<<<<< HEAD
 			</c:forEach>
 		</tbody>
 	</table>
-=======
-			</thead>
-			<tbody>
-					<c:forEach items="${scholarships}" var="scholarship">
-				<tr>
 
-						<td>${scholarship.scholarshipId }</td>
-						<td>${scholarship.institution.institutionName }</td>
-						<td>${scholarship.entity.entityName}</td>
-						<td>
-						<a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
-						</td>
-						<td>${scholarship.scholarshipAmount}${contact}</td>
-						<td>${scholarship.institution.contact }</td>
-						<td>${scholarship.institution.contactNumber }</td>
-
-				</tr>
-					</c:forEach>
-			</tbody>
-		</table>
->>>>>>> a02273e21c2696432bc0c520670e9e50a3956574
 </body>
 </html>

@@ -31,7 +31,7 @@ CREATE TABLE scholarshipv1.user (
 -- Create the 'entity' table
 CREATE TABLE scholarshipv1.entity (
   `entityid` int NOT NULL AUTO_INCREMENT,
-  `entity` varchar(255) DEFAULT NULL,
+  `entityName` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`entityid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -88,13 +88,13 @@ INSERT INTO scholarshipv1.scholarshiprecord (`institutionId`,`scholarshipName`, 
 ('25371549','Scholarship 2', 10000, 2,'2024-01-10','2024-01-15','https://tw.yahoo.com/','李小姐','0987878787'),
 ('25348848','Scholarship 3', 35000, 3,'2024-01-10','2024-01-15','https://tw.yahoo.com/','李小姐','0987878787');
 
-INSERT INTO scholarshipv1.entity (`entityid`, `entity`) VALUES
-('1', 'kindergarten'),
-('2', 'primary school'),
-('3', 'middle school'),
-('4', 'high school'),
-('5', 'college/university'),
-('6', 'graduate school');
+INSERT INTO scholarshipv1.entity (`entityid`, `entityName`) VALUES
+('1', '幼稚園'),
+('2', '國小'),
+('3', '國中'),
+('4', '高中'),
+('5', '大學'),
+('6', '研究所');
 
 
 use scholarshipv1;
