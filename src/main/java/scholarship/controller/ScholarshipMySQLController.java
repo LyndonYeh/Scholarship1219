@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -68,7 +67,7 @@ public class ScholarshipMySQLController {
 	@Autowired
 	private EntityDao entityDao;
 
-	/*
+	/**
 	 * 登入頁
 	 */
 	@GetMapping(value = { "/login", "/", "/login/" })
@@ -82,7 +81,7 @@ public class ScholarshipMySQLController {
 		return "/login";
 	}
 
-	/*
+	/**
 	 * 驗證登入
 	 */
 	@PostMapping("/login")
@@ -92,7 +91,7 @@ public class ScholarshipMySQLController {
 		return "redirect:/mvc/scholarship/backend";
 	}
 
-	/*
+	/**
 	 * 登出
 	 */
 	@GetMapping("/logout")
@@ -103,7 +102,7 @@ public class ScholarshipMySQLController {
 		return "redirect:/mvc/scholarship/frontend";
 	}
 
-	/*
+	/**
 	 * 忘記密碼頁面
 	 */
 	@RequestMapping("/frontend/forgetpassword")
@@ -111,7 +110,7 @@ public class ScholarshipMySQLController {
 		return "/frontend/forgetpassword";
 	}
 
-	/*
+	/**
 	 * 忘記密碼傳送驗證碼頁面
 	 */
 	@PostMapping("/frontend/forgetpassword")
@@ -143,7 +142,7 @@ public class ScholarshipMySQLController {
 		return "/frontend/forgetpasswordverify";
 	}
 
-	/*
+	/**
 	 * 忘記密碼驗證驗證碼
 	 */
 	@PostMapping("/frontend/forgetpasswordverify")
@@ -161,7 +160,7 @@ public class ScholarshipMySQLController {
 
 	}
 
-	/*
+	/**
 	 * 重設密碼頁面
 	 */
 	@GetMapping("/backend/reset/{strUUID}")
@@ -172,7 +171,7 @@ public class ScholarshipMySQLController {
 		return "/backend/reset";
 	}
 
-	/*
+	/**
 	 * 重設密碼
 	 */
 	@PostMapping("/backend/reset/{strUUID}")
@@ -182,7 +181,7 @@ public class ScholarshipMySQLController {
 		return "redirect:/mvc/scholarship/login";
 	}
 
-	/*
+	/**
 	 * 註冊信箱頁面
 	 */
 	@GetMapping("/frontend/register")
@@ -190,7 +189,7 @@ public class ScholarshipMySQLController {
 		return "/frontend/register";
 	}
 
-	/*
+	/**
 	 * 比對註冊信箱驗證碼
 	 */
 	@PostMapping("/frontend/register")
@@ -219,7 +218,7 @@ public class ScholarshipMySQLController {
 		return "register";
 	}
 
-	/*
+	/**
 	 * 註冊頁面
 	 */
 	@GetMapping("/frontend/registerconfirm")
@@ -227,7 +226,7 @@ public class ScholarshipMySQLController {
 		return "/frontend/registerconfirm";
 	}
 
-	/*
+	/**
 	 * 使用者註冊
 	 */
 	@PostMapping("/frontend/registerconfirm")
@@ -318,7 +317,7 @@ public class ScholarshipMySQLController {
 
 	}
 
-	/*
+	/**
 	 * 後台首頁
 	 */
 	@GetMapping("/backend")
@@ -327,9 +326,22 @@ public class ScholarshipMySQLController {
 
 		model.addAttribute("submitBtnName", "新增");
 		model.addAttribute("_method", "POST");
-		// System.out.println(scholarshipDao.findAllscholarship());
 
 		return "backend/backendmain";
+	}
+	/**
+	 * 垃圾回收頁
+	 */
+	@GetMapping("/backend/garbageCollection")
+	public String garbageCollection(@ModelAttribute Scholarship scholarship, Model model, HttpSession session) {
+		User sessionData = (User) session.getAttribute("user");
+		List<Scholarship> scholarships = scholarshipDao.findScholarshipByInstitutionIdFromGarbageCollection(sessionData.getInstitutionId());
+
+		model.addAttribute("_method", "POST");
+		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
+		model.addAttribute("username", sessionData.getUsername());
+
+		return "backend/garbageCollection";
 	}
 
 	/**
@@ -354,6 +366,14 @@ public class ScholarshipMySQLController {
 		User sessionData = (User) session.getAttribute("user");
 		scholarship.setInstitutionId(sessionData.getInstitutionId());
 		scholarship.setUserId(sessionData.getUserId());
+		while(scholarship.getContact().isEmpty()) {
+			String Contact=institutionDao.findInstitutionByInstitutionId(sessionData.getInstitutionId()).get().getContact();
+			scholarship.setContact(Contact);
+		}
+		while(scholarship.getContactNumber().isEmpty()) {
+			String contactNumber =institutionDao.findInstitutionByInstitutionId(scholarship.getInstitutionId()).get().getContactNumber();
+			scholarship.setContactNumber(contactNumber);
+		}
 		scholarshipDao.addScholarship(scholarship);
 		// System.out.println("add User rowcount = " + rowcount);
 		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁
@@ -373,17 +393,20 @@ public class ScholarshipMySQLController {
 		model.addAttribute("_method", "POST");
 		return "/backend/backendmain";
 	}
-
+	/**
+	 * 修改上下架狀態
+	 */
 	@GetMapping("/backend/changeLunch/{scholarshipId}")
-	public String changeLunch(@PathVariable("scholarshipId") Integer scholarshipId, Model model, HttpSession session) {
+	public String changeLunch(@PathVariable("scholarshipId") Integer scholarshipId, HttpSession session) {
 
-		addBasicModelBackEnd(model, session);
 
-		Scholarship scholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
-		model.addAttribute("scholarship", scholarship);
-		model.addAttribute("submitBtnName", "新增");
-		model.addAttribute("_method", "POST");
-		return "/backend/backendmain";
+		Scholarship changeScholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
+		Boolean isLunch=changeScholarship.getIsUpdated();
+		isLunch=!isLunch;
+		scholarshipDao.updateLauchStatusbyId(scholarshipId, isLunch);
+
+		
+		return "redirect:/mvc/scholarship/backend";
 	}
 
 	/**
@@ -392,9 +415,27 @@ public class ScholarshipMySQLController {
 	@DeleteMapping("/backend/delete/{scholarshipId}") // Delete method 刪除
 	// @ResponseBody
 	public String deleteScholarship(@PathVariable("scholarshipId") Integer scholarshipId) {
+		//先複製到垃圾桶
+		Scholarship dScholarship=scholarshipDao.findScholarshipById(scholarshipId).get();
+		scholarshipDao.addScholarshipToGarbageCollection(dScholarship);
+		
 		boolean rowcount = scholarshipDao.removeScholarshipById(scholarshipId);
 		System.out.println("delete User rowcount = " + rowcount);
 		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁
+	}
+	/**
+	 * 復原獎學金資料
+	 */
+	@DeleteMapping("/backend/garbageCollection/{scholarshipId}") // Delete method 刪除
+	// @ResponseBody
+	public String recoveryScholarship(@PathVariable("scholarshipId") Integer scholarshipId) {
+		//先複製回後台
+		Scholarship rScholarship=scholarshipDao.findScholarshipByIdFromGarbageCollection(scholarshipId).get();
+		scholarshipDao.addScholarship(rScholarship);
+		
+		boolean rowcount = scholarshipDao.removeScholarshipByIdFromGarbageCollection(scholarshipId);
+		System.out.println("delete User rowcount = " + rowcount);
+		return "redirect:/mvc/scholarship/backend/garbageCollection"; 
 	}
 
 	/**
@@ -433,9 +474,9 @@ public class ScholarshipMySQLController {
 		List<Scholarship> scholarships = scholarshipDao.findAllscholarshipisUpdated();
 		List<User> users = userDao.findAllUsers();
 
-//		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
+		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
-//		model.addAttribute("users", users); // 取得目前最新 users 資料
+		model.addAttribute("users", users); // 取得目前最新 users 資料
 	}
 
 	private void addBasicModelEntity(Model model, Integer entId) {
