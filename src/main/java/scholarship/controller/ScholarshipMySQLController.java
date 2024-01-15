@@ -283,7 +283,7 @@ public class ScholarshipMySQLController {
 		if (session.getAttribute("user") instanceof User) {
 			User sessionData = (User) session.getAttribute("user");
 			model.addAttribute("username", sessionData.getUsername());
-			// 如果有 user 在 session, 存入 attribute 登入狀態的給前台渲染 username\
+			// 如果有 user 在 session, 存入 attribute 登入狀態的給前台渲染 username
 		} else {
 			addBasicModelFrontEnd(model);
 			model.addAttribute("submitBtnName", "新增");

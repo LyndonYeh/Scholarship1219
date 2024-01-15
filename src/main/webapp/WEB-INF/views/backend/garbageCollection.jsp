@@ -67,8 +67,7 @@
 
 		</td>
 	<tr>
-
-		<table class="table table-warning">
+		<table class="table table-light">
 			<thead>
 				<tr>
 					<th scope="col">#</th>

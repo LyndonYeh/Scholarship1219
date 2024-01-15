@@ -47,12 +47,13 @@ form {
 		<form class="row g-3 needs-validation" novalidate method="post"
 			action="${pageContext.request.contextPath}/mvc/scholarship/backend/edit/${session.userId}">
 			<h4 class="text-center">修改資訊</h4>
-			<div class="col-md-12">
-				<label for="username" class="form-label">使用者帳號(信箱)</label> <input
-					type="text" class="form-control" id="username" name="username"
-					value="${session.username}" disabled required>
-				<div class="invalid-feedback">請輸入帳號(信箱)</div>
+			<div class="input-group mb-3">
+				<span class="input-group-text">目前預設聯絡人</span><input type="text"
+					class="form-control"
+					aria-label="Dollar amount (with dot and two decimal places)"
+					value="${sessionInstitution.get().getContact()}" readonly>
 			</div>
+
 			<div class="col-md-5">
 				<label for="currentContact" class="form-label">目前預設聯絡人</label> <input
 					type="text" class="form-control" id="currentContact"
@@ -83,9 +84,10 @@ form {
 						<div class="invalid-feedback">請輸入密碼</div>
 					</div>
 				</div>
-				<a class="btn btn-outline-primary mt-4"
-					href="${pageContext.request.contextPath}/mvc/scholarship/frontend/forgetpassword">
-					重設密碼 </a>
+				<p class="mt-4">
+					修改密碼請至<a class="fw-light"
+						href="${pageContext.request.contextPath}/mvc/scholarship/frontend/forgetpassword">重設密碼</a>
+				</p>
 			</div>
 			<button class="btn btn-outline-danger" type="submit">確認修改</button>
 

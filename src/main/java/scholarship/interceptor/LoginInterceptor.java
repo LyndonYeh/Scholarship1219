@@ -38,6 +38,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			if (URI.contains("/mvc/scholarship/backend/copy/")) {
 				return true;
 			}
+			
 			if (URI.contains("/mvc/scholarship/backend/garbageCollection")) {
 				return true;
 			}
@@ -58,11 +59,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 		} else {
 			// 處理 frontend 網址授權
-			if (URI.contains("/Scholarship/mvc/scholarship/frontend/")) {
+			if (URI.contains("/mvc/scholarship/frontend/")) {
 				return true;
 			}
 
-			if (URI.contains("/mvc/scholarship/login")) {
+			if (URI.contains("/Scholarship/mvc/scholarship/login")) {
 				return true;
 			}
 
@@ -71,7 +72,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 				return true;
 			}
 		}
-		System.err.println(request.getContextPath());
+		System.out.println("Session" + session);
+		System.out.println("Session User"+ session.getAttribute("user"));
+		System.out.println(" request.getRequestURI();" + URI);
 		response.sendRedirect(request.getContextPath() + "/mvc/scholarship/login");
 		return false;
 
