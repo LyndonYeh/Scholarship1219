@@ -47,7 +47,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 				return true;
 			}
 			
-			// 後台包含 change url : 給過
+			// 後台包含 delete url : 給過
 			if (URI.contains("/mvc/scholarship/backend/delete/")) {
 				return true;
 			}

@@ -28,10 +28,6 @@ public class Institution {
     private String contactNumber;
     private String contact;
 	
-	// 設定關聯
-	private User user;
-	private List<Scholarship> scholarships;
-	private List<User> users;
 
 	public Institution() {
 	
@@ -43,14 +39,6 @@ public class Institution {
 		this.contact = contact;
 	}
 
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
 
 
 	public String getInstitutionName() {

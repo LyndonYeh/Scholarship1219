@@ -1,18 +1,25 @@
 package scholarship.security.callback;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.http.protocol.HttpService;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import scholarship.bean.User;
+import scholarship.model.dao.UserDao;
+import scholarship.service.UserService;
 import scholarship.util.OAuth2Util;
-
 
 @WebServlet(value = "/secure/callback/oauth2")
 public class GithubCallback extends HttpServlet {
@@ -39,21 +46,12 @@ public class GithubCallback extends HttpServlet {
 
 		// 3. 得到用戶在 Github 上的公開資料
 		String userInfo = OAuth2Util.getUserInfoFromGitHub(accessToken);
-		resp.getWriter().println("userInfo: " + userInfo);
 
 		// 4. 利用 JSONObject 來分析資料
 		JSONObject userInfoObject = new JSONObject(userInfo);
-		resp.getWriter().println("login: " + userInfoObject.getString("login"));
-		resp.getWriter().println("id: " + userInfoObject.getInt("id"));
-		resp.getWriter().println("email: " + userInfoObject.getString("email"));
-		resp.getWriter().println("name: " + userInfoObject.getString("name"));
-		resp.getWriter().println("bio: " + userInfoObject.getString("bio"));
-
-		// 5. 檢查會員資料表中是否有此人, 若無則將該會員資料自動新增到資料表
-
-		// 6. 新增成功就自行自動登入 (例如: 建立 user 物件並存放到 session 中)
-
-		// 7. 重導到登入成功頁面
+		String username = userInfoObject.getString("login");
+		
+		
 
 	}
 }

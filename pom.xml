@@ -281,6 +281,12 @@
 			<version>20231013</version>
 		</dependency>
 
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
 	</dependencies>
 
 

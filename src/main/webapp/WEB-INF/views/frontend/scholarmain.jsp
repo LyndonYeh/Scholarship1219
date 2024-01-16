@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -22,20 +24,30 @@
 <!-- 引入 jQuery -->
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 <!-- 引入 DataTables -->
 <script type="text/javascript"
 	src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-	
-<script type="text/javascript" src="http://localhost:8080/Scholarship/js/datatables_zh_tw.json"></script>
+
+<script type="text/javascript"
+	src="http://localhost:8080/Scholarship/js/datatables_zh_tw.json"></script>
 <!-- 引入 DataTables 匯出列印功能 -->
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script type="text/javascript"
 	src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript"
+	src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
 <script type="text/javascript"
 	src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+
+<script type="text/javascript"
+	src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script type="text/javascript"
@@ -48,20 +60,30 @@
 	src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
 
-		<script type="text/javascript">
-			$(document).ready(function(){
-				$('.pure-table').DataTable({
-					// 設定語言為繁體中文
-					"language": {
-						"url": "http://localhost:8080/Scholarship/js/datatables_zh_tw.json"
-					},
-					//設定匯出功能
-					dom: 'lBfrtip',
-					buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-				});
-			});
-		</script>
-	<script>
+<script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+						var table = $('.pure-table')
+								.DataTable(
+										{
+											// 設定語言為繁體中文
+											"language" : {
+												"url" : "http://localhost:8080/Scholarship/js/datatables_zh_tw.json"
+											},
+											//設定匯出功能
+											dom : 'lBfrtip',
+											buttons : [ 'copy', 'csv', 'excel',
+													'pdf', 'print' ]
+
+										});
+
+						table.buttons().container().appendTo(
+								'.pure-table_wrapper .col-md-6');
+
+					}
+
+			);
 	function copySelectedValue() {
 		// Get the selected value from the dropdown
 		var selectedValue = document.getElementById("amountSelect").value;
@@ -82,7 +104,7 @@
 	<div id="main" class="p-3 bg bg-light">
 		<sp:form modelAttribute="scholarship" method="post"
 			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/"
-			class="mb-3" >
+			class="mb-3">
 			<div class="row g-3">
 				<div class="col-md-auto">
 					<sp:select class="form-select" path="entityId">
@@ -119,8 +141,9 @@
 			</div>
 		</sp:form>
 	</div>
-	<div class="mt-3" style="margin:20px">
-		<table class="pure-table pure-table-bordered ">
+
+	<div class="mt-3" style="margin: 20px">
+		<table class="pure-table pure-table-bordered">
 			<thead>
 				<tr>
 					<th scope="col">編號</th>
@@ -128,6 +151,7 @@
 					<th scope="col">身分別</th>
 					<th scope="col">名稱</th>
 					<th scope="col">額度</th>
+					<th scope="col">截止日期</th>
 					<th scope="col">聯絡人</th>
 					<th scope="col">聯絡電話</th>
 				</tr>
@@ -140,7 +164,8 @@
 						<td>${scholarship.entity.entityName}</td>
 						<td><a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
 						</td>
-						<td>${scholarship.scholarshipAmount}${contact}</td>
+						<td>${scholarship.scholarshipAmount}</td>
+						<td>${scholarship.endDate}</td>
 						<td>${scholarship.institution.contact }</td>
 						<td>${scholarship.institution.contactNumber }</td>
 					</tr>

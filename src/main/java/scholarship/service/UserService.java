@@ -69,24 +69,19 @@ public class UserService {
 	}
 
 	
-	public String loginGoogleUser(String email, HttpSession session) {
-		// 如果使用者未存在資料庫, 新建使用者存入 email 到資料庫, 導向後台
-		// 如果使用者已存在, 不新建使用者 不存入 email 到資料庫, 導向後台
-		// security.ODIC ODICcallback 中 有定義回傳好的 email
-		// google登入後重導至 ODICcallback 呼叫 loginGoogleUser 方法建立 session 
-		
-		Optional<User> userOpt = userDao.findUserByUsername(email);
-		if (!userOpt.isPresent()) {
-			User user = new User();
-			user.setUsername(email);
-			userDao.addUser(user);
-			session.setAttribute("user", user);
-			session.setMaxInactiveInterval(60*30);
-			return"redirect:/mvc/scholarship/backend";
+	public Boolean loginGitHubUser(String username, HttpSession session) {
+	
+		List<User> users = userDao.findAllUsers();
+		List<String> usernames = users.stream().map(User::getUsername) // 把 username 抽出來
+				.collect(Collectors.toList());
+		session.setAttribute("username", username);
+		if(usernames.contains(username)) {
+			return true;	
 		} else {
-			session.setAttribute("email", email);
-			session.setMaxInactiveInterval(60*30);
-			return"redirect:/mvc/scholarship/backend";
+			User user = new User();
+			user.setUsername(username);
+			userDao.addUser(user);
+			return false;	
 		}
 	}
 
@@ -95,6 +90,7 @@ public class UserService {
 		Optional<User> userOpt = userDao.findUserByUsername(sessionUsername);
 		User user = userOpt.get();
 		userDao.updateUserPasswordById(user.getUserId(), BCrypt.hashpw(newpassword, BCrypt.gensalt()));
+		session.invalidate();
 		return "login";
 	}
 

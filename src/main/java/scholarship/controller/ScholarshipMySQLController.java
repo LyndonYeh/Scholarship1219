@@ -207,15 +207,13 @@ public class ScholarshipMySQLController {
 				EmailService.sendVerificationCode(toEmail, verificationCode);
 				return "redirect:/mvc/scholarship/frontend/registerconfirm";
 			} catch (MessagingException e) {
-				MessagingException Erro = e;
-				System.out.println(e);
-				return "error";
+				redirectAttributes.addFlashAttribute("registerErrorMessage", "信箱錯誤");
+				return "redirect:/mvc/scholarshp/frontend/register";
 			}
 		} else {
 			redirectAttributes.addFlashAttribute("registerErrorMessage", "信箱錯誤");
+			return "redirect:/mvc/scholarship/frontend/register";
 		}
-		redirectAttributes.addFlashAttribute("registerErrorMessage", "信箱錯誤");
-		return "register";
 	}
 
 	/**
@@ -234,22 +232,38 @@ public class ScholarshipMySQLController {
 			@RequestParam("institutionName") String institutionName,
 			@RequestParam("institutionId") String institutionId, @RequestParam("contact") String contact,
 			@RequestParam("contactNumber") String contactNumber, @RequestParam("username") String username,
-			@RequestParam("verificationCode") String verificationCode, Model model, HttpSession session) {
+			@RequestParam("verificationCode") String verificationCode, Model model, HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		String sessionVerifiedCode = (String) session.getAttribute("verificationCode");
-		System.out.println(sessionVerifiedCode);
-		System.out.println(verificationCode);
 		if (verificationCode.equals(sessionVerifiedCode)) {
-			try {
-				userService.registerUser(username, password, institutionName, institutionId, contact, contactNumber);
-				return "redirect:/mvc/scholarship/login";
-			} catch (Exception e) {
-				e.printStackTrace();
-				model.addAttribute("error", "Error occurred during registration.");
-				return "error";
-			}
+			List<Institution> institutions = institutionDao.findAllInstitutions();
+			List<String> institutionNames = institutions.stream().map(Institution::getInstitutionName)
+					.collect(Collectors.toList());
+			List<String> institutionIds = institutions.stream().map(Institution::getInstitutionId)
+					.collect(Collectors.toList());
 
+			if (!institutionNames.contains(institutionName) && !institutionIds.contains(institutionId)) {
+				try {
+					userService.registerUser(username, password, institutionName, institutionId, contact,
+							contactNumber);
+					return "redirect:/mvc/scholarship/login";
+				} catch (Exception e) {
+					e.printStackTrace();
+					return "redirect:/mvc/scholarship/frontend/registerconfirm";
+				}
+			} 
+			else if (institutionNames.contains(institutionName)){
+				redirectAttributes.addFlashAttribute("InstitutionNameErrorMessage", "機構名稱已存在");
+				return "redirect:/mvc/scholarship/frontend/registerconfirm";
+			} 
+			else if (institutionIds.contains(institutionId)) {
+				redirectAttributes.addFlashAttribute("InstitutionIdErrorMessage", "機構統編已存在");
+				return "redirect:/mvc/scholarship/frontend/registerconfirm";
+			}
 		}
-		return "error";
+		
+		redirectAttributes.addFlashAttribute("CodeErrorMessage", "驗證碼錯誤");
+		return "redirect:/mvc/scholarship/frontend/registerconfirm";
 	}
 
 	/**
@@ -304,15 +318,15 @@ public class ScholarshipMySQLController {
 
 		if (entId != 0 && amount != null) {
 			addBasicModelEntityAndAmount(model, entId, amount);
-			return "frontend/scholarmain";
+			return "/frontend/scholarmain";
 		} else if (entId != 0) {
 			addBasicModelEntity(model, entId);
-			return "frontend/scholarmain";
+			return "/frontend/scholarmain";
 		} else if (amount != null) {
 			addBasicModelAmount(model, amount);
-			return "frontend/scholarmain";
+			return "/frontend/scholarmain";
 		} else {
-			return "frontend/scholarmain";
+			return "redirect:/mvc/scholarship/frontend/";
 		}
 
 	}
@@ -329,13 +343,15 @@ public class ScholarshipMySQLController {
 
 		return "backend/backendmain";
 	}
+
 	/**
 	 * 垃圾回收頁
 	 */
 	@GetMapping("/backend/garbageCollection")
 	public String garbageCollection(@ModelAttribute Scholarship scholarship, Model model, HttpSession session) {
 		User sessionData = (User) session.getAttribute("user");
-		List<Scholarship> scholarships = scholarshipDao.findScholarshipByInstitutionIdFromGarbageCollection(sessionData.getInstitutionId());
+		List<Scholarship> scholarships = scholarshipDao
+				.findScholarshipByInstitutionIdFromGarbageCollection(sessionData.getInstitutionId());
 
 		model.addAttribute("_method", "POST");
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
@@ -367,12 +383,14 @@ public class ScholarshipMySQLController {
 		User sessionData = (User) session.getAttribute("user");
 		scholarship.setInstitutionId(sessionData.getInstitutionId());
 		scholarship.setUserId(sessionData.getUserId());
-		while(scholarship.getContact().isEmpty()) {
-			String Contact=institutionDao.findInstitutionByInstitutionId(sessionData.getInstitutionId()).get().getContact();
+		while (scholarship.getContact().isEmpty()) {
+			String Contact = institutionDao.findInstitutionByInstitutionId(sessionData.getInstitutionId()).get()
+					.getContact();
 			scholarship.setContact(Contact);
 		}
-		while(scholarship.getContactNumber().isEmpty()) {
-			String contactNumber =institutionDao.findInstitutionByInstitutionId(scholarship.getInstitutionId()).get().getContactNumber();
+		while (scholarship.getContactNumber().isEmpty()) {
+			String contactNumber = institutionDao.findInstitutionByInstitutionId(scholarship.getInstitutionId()).get()
+					.getContactNumber();
 			scholarship.setContactNumber(contactNumber);
 		}
 		scholarshipDao.addScholarship(scholarship);
@@ -394,19 +412,18 @@ public class ScholarshipMySQLController {
 		model.addAttribute("_method", "POST");
 		return "/backend/backendmain";
 	}
+
 	/**
 	 * 修改上下架狀態
 	 */
 	@GetMapping("/backend/changeLunch/{scholarshipId}")
 	public String changeLunch(@PathVariable("scholarshipId") Integer scholarshipId, HttpSession session) {
 
-
 		Scholarship changeScholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
-		Boolean isLunch=changeScholarship.getIsUpdated();
-		isLunch=!isLunch;
+		Boolean isLunch = changeScholarship.getIsUpdated();
+		isLunch = !isLunch;
 		scholarshipDao.updateLauchStatusbyId(scholarshipId, isLunch);
 
-		
 		return "redirect:/mvc/scholarship/backend";
 	}
 
@@ -416,27 +433,28 @@ public class ScholarshipMySQLController {
 	@DeleteMapping("/backend/delete/{scholarshipId}") // Delete method 刪除
 	// @ResponseBody
 	public String deleteScholarship(@PathVariable("scholarshipId") Integer scholarshipId) {
-		//先複製到垃圾桶
-		Scholarship dScholarship=scholarshipDao.findScholarshipById(scholarshipId).get();
+		// 先複製到垃圾桶
+		Scholarship dScholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
 		scholarshipDao.addScholarshipToGarbageCollection(dScholarship);
-		
+
 		boolean rowcount = scholarshipDao.removeScholarshipById(scholarshipId);
 		System.out.println("delete User rowcount = " + rowcount);
 		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁
 	}
+
 	/**
 	 * 復原獎學金資料
 	 */
 	@DeleteMapping("/backend/garbageCollection/{scholarshipId}") // Delete method 刪除
 	// @ResponseBody
 	public String recoveryScholarship(@PathVariable("scholarshipId") Integer scholarshipId) {
-		//先複製回後台
-		Scholarship rScholarship=scholarshipDao.findScholarshipByIdFromGarbageCollection(scholarshipId).get();
+		// 先複製回後台
+		Scholarship rScholarship = scholarshipDao.findScholarshipByIdFromGarbageCollection(scholarshipId).get();
 		scholarshipDao.addScholarship(rScholarship);
-		
+
 		boolean rowcount = scholarshipDao.removeScholarshipByIdFromGarbageCollection(scholarshipId);
 		System.out.println("delete User rowcount = " + rowcount);
-		return "redirect:/mvc/scholarship/backend/garbageCollection"; 
+		return "redirect:/mvc/scholarship/backend/garbageCollection";
 	}
 
 	/**

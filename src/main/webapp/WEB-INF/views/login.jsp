@@ -52,15 +52,15 @@ form {
 			<div class="">
 				<label for="password" class="form-label">密碼</label> <input
 					type="password" class="form-control" id="password" name="password"
-					value="password1" required>
+					value="Password1" required>
 				<div class="invalid-feedback">請輸入密碼</div>
 			</div>
 			<div class="d-flex justify-content-around align-items-center mt-3">
-				<button class="btn btn-primary" type="submit"
+				<button class="btn btn-outline-secondary" type="submit"
 					onclick="location.href='./backend/main.jsp';">登入</button>
 				<a class="btn btn-outline-danger"
 					onclick="location.href='./frontend/forgetpassword';">忘記密碼</a> <a
-					class="btn btn-outline-primary"
+					class="btn btn-outline-secondary"
 					onclick="location.href='./frontend';">回到首頁</a>
 			</div>
 
@@ -83,10 +83,14 @@ form {
 				if (!form.checkValidity()) {
 					event.preventDefault()
 					event.stopPropagation()
+					var inputs = form.querySelectorAll('input');
+					Array.prototype.slice.call(inputs).forEach(function(input) {
+						input.classList.add('is-invalid');
+					});
 				}
 
 				form.classList.add('was-validated')
 			}, false)
 		})
-	})()
+	})
 </script>

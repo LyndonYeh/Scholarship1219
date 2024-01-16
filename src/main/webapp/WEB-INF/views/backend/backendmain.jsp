@@ -71,27 +71,33 @@
 			<div class="row g-3">
 				<sp:input path="scholarshipId" type="hidden" />
 				<input name="_method" type="hidden" value="${ _method }" />
-
+				<!-- hidden -->
 				<div class="col-md-auto">
 					<sp:input path="scholarshipName" type="text" placeholder="請輸入獎學金名稱"
 						class="form-control rounded" />
 				</div>
+
 				<div class="col-md-auto">
 					<sp:input path="webUrl" type="text" class="form-control rounded"
-						placeholder="請輸入獎學金網址，例:https://tw.yahoo.com/"
-						style="width: 300px" />
+						placeholder="請輸入獎學金網址，例:https://123/" style="width: 300px" />
 				</div>
-				<!-- &emsp;上傳時間:&nbsp;  -->
-				<sp:input path="updatedTime" type="hidden" />
-
+				<div class="col-md-auto text-center">
+					<label class="text-center mt-2">開始日期</label>
+				</div>
 				<div class="col-md-auto">
-					<sp:input path="startDate" type="date" class="form-control rounded" />
-				</div>
 
+					<sp:input path="startDate" type="date" class="form-control rounded"
+						placeholder="Start Date" />
+				</div>
 				<div class="col-md-auto">
-					<sp:input path="endDate" type="date" class="form-control rounded" />
+					<label class="text-center mt-2">截止日期</label>
 				</div>
-
+				<div class="col-md-auto text-center">
+					<sp:input path="endDate" type="date" class="form-control rounded"
+						placeholder="End Date" />
+				</div>
+			</div>
+			<div class="row g-3 mt-3">
 				<div class="col-md-auto">
 					<sp:select path="entityId" class="form-select">
 						<sp:option value="0" style="color: grey; font-style: italic;"
@@ -111,13 +117,13 @@
 				</div>
 
 				<div class="col-md-auto">
-					<sp:input class="form-control rounded" path="institution.contact"
-						type="text" placeholder="請輸入聯絡人" />
+					<sp:input class="form-control rounded" path="contact" type="text"
+						placeholder="請輸入聯絡人" />
 				</div>
 
 				<div class="col-md-auto">
-					<sp:input class="form-control rounded"
-						path="institution.contactNumber" type="text" placeholder="請輸入聯絡電話" />
+					<sp:input class="form-control rounded" path="contactNumber"
+						type="text" placeholder="請輸入聯絡電話" />
 				</div>
 
 				<div class="col-md-auto">
@@ -139,6 +145,7 @@
 				<th scope="col">獎學金額度</th>
 				<th scope="col">聯絡人</th>
 				<th scope="col">聯絡電話</th>
+				<th scope="col">截止日期</th>
 				<th scope="col">複製</th>
 				<th scope="col">上架</th>
 				<th scope="col">刪除</th>
@@ -157,15 +164,16 @@
 					<td>${scholarship.scholarshipAmount}</td>
 					<td>${scholarship.contact }</td>
 					<td>${scholarship.contactNumber }</td>
+					<td>${scholarship.endDate }</td>
 					<td><a type="button" class="btn btn-warning"
 						href="${pageContext.request.contextPath}/mvc/scholarship/backend/copy/${ scholarship.scholarshipId }">複製</a>
 					</td>
 					<td><a type="button"
-						class="btn ${scholarship.isUpdated ? 'btn-danger' : 'btn-secondary'}"
+						class="btn ${scholarship.isUpdated ? 'btn-success' : 'btn-secondary'}"
 						href="${pageContext.request.contextPath}/mvc/scholarship/backend/changeLunch/${scholarship.scholarshipId}"
-						style="display: inline-block;"> ${scholarship.isUpdated ? '上架中...' : '未上架'}
+						style="display: inline-block;"> ${scholarship.isUpdated ? '已上架' : '未上架'}
 					</a></td>
-					<td><a type="button" class="btn btn-warning"
+					<td><a type="button" class="btn btn-danger"
 						href="javascript:void(0);"
 						onClick="deleteScholarship(${ scholarship.scholarshipId })">刪除</a>
 					</td>
