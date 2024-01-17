@@ -76,6 +76,7 @@
         
         
         
+<<<<<<< HEAD
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp/WEB-INF/views/frontend"/>
                                                                 
         
@@ -96,6 +97,10 @@
                 
         <dependent-module archiveName="JavaCryptography-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/JavaCryptography/JavaCryptography">
                         
+=======
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+        <dependent-module archiveName="JavaCryptography-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/javaCryptography/javaCryptography">
+>>>>>>> 2f3435e55043b0e93302e958484b40795690c579
             <dependency-type>uses</dependency-type>
                     
         </dependent-module>

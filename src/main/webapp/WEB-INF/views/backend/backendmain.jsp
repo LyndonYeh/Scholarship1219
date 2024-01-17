@@ -46,6 +46,7 @@
 <body>
 	<%@include file="../include/menu.jspf"%>
 
+<<<<<<< HEAD
 	<table class="table">
 		<thead class="bg bg-dark text-light">
 			<tr>
@@ -76,6 +77,71 @@
 					<sp:input path="scholarshipName" type="text" placeholder="請輸入獎學金名稱"
 						class="form-control rounded" />
 				</div>
+=======
+				</tbody>
+			</table>
+			<div id="main" class="p-3 bg bg-light">
+				<sp:form modelAttribute="scholarship" method="post"
+					class="mb-3"
+					action="${pageContext.request.contextPath}/mvc/scholarship/backend">
+					
+					<div class="row g-3">
+					<sp:input path="scholarshipId" type="hidden" />
+					<input name="_method" type="hidden" value="${ _method }" />
+
+					<div class="col-md-auto">
+						<sp:input path="scholarshipName" type="text"
+							placeholder="請輸入獎學金名稱" class="form-control rounded"/>
+					</div>
+					<div class="col-md-auto">
+					<sp:input path="webUrl" type="text" class="form-control rounded" placeholder="請輸入獎學金網址，例:https://tw.yahoo.com/" style="width: 350px"/>
+					</div>
+				
+					<sp:input path="updatedTime" type="hidden" />
+
+					<div class="col-md-auto">
+						<sp:input path="startDate" type="date" class="form-control rounded"/>
+					</div>
+
+					<div class="col-md-auto">
+						<sp:input path="endDate" type="date" class="form-control rounded"/>
+					</div>
+
+					<div class="col-md-auto">
+						<sp:select path="entityId" class="form-select" >
+							<sp:option value="0" style="color: grey; font-style: italic;"
+								label="請選擇身分別"></sp:option>
+							<sp:option value="1" label="幼稚園"></sp:option>
+							<sp:option value="2" label="小學"></sp:option>
+							<sp:option value="3" label="國中"></sp:option>
+							<sp:option value="4" label="高中"></sp:option>
+							<sp:option value="5" label="大學"></sp:option>
+							<sp:option value="6" label="研究所"></sp:option>
+						</sp:select>
+					</div>
+
+					<div class="col-md-auto">
+						<sp:input class="form-control rounded" path="scholarshipAmount" type="number"
+							placeholder="請輸入獎學金額度" />
+					</div>
+
+					<div class="col-md-auto">
+						<sp:input class="form-control rounded" path="contact" type="text"
+							placeholder="請輸入聯絡人" />
+					</div>
+
+					<div class="col-md-auto">
+						<sp:input class="form-control rounded" path="contactNumber" type="text"
+							placeholder="請輸入聯絡電話" />
+					</div>
+
+					<div class="col-md-auto">
+						<button type="submit" type="submit"
+							class="btn btn-outline-secondary">${ submitBtnName }</button>
+					</div>
+			</div> 
+			</sp:form>
+>>>>>>> 2f3435e55043b0e93302e958484b40795690c579
 
 				<div class="col-md-auto">
 					<sp:input path="webUrl" type="text" class="form-control rounded"
@@ -156,6 +222,7 @@
 
 			<c:forEach items="${scholarships}" var="scholarship">
 				<tr>
+<<<<<<< HEAD
 					<td>${scholarship.scholarshipId }</td>
 					<td>${scholarship.institution.institutionName }</td>
 
@@ -177,6 +244,17 @@
 						href="javascript:void(0);"
 						onClick="deleteScholarship(${ scholarship.scholarshipId })">刪除</a>
 					</td>
+=======
+					<th scope="col">編號</th>
+					<th scope="col">獎助機構</th>
+					<th scope="col">獎學金名稱</th>
+					<th scope="col">獎學金額度</th>
+					<th scope="col">聯絡人</th>
+					<th scope="col">聯絡電話</th>
+					<th scope="col">複製</th>
+					<th scope="col">上架</th>
+					<th scope="col">刪除</th>
+>>>>>>> 2f3435e55043b0e93302e958484b40795690c579
 
 				</tr>
 			</c:forEach>

@@ -24,6 +24,7 @@
 <!-- 引入 jQuery -->
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<<<<<<< HEAD
 
 <script type="text/javascript" charset="utf8"
 	src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
@@ -33,6 +34,15 @@
 
 <script type="text/javascript"
 	src="http://localhost:8080/Scholarship/js/datatables_zh_tw.json"></script>
+=======
+	
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<!-- 引入 DataTables -->
+<script type="text/javascript"
+	src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+	
+<script type="text/javascript" src="http://localhost:8080/Scholarship/js/datatables_zh_tw.json"></script>
+>>>>>>> 2f3435e55043b0e93302e958484b40795690c579
 <!-- 引入 DataTables 匯出列印功能 -->
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -60,6 +70,7 @@
 	src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
 
+<<<<<<< HEAD
 <script type="text/javascript">
 	$(document)
 			.ready(
@@ -84,6 +95,22 @@
 					}
 
 			);
+=======
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('.pure-table').DataTable({
+					// 設定語言為繁體中文
+					"language": {
+						"url": "http://localhost:8080/Scholarship/js/datatables_zh_tw.json"
+					},
+					//設定匯出功能
+					dom: 'lBfrtip',
+					buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+				});
+			});
+		</script>
+	<script>
+>>>>>>> 2f3435e55043b0e93302e958484b40795690c579
 	function copySelectedValue() {
 		// Get the selected value from the dropdown
 		var selectedValue = document.getElementById("amountSelect").value;
@@ -104,7 +131,7 @@
 	<div id="main" class="p-3 bg bg-light">
 		<sp:form modelAttribute="scholarship" method="post"
 			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/"
-			class="mb-3">
+			class="mb-3" >
 			<div class="row g-3">
 				<div class="col-md-auto">
 					<sp:select class="form-select" path="entityId">
@@ -141,9 +168,14 @@
 			</div>
 		</sp:form>
 	</div>
+<<<<<<< HEAD
 
 	<div class="mt-3" style="margin: 20px">
 		<table class="pure-table pure-table-bordered">
+=======
+	<div class="mt-3" style="margin:20px">
+		<table class="pure-table pure-table-bordered ">
+>>>>>>> 2f3435e55043b0e93302e958484b40795690c579
 			<thead>
 				<tr>
 					<th scope="col">編號</th>
@@ -164,8 +196,12 @@
 						<td>${scholarship.entity.entityName}</td>
 						<td><a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
 						</td>
+<<<<<<< HEAD
 						<td>${scholarship.scholarshipAmount}</td>
 						<td>${scholarship.endDate}</td>
+=======
+						<td>${scholarship.scholarshipAmount}${contact}</td>
+>>>>>>> 2f3435e55043b0e93302e958484b40795690c579
 						<td>${scholarship.institution.contact }</td>
 						<td>${scholarship.institution.contactNumber }</td>
 					</tr>
