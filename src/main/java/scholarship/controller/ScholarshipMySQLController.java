@@ -382,7 +382,7 @@ public class ScholarshipMySQLController {
 			model.addAttribute("scholarship", scholarship); // 給 form 表單用的 (ModelAttribute)
 
 			return "backendmain";
-		}
+		} 
 
 		addBasicModelBackEnd(model, session);
 		User sessionData = (User) session.getAttribute("user");
@@ -471,6 +471,7 @@ public class ScholarshipMySQLController {
 	 * 
 	 */
 	private void addBasicModelBackEnd(Model model, HttpSession session) {
+	
 		User sessionData = (User) session.getAttribute("user");
 
 		List<Institution> instiutions = institutionDao.findAllInstitutions();
