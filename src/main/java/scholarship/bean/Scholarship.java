@@ -1,5 +1,10 @@
 package scholarship.bean;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -36,7 +41,7 @@ public class Scholarship {
 	private String startDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-	private String endDate;
+	private Date endDate;
 	private Boolean isExpired;
 	private String webUrl;
 	private Boolean isUpdated;
@@ -55,7 +60,7 @@ public class Scholarship {
 	}
 
 	public Scholarship(Integer scholarshipId, Integer userId, String scholarshipName, Integer entityId,
-			Integer scholarshipAmount, String updatedTime, String startDate, String endDate, String webUrl) {
+			Integer scholarshipAmount, String updatedTime, String startDate, Date endDate, String webUrl) {
 		this.scholarshipId = scholarshipId;
 		this.userId = userId;
 		this.scholarshipName = scholarshipName;
@@ -70,7 +75,7 @@ public class Scholarship {
 	
 	
 	public Scholarship(Integer scholarshipId, Integer userId, String institutionId, String scholarshipName,
-			Integer scholarshipAmount, String updatedTime, String startDate, String endDate, Boolean isExpired,
+			Integer scholarshipAmount, String updatedTime, String startDate, Date endDate, Boolean isExpired,
 			String webUrl, Boolean isUpdated, Integer entityId, String contactNumber, String contact,
 			Institution institution, Entity entity) {
 		super();
@@ -148,11 +153,15 @@ public class Scholarship {
 		this.startDate = startDate;
 	}
 
-	public String getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
+	public String getStringEndDate() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
+	        return format.format(this.endDate);
+	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 

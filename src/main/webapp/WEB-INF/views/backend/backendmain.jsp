@@ -10,6 +10,7 @@
 
 <html>
 <head>
+
 <script type="text/javascript">
 			function deleteScholarship(scholarshipId) {
 				const url = '${pageContext.request.contextPath}/mvc/scholarship/backend/delete/' + scholarshipId;
@@ -115,34 +116,34 @@
 				<input name="_method" type="hidden" value="${ _method }" />
 				<!-- hidden -->
 				<div class="col-md-auto">
-					<sp:input path="scholarshipName" type="text" placeholder="請輸入獎學金名稱"
-						class="form-control rounded" />
+					<sp:input path="scholarshipName" type="text"  placeholder="請輸入獎學金名稱"
+						class="form-control rounded" required="required"/>
 				</div>
 				<div class="col-md-auto">
 					<sp:input path="webUrl" type="text" class="form-control rounded"
-						placeholder="請輸入獎學金網址，例:https://123/" style="width: 300px" />
+						placeholder="請輸入獎學金網址，例:https://123/" style="width: 300px" required="required" />
 				</div>
 				<div class="col-md-auto text-center">
-					<label class="text-center mt-2">開始日期</label>
+					<label class="text-center mt-2" >開始日期</label>
 				</div>
 				<div class="col-md-auto">
 
 					<sp:input path="startDate" type="date" class="form-control rounded"
-						placeholder="Start Date" />
+						placeholder="Start Date" required="required"/>
 				</div>
 				<div class="col-md-auto">
 					<label class="text-center mt-2">截止日期</label>
 				</div>
 				<div class="col-md-auto text-center">
 					<sp:input path="endDate" type="date" class="form-control rounded"
-						placeholder="End Date" />
+						placeholder="End Date" required="required"/>
 				</div>
 			</div>
 			<div class="row g-3 mt-3">
 				<div class="col-md-auto">
-					<sp:select path="entityId" class="form-select">
-						<sp:option value="0" style="color: grey; font-style: italic;"
-							label="請選擇身分別"></sp:option>
+					<sp:select path="entityId" class="form-select" required="required">
+					<sp:option value="" disabled="disabled" style="color: grey; font-style: italic;" label="請選擇身分別">
+					</sp:option>
 						<sp:option value="1" label="幼稚園"></sp:option>
 						<sp:option value="2" label="小學"></sp:option>
 						<sp:option value="3" label="國中"></sp:option>
@@ -154,7 +155,7 @@
 
 				<div class="col-md-auto">
 					<sp:input class="form-control rounded" path="scholarshipAmount"
-						type="number" placeholder="請輸入獎學金額度" />
+						type="number" placeholder="請輸入獎學金額度" required="required"/>
 				</div>
 
 				<div class="col-md-auto">
@@ -205,7 +206,7 @@
 					<td>${scholarship.scholarshipAmount}</td>
 					<td>${scholarship.contact }</td>
 					<td>${scholarship.contactNumber }</td>
-					<td ${scholarship.isExpired?'class=expried':'' } >${scholarship.endDate }</td>
+					<td ${scholarship.isExpired?'class=expried':'' }>${scholarship.stringEndDate}</td>
 					<td><a type="button" class="btn btn-warning"
 						href="${pageContext.request.contextPath}/mvc/scholarship/backend/copy/${ scholarship.scholarshipId }">複製</a>
 					</td>

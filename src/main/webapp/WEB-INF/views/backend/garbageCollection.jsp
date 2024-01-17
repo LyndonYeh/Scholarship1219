@@ -132,7 +132,7 @@
 						</td>
 						<td>${scholarship.scholarshipAmount}</td>
 						<td>${scholarship.contact }</td>
-						<td>${scholarship.contactNumber }${scholarship.endDate}</td>
+						<td>${scholarship.contactNumber }</td>
 						<td>
 							<div id="${scholarship.scholarshipId}"class="expried"></div> 
 							 <script>

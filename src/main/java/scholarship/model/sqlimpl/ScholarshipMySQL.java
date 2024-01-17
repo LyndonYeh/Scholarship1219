@@ -1,6 +1,5 @@
 package scholarship.model.sqlimpl;
 
-import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +10,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-
+import java.util.Date;
 import scholarship.bean.Entity;
 import scholarship.bean.Institution;
 import scholarship.bean.Scholarship;
@@ -49,6 +48,8 @@ public class ScholarshipMySQL implements ScholarshipDao {
        
         int scholarshipId = getNextScholarshipId();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+       
+        Date todayDate = new Date();
         
         Map<String, Object> params = new HashMap<>();
         params.put("scholarshipId", scholarshipId);
@@ -61,8 +62,8 @@ public class ScholarshipMySQL implements ScholarshipDao {
         //params.put("updatedTime", Date.valueOf(scholarship.getUpdatedTime()));
         params.put("updatedTime", format.format(System.currentTimeMillis()));
         params.put("startDate", scholarship.getStartDate());
-        params.put("endDate", Date.valueOf(scholarship.getEndDate()));
-        params.put("isExpired", false);
+        params.put("endDate", scholarship.getEndDate());
+        params.put("isExpired",(scholarship.getEndDate()).before(todayDate));
         params.put("webUrl", scholarship.getWebUrl());
         params.put("isUpdated", false);
         params.put("contact", scholarship.getContact());
@@ -90,7 +91,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
     	//params.put("updatedTime", Date.valueOf(scholarship.getUpdatedTime()));
     	params.put("updatedTime", format.format(System.currentTimeMillis()));
     	params.put("startDate", scholarship.getStartDate());
-    	params.put("endDate", Date.valueOf(scholarship.getEndDate()));
+    	params.put("endDate", scholarship.getEndDate());
     	params.put("isExpired", false);
     	params.put("webUrl", scholarship.getWebUrl());
     	params.put("isUpdated", false);
