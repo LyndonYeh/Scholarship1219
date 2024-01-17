@@ -52,7 +52,7 @@ form {
 			<div class="">
 				<label for="password" class="form-label">密碼</label> <input
 					type="password" class="form-control" id="password" name="password"
-					value="Password1" required>
+					value="password1" required>
 				<div class="invalid-feedback">請輸入密碼</div>
 			</div>
 			<div class="d-flex justify-content-around align-items-center mt-3">

@@ -7,7 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
-<!-- % List<ScholarshipUpdateRecord> ScholarshipUpdateRecords = (List<ScholarshipUpdateRecord>) request.getAttribute("cholarshipUpdateRecord");%> -->
+
 <html>
 <head>
 <script type="text/javascript">
@@ -29,7 +29,50 @@
 					});
 				}
 			}
+			function updateScholarship(scholarshipId, isExpired) {
+			    const url2 = '${pageContext.request.contextPath}/mvc/scholarship/backend/changeLunch/' + scholarshipId;
+			    const url3 = '${pageContext.request.contextPath}/mvc/scholarship/backend';
+
+			    if (isExpired) {
+			        if (confirm('已過期無法上架')) {
+			            fetch(url3, { method: 'GET' })
+			                .then(response => {
+			                    if (response.redirected) {
+			                        console.log(response);
+			                        location.href = response.url;
+			                    } else {
+			                        console.log('update fail');
+			                    }
+			                })
+			                .catch(error => {
+			                    console.log('update error: ', error);
+			                });
+			        }
+			    } else {
+			        fetch(url2, { method: 'GET' })
+			            .then(response => {
+			                if (response.redirected) {
+			                    console.log(response);
+			                    location.href = response.url;
+			                } else {
+			                    console.log('update fail');
+			                }
+			            })
+			            .catch(error => {
+			                console.log('update error: ', error);
+			            });
+			    }
+			}
+
 		</script>
+		<style type="text/css">
+		.expried{
+		color: red;
+		}
+		
+		
+		
+		</style>
 <link rel="shortcut icon" type="image/x-icon"
 	href="../../images/icon.png">
 <link
@@ -162,15 +205,16 @@
 					<td>${scholarship.scholarshipAmount}</td>
 					<td>${scholarship.contact }</td>
 					<td>${scholarship.contactNumber }</td>
-					<td>${scholarship.endDate }</td>
+					<td ${scholarship.isExpired?'class=expried':'' } >${scholarship.endDate }</td>
 					<td><a type="button" class="btn btn-warning"
 						href="${pageContext.request.contextPath}/mvc/scholarship/backend/copy/${ scholarship.scholarshipId }">複製</a>
 					</td>
 					<td><a type="button"
 						class="btn ${scholarship.isUpdated ? 'btn-success' : 'btn-secondary'}"
-						href="${pageContext.request.contextPath}/mvc/scholarship/backend/changeLunch/${scholarship.scholarshipId}"
+						href="javascript:void(1);"
+						onClick="updateScholarship(${ scholarship.scholarshipId },${scholarship.isExpired })"
 						style="display: inline-block;"> ${scholarship.isUpdated ? '已上架' : '未上架'}
-					</a></td>
+					</a>${scholarship.isExpired?'<img src="../../images/expired.png" >':'' }</td>
 					<td><a type="button" class="btn btn-danger"
 						href="javascript:void(0);"
 						onClick="deleteScholarship(${ scholarship.scholarshipId })">刪除</a>
