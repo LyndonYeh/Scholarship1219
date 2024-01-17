@@ -18,17 +18,16 @@ public class LoginInterceptor implements HandlerInterceptor {
 		String URI = request.getRequestURI();
 
 		// 有 session 的資料
-		if (session.getAttribute("user") != null || session.getAttribute("githubUsername") != null) {
+		if (session.getAttribute("user") != null) {
 
-			if (session.getAttribute("user") != null) {
-				User user = (User) session.getAttribute("user");
-				String urlUserId = String.valueOf(user.getUserId());
-				
-				// 修改資料頁 session userId 等於網址userId : 給過
-				if (URI.contains("/mvc/scholarship/backend/edit/" + urlUserId)) {
-					return true;
-				}
+			User user = (User) session.getAttribute("user");
+			String urlUserId = String.valueOf(user.getUserId());
+
+			// 修改資料頁 session userId 等於網址userId : 給過
+			if (URI.contains("/mvc/scholarship/backend/edit/" + urlUserId)) {
+				return true;
 			}
+
 			// 處理 backend 網址授權
 			// 等於後台首頁 : 給過
 			if (URI.equals("/Scholarship/mvc/scholarship/backend")) {

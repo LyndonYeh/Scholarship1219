@@ -95,36 +95,21 @@ form {
 				如欲修改密碼請至<a class="fw-light"
 					href="${pageContext.request.contextPath}/mvc/scholarship/frontend/forgetpassword">重設密碼</a>
 			</p>
-			<!-- 
-			<p class="mt-4">
-				修改密碼請至<a class="fw-light"
-					href="${pageContext.request.contextPath}/mvc/scholarship/frontend/forgetpassword">重設密碼</a>
-			</p>
-			<div class="col-md-5">
-				<label for="password" class="form-label">請輸入密碼 </label>
-				<div class="form-group">
-					<div class="password-container">
-						<div style="color: red">${editErrorMessage}</div>
-						<input type="password" class="form-control" id="password"
-							name="password" value="" required>
-						<div class="invalid-feedback">請輸入密碼</div>
-					</div>
+
+			<div class="row g-3 justify-content-between">
+				<div class="col-md-auto ">
+					<a type="text" class="btn btn-outline-secondary"
+						onclick="location.href='${pageContext.request.contextPath}/mvc/scholarship/backend'">回後台</a>
 				</div>
-				<p class="mt-4">
-					修改密碼請至<a class="fw-light"
-						href="${pageContext.request.contextPath}/mvc/scholarship/frontend/forgetpassword">重設密碼</a>
-				</p>
+
+				<div class="col-md-auto">
+					<button type="submit" type="submit"
+						class="btn btn-outline-danger">確認修改</button>
+				</div>
 			</div>
-			 -->
-			<button class="btn btn-outline-danger" type="submit">確認修改</button>
 
 		</form>
-		<!-- 測試訊息<div>
-		<h2>Test Area</h2>
-		<p>${session}</p>
-		<p>${session.password}</p>
-		<p>${sessionInstitution}</p>
-	</div> -->
+
 	</div>
 
 

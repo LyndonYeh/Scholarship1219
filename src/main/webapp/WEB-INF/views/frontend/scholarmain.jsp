@@ -36,6 +36,7 @@
 	src="http://localhost:8080/Scholarship/js/datatables_zh_tw.json"></script>
 
 
+
 <!-- 引入 DataTables 匯出列印功能 -->
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -72,7 +73,8 @@
 										{
 											// 設定語言為繁體中文
 											"language" : {
-												"url" : "http://localhost:8080/Scholarship/js/datatables_zh_tw.json"
+												"url" : "http://localhost:8080/Scholarship/js/datatables_zh_tw.json",
+
 											},
 											//設定匯出功能
 											dom : 'lBfrtip',
@@ -83,7 +85,7 @@
 						table.buttons().container().appendTo(
 								'.pure-table_wrapper .col-md-6');
 					});
-	
+
 	function copySelectedValue() {
 		// Get the selected value from the dropdown
 		var selectedValue = document.getElementById("amountSelect").value;

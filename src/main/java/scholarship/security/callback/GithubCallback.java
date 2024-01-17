@@ -52,7 +52,7 @@ public class GithubCallback extends HttpServlet {
 		String username = userInfoObject.getString("login");
 		
 		HttpSession session = req.getSession();
-		session.setAttribute("githubUsername", username);
+		session.setAttribute("githubUsername", username+"(GitHub)");
 		resp.getWriter().println(session.getAttribute("githubUsername"));
 		
 		resp.sendRedirect("http://localhost:8080/Scholarship/mvc/scholarship/frontend");

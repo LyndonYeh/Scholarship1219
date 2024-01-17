@@ -57,7 +57,7 @@ form {
 			</div>
 			<div class="d-flex justify-content-around align-items-center mt-3">
 				<button class="btn btn-outline-secondary" type="submit"
-					onclick="location.href='./backend/main.jsp';">登入</button>
+					onclick="location.href='./backend/main';">登入</button>
 				<a class="btn btn-outline-danger"
 					onclick="location.href='./frontend/forgetpassword';">忘記密碼</a> <a
 					class="btn btn-outline-secondary"
