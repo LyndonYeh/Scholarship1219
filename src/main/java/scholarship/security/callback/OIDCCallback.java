@@ -46,7 +46,7 @@ public class OIDCCallback extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html;charset=UTF-8");
 		
-	
+
 		
 		// 取得授權碼
 		String code = req.getParameter("code");

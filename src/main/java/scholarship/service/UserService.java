@@ -50,7 +50,7 @@ public class UserService {
 
 			if (BCrypt.checkpw(password, user.getPassword())) {
 				session.setAttribute("user", user);
-				session.setMaxInactiveInterval(60*30);
+				session.setMaxInactiveInterval(60 * 30);
 				return "redirect:/mvc/scholarship/backend";
 			} else {
 				handleLoginFailure(session, model, "密碼錯誤");
@@ -61,28 +61,19 @@ public class UserService {
 		return "login";
 	}
 
-	
 	private void handleLoginFailure(HttpSession session, Model model, String message) {
 		// 設定共用 session
 		session.invalidate();
 		model.addAttribute("loginMessage", message);
 	}
 
-	
 	public Boolean loginGitHubUser(String username, HttpSession session) {
-	
-		List<User> users = userDao.findAllUsers();
-		List<String> usernames = users.stream().map(User::getUsername) // 把 username 抽出來
-				.collect(Collectors.toList());
 		session.setAttribute("username", username);
-		if(usernames.contains(username)) {
-			return true;	
-		} else {
-			User user = new User();
-			user.setUsername(username);
-			userDao.addUser(user);
-			return false;	
-		}
+		session.setAttribute("user", username);
+		User user = new User();
+		user.setUsername(username);
+		userDao.addUser(user);
+		return true;
 	}
 
 	public String resetPassword(String strUUID, String newpassword, HttpSession session, Model model) {
@@ -116,17 +107,13 @@ public class UserService {
 		user.setInstitution(institution);
 		user.setUsername(username);
 		user.setPassword(password);
-//		user.setLevel(level);
-
 		userDao.addUser(user);
 
 	}
 
-
-
 	public void showEditUser(User user, HttpSession session, Model model) {
 		User sessionData = user;
-		// user 被設定成 controller 的 session 抓取值: User user 
+		// user 被設定成 controller 的 session 抓取值: User user
 		// userDao.findUserById(userId).get();
 		Optional<Institution> sessionInstitution = institutionDao
 				.findInstitutionByInstitutionId(sessionData.getInstitutionId());

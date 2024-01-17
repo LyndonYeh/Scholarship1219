@@ -23,7 +23,7 @@ import scholarship.util.OAuth2Util;
 
 @WebServlet(value = "/secure/callback/oauth2")
 public class GithubCallback extends HttpServlet {
-
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
@@ -50,6 +50,12 @@ public class GithubCallback extends HttpServlet {
 		// 4. 利用 JSONObject 來分析資料
 		JSONObject userInfoObject = new JSONObject(userInfo);
 		String username = userInfoObject.getString("login");
+		
+		HttpSession session = req.getSession();
+		session.setAttribute("githubUsername", username);
+		resp.getWriter().println(session.getAttribute("githubUsername"));
+		
+		resp.sendRedirect("http://localhost:8080/Scholarship/mvc/scholarship/frontend");
 		
 		
 

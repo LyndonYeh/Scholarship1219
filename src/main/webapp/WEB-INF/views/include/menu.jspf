@@ -48,6 +48,16 @@
 							class="nav-link active" aria-current="page"
 							href="${pageContext.request.contextPath}/mvc/scholarship/backend">後台首頁</a></li>
 					</c:when>
+						<c:when
+						test="${currentURL.contains('frontend') and not empty sessionScope.githubUsername}">
+						<li class="navbar-brand"><a class="nav-link active"
+							aria-current="page"
+							href="${pageContext.request.contextPath}/mvc/scholarship/frontend">獎學金列表</a></li>
+						<li
+							class="nav-item  d-flex justify-content-center align-items-center"><a
+							class="nav-link active" aria-current="page"
+							href="${pageContext.request.contextPath}/mvc/scholarship/backend">後台首頁</a></li>
+					</c:when>
 					<c:otherwise>
 						<li class="navbar-brand"><a class="nav-link active"
 							aria-current="page"
@@ -60,6 +70,17 @@
 					<li class="nav-item"><a
 						class="nav-link d-flex justify-content-center align-items-center"
 						style="color: white;">Hi,${username}</a></li>
+					<li class="nav-item">
+						<form class="form-inline"
+							action="${pageContext.request.contextPath}/mvc/scholarship/logout">
+							<button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button>
+						</form>
+					</li>
+				</c:when>
+				<c:when test="${not empty sessionScope.githubUsername}">
+					<li class="nav-item"><a
+						class="nav-link d-flex justify-content-center align-items-center"
+						style="color: white;">Hi,${githubUsername}</a></li>
 					<li class="nav-item">
 						<form class="form-inline"
 							action="${pageContext.request.contextPath}/mvc/scholarship/logout">

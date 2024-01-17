@@ -8,11 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import scholarship.service.UserService;
 import scholarship.util.OAuth2Util;
 
 @WebServlet(value = "/secure/oauth2/github_login")
 public class GithubLogin extends HttpServlet {
-
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 向 Github 驗證授權

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-                                                                        
+                                                                            
     
     
     
@@ -17,8 +17,10 @@
 
     
     
-    <wb-module deploy-name="SpringMVC-0.0.1-SNAPSHOT">
-                                                                                                                               
+    
+    <wb-module deploy-name="Scholarship-0.0.1-SNAPSHOT">
+                                                                                                                                       
+        
         
         
         
@@ -33,7 +35,8 @@
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
-                                                                                                                                                
+                                                                                                                                                        
+        
         
         
         
@@ -51,7 +54,8 @@
         
         
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
-                                                                                                                                                
+                                                                                                                                                        
+        
         
         
         
@@ -76,37 +80,14 @@
         
         
         
-<<<<<<< HEAD
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp/WEB-INF/views/frontend"/>
-                                                                
-        
-        
-        
-        
-        
-        
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp/WEB-INF/views/backend"/>
-                                                        
-        
-        
-        
-        
-        
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp/WEB-INF/views/frontend/views"/>
-                
         <dependent-module archiveName="JavaCryptography-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/JavaCryptography/JavaCryptography">
-                        
-=======
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
-        <dependent-module archiveName="JavaCryptography-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/javaCryptography/javaCryptography">
->>>>>>> 2f3435e55043b0e93302e958484b40795690c579
             <dependency-type>uses</dependency-type>
-                    
         </dependent-module>
-                                                                                                                                                
+                                                                                                                                                        
         
 
+        
         
         
         
@@ -123,9 +104,8 @@
         
         
         <property name="java-output-path" value="/Scholarship/build/classes"/>
-                
-        <property name="context-root" value="SpringMVC"/>
-                                                                                                                                            
+        <property name="context-root" value="Scholarship"/>
+                                                                                                                                                    
 
     
     
@@ -142,8 +122,10 @@
     
     
     
+    
     </wb-module>
-                                                                    
+                                                                        
+
 
 
 
