@@ -17,6 +17,8 @@ public class User {
 	private String institutionId; // 機構 id
 	private String username; // 使用者名稱
 	private String password; // 使用者密碼
+	
+	//設定關聯
 	private Institution institution;
 	
 	

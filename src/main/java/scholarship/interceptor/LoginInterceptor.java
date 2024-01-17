@@ -19,18 +19,18 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 		// 有 session 的資料
 		if (session.getAttribute("user") != null) {
+
 			User user = (User) session.getAttribute("user");
 			String urlUserId = String.valueOf(user.getUserId());
+
+			// 修改資料頁 session userId 等於網址userId : 給過
+			if (URI.contains("/mvc/scholarship/backend/edit/" + urlUserId)) {
+				return true;
+			}
 
 			// 處理 backend 網址授權
 			// 等於後台首頁 : 給過
 			if (URI.equals("/Scholarship/mvc/scholarship/backend")) {
-				return true;
-			}
-			
-
-			// 修改資料頁 session userId 等於網址userId : 給過
-			if (URI.contains("/mvc/scholarship/backend/edit/" + urlUserId)) {
 				return true;
 			}
 
@@ -38,6 +38,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			if (URI.contains("/mvc/scholarship/backend/copy/")) {
 				return true;
 			}
+
 			if (URI.contains("/mvc/scholarship/backend/garbageCollection")) {
 				return true;
 			}
@@ -45,8 +46,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 			if (URI.contains("/mvc/scholarship/backend/changeLunch/")) {
 				return true;
 			}
-			
-			// 後台包含 change url : 給過
+
+			// 後台包含 delete url : 給過
 			if (URI.contains("/mvc/scholarship/backend/delete/")) {
 				return true;
 			}
@@ -58,11 +59,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 		} else {
 			// 處理 frontend 網址授權
-			if (URI.contains("/Scholarship/mvc/scholarship/frontend/")) {
+			if (URI.contains("/mvc/scholarship/frontend/")) {
 				return true;
 			}
 
-			if (URI.contains("/mvc/scholarship/login")) {
+			if (URI.contains("/Scholarship/mvc/scholarship/login")) {
 				return true;
 			}
 
@@ -70,8 +71,14 @@ public class LoginInterceptor implements HandlerInterceptor {
 			if (URI.contains("/mvc/scholarship/backend/reset/")) {
 				return true;
 			}
+
+			if (URI.contains("/Scholarship/secure/callback")) {
+				return true;
+			}
 		}
-		System.err.println(request.getContextPath());
+		System.out.println("Session" + session);
+		System.out.println("Session User" + session.getAttribute("user"));
+		System.out.println(" request.getRequestURI();" + URI);
 		response.sendRedirect(request.getContextPath() + "/mvc/scholarship/login");
 		return false;
 

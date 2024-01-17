@@ -40,19 +40,14 @@ form {
 </head>
 <body>
 
-	<div class="d-flex justify-content-center  align-items-center vh-100 ">
+	<div class="d-flex justify-content-center  align-items-center vh-80 ">
 
 		<form class="row g-3 needs-validation " method="post"
 			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/registerconfirm">
-			<h4 class="text-center">註冊會員 ${username}</h4>
 
 			<div class="mb-3">
-				<label for="verificationCode" class="form-label">請輸入6位數驗證碼</label>
-				<div class="input-group" id="verificationCode">
-					<input type="text" class="form-control digit-input"
-						id="verificationCode" name="verificationCode" maxlength="6">
-
-				</div>
+				<input type="text" class="form-control" id="username"
+					name="username" value="${username}" style="display: none;">
 			</div>
 
 			<div id="register" class="registration-form-container">
@@ -61,38 +56,42 @@ form {
 					<label for="password" class="form-label">密碼
 						(至少包含一個大寫及一個小寫英文字母及數字)</label><input type="password" class="form-control"
 						id="password" name="password" value="" required>
-					<div class="invalid-feedback">請輸入密碼</div>
+					<div class="invalid-feedback">請輸入有效密碼</div>
 				</div>
-				<div class="mb-3">
-					<input type="text" class="form-control" id="username"
-						name="username" value="${username}" style="display: none;">
-				</div>
+
+
 
 				<div class="mb-3">
 					<label for="cfpassword" class="form-label">密碼確認</label> <input
 						type="password" class="form-control" id="cfpassword"
 						name="cfpassword" value="" required>
 					<div class="invalid-feedback">再次輸入密碼</div>
-					<small class="text-danger" id="passwordMismatch">密碼不符</small>
+					<small class="text-danger" id="passwordMismatch"></small>
 				</div>
+
 				<div class="col-md-5">
 					<label for="institutionName" class="form-label">機構名稱</label> <input
 						type="text" class="form-control" id="institutionName"
 						name="institutionName" value="" required>
 					<div class="invalid-feedback">請輸入機構名稱</div>
+					<p style="color: red">${InstitutionNameErrorMessage}</p>
 				</div>
+
 				<div class="col-md-7">
 					<label for="institutionId" class="form-label">機構統編</label> <input
 						type="text" class="form-control" id="institutionId"
 						name="institutionId" value="" required>
 					<div class="invalid-feedback">請輸入機構統編</div>
+					<p style="color: red">${InstitutionIdErrorMessage}</p>
 				</div>
+
 				<div class="col-md-5">
 					<label for="contact" class="form-label">聯絡人</label> <input
 						type="text" class="form-control" id="contact" name="contact"
 						value="" required>
 					<div class="invalid-feedback">請輸入預設聯絡人姓名</div>
 				</div>
+
 				<div class="col-md-7">
 					<label for="contactNumber" class="form-label">聯絡電話</label> <input
 						type="text" class="form-control" id="contactNumber"
@@ -100,13 +99,64 @@ form {
 					<div class="invalid-feedback">請輸入聯絡電話</div>
 				</div>
 
+				<div class="mb-3">
+					<label for="verificationCode" class="form-label">請輸入6位數驗證碼</label>
+					<div class="input-group" id="verificationCode">
+						<input type="text" class="form-control digit-input"
+							id="verificationCode" name="verificationCode" maxlength="6">
+					</div>
+					<p style="color: red">${CodeErrorMessage}</p>
+				</div>
+
+
 				<div class=" d-flex justify-content-center my-3">
 					<button class="btn btn-primary" type="submit">註冊</button>
 				</div>
 			</div>
 		</form>
 	</div>
-
-
 </body>
 </html>
+<script type="text/javascript">
+	(function() {
+		'use strict';
+
+		var forms = document.querySelectorAll('.needs-validation');
+
+		Array.prototype.slice.call(forms).forEach(function(form) {
+			form.addEventListener('submit', function(event) {
+				if (!form.checkValidity()) {
+					event.preventDefault();
+					event.stopPropagation();
+					var inputs = form.querySelectorAll('input');
+					Array.prototype.slice.call(inputs).forEach(function(input) {
+						input.classList.add('is-invalid');
+					});
+				}
+
+				// Password mismatch validation
+				var password = form.querySelector('#password');
+				var cfpassword = form.querySelector('#cfpassword');
+				var passwordMismatch = form.querySelector('#passwordMismatch');
+
+				if (password.value !== cfpassword.value) {
+					passwordMismatch.style.display = 'block';
+					cfpassword.setCustomValidity('密碼不符');
+				} else {
+					passwordMismatch.style.display = 'none';
+					cfpassword.setCustomValidity('');
+				}
+
+				var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+
+				if (!passwordRegex.test(password.value)) {
+					password.setCustomValidity('至少包含一個大寫及一個小寫英文字母及數字');
+				} else {
+					password.setCustomValidity('');
+				}
+
+				form.classList.add('was-validated');
+			}, false);
+		});
+	})();
+</script>

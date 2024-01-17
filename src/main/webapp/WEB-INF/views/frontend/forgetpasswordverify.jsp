@@ -25,14 +25,13 @@
 								id="verifyCode" name="verifyCode" maxlength="6" required>
 							<button id="verifyCode" class="btn btn-outline-primary"
 								type="submit">驗證</button>
-							<!-- 比對 session 驗證碼; yes : 導至 reset password page no :  -->
 						</div>
+						<div style="color: red">${forgetErrorMessage}</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div style="color: red">${forgetErrorMessage}</div>
-
+	
 </body>
 </html>
