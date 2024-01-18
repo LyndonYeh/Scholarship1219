@@ -343,8 +343,7 @@ public class ScholarshipMySQLController {
 	public String indexBackend(@ModelAttribute Scholarship scholarship, Model model, HttpSession session) {
 		addBasicModelBackEnd(model, session);
 
-		model.addAttribute("submitBtnName", "新增");
-		model.addAttribute("_method", "POST");
+//		model.addAttribute("_method", "POST");
 
 		return "backend/backendmain";
 	}

@@ -71,7 +71,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
         namedParameterJdbcTemplate.update(sql, params);
     }
-    //這個是垃圾桶的新增
+    //垃圾桶
     @Override
     public void addScholarshipToGarbageCollection(Scholarship scholarship) {
     	String sql = "INSERT INTO scholarshipv1.garbageCollection ( userId, institutionId, scholarshipName, scholarshipAmount, entityId, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated, contact, contactNumber) " +
@@ -254,12 +254,6 @@ public class ScholarshipMySQL implements ScholarshipDao {
 		scholarship.setInstitution(addInstitution.get());
 		scholarship.setEntity(addEntity.get());
 	}
-	
-//	private void enrichScholarshipWithEntity(Scholarship scholarship) {
-//		// 注入 Entity 到 Scholarship
-//		
-//		
-//	}
 	
 	
 }

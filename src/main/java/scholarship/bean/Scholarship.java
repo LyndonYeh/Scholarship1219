@@ -156,6 +156,7 @@ public class Scholarship {
 	public Date getEndDate() {
 		return endDate;
 	}
+	
 	public String getStringEndDate() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
 	        return format.format(this.endDate);

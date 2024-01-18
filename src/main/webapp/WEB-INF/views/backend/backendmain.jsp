@@ -5,6 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="currentURL"
+	value="''+${pageContext.request.requestURL}" />
 
 <!DOCTYPE html>
 
@@ -66,14 +68,11 @@
 			}
 
 		</script>
-		<style type="text/css">
-		.expried{
-		color: red;
-		}
-		
-		
-		
-		</style>
+<style type="text/css">
+.expried {
+	color: red;
+}
+</style>
 <link rel="shortcut icon" type="image/x-icon"
 	href="../../images/icon.png">
 <link
@@ -110,40 +109,41 @@
 	<div id="main" class="p-3 bg bg-light">
 		<sp:form modelAttribute="scholarship" method="post" class="mb-3"
 			action="${pageContext.request.contextPath}/mvc/scholarship/backend">
-			<!-- 名稱旁要有上傳檔案的按鈕 -->
 			<div class="row g-3">
 				<sp:input path="scholarshipId" type="hidden" />
 				<input name="_method" type="hidden" value="${ _method }" />
 				<!-- hidden -->
 				<div class="col-md-auto">
-					<sp:input path="scholarshipName" type="text"  placeholder="請輸入獎學金名稱"
-						class="form-control rounded" required="required"/>
+					<sp:input path="scholarshipName" type="text" placeholder="請輸入獎學金名稱"
+						class="form-control rounded" required="required" />
 				</div>
 				<div class="col-md-auto">
 					<sp:input path="webUrl" type="text" class="form-control rounded"
-						placeholder="請輸入獎學金網址，例:https://123/" style="width: 300px" required="required" />
+						placeholder="請輸入獎學金網址，例:https://123/" style="width: 300px"
+						required="required" />
 				</div>
 				<div class="col-md-auto text-center">
-					<label class="text-center mt-2" >開始日期</label>
+					<label class="text-center mt-2">開始日期</label>
 				</div>
 				<div class="col-md-auto">
 
 					<sp:input path="startDate" type="date" class="form-control rounded"
-						placeholder="Start Date" required="required"/>
+						placeholder="Start Date" required="required" />
 				</div>
 				<div class="col-md-auto">
 					<label class="text-center mt-2">截止日期</label>
 				</div>
 				<div class="col-md-auto text-center">
 					<sp:input path="endDate" type="date" class="form-control rounded"
-						placeholder="End Date" required="required"/>
+						placeholder="End Date" required="required" />
 				</div>
 			</div>
 			<div class="row g-3 mt-3">
 				<div class="col-md-auto">
 					<sp:select path="entityId" class="form-select" required="required">
-					<sp:option value="" disabled="disabled" style="color: grey; font-style: italic;" label="請選擇身分別">
-					</sp:option>
+						<sp:option value="" disabled="disabled"
+							style="color: grey; font-style: italic;" label="請選擇身分別">
+						</sp:option>
 						<sp:option value="1" label="幼稚園"></sp:option>
 						<sp:option value="2" label="小學"></sp:option>
 						<sp:option value="3" label="國中"></sp:option>
@@ -155,7 +155,7 @@
 
 				<div class="col-md-auto">
 					<sp:input class="form-control rounded" path="scholarshipAmount"
-						type="number" placeholder="請輸入獎學金額度" required="required"/>
+						type="number" placeholder="請輸入獎學金額度" required="required" />
 				</div>
 
 				<div class="col-md-auto">
@@ -170,7 +170,7 @@
 
 				<div class="col-md-auto">
 					<button type="submit" type="submit"
-						class="btn btn-outline-secondary">${ submitBtnName }</button>
+						class="btn btn-outline-secondary">新增</button>
 				</div>
 			</div>
 		</sp:form>
@@ -181,7 +181,7 @@
 	<table class="table table-light">
 		<thead>
 			<tr>
-				<th scope="col">#</th>
+				<th scope="col">編號</th>
 				<th scope="col">獎助機構</th>
 				<th scope="col">獎學金名稱</th>
 				<th scope="col">獎學金額度</th>

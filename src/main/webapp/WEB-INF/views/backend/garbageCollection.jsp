@@ -13,6 +13,7 @@
 <script>
     function startCountdown(endDate, countdownElementId) {
         	endDate.setDate(endDate.getDate() + 30);
+        	// 設定單筆 scholarship 預計刪除時間 endDate + 30 days
         function updateCountdown() {
             const now = new Date();
             const timeRemainingInSeconds = Math.floor((endDate - now) / 1000);
