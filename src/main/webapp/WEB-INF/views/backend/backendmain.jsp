@@ -29,6 +29,29 @@
 					});
 				}
 			}
+			function updateScholarship(scholarshipId,isExpired) {
+				const url2 = '${pageContext.request.contextPath}/mvc/scholarship/backend/changeLunch/' + scholarshipId;
+				const url3	= '${pageContext.request.contextPath}/mvc/scholarship/backend';
+				fetch(url2, {method: 'GET'})
+				if(isExpired){
+				 if(confirm('已過期無法上架')) {
+					fetch(url3, {method: 'GET'})
+					.then(response => {
+						if(response.ok || response.redirected) {
+							console.log(response);
+
+							location.href = response.url3;
+						} else {
+							console.log('delete fail');
+						}
+					})
+
+					}
+				}else location.href = response.url2;
+			}
+			.catch(error => {
+				console.log('delete error: ', error);
+			});
 		</script>
 <link rel="shortcut icon" type="image/x-icon"
 	href="../../images/icon.png">
@@ -168,9 +191,11 @@
 					</td>
 					<td><a type="button"
 						class="btn ${scholarship.isUpdated ? 'btn-success' : 'btn-secondary'}"
-						href="${pageContext.request.contextPath}/mvc/scholarship/backend/changeLunch/${scholarship.scholarshipId}"
+						href="javascript:void(1);"
+						onClick="updateScholarship(${ scholarship.scholarshipId },${scholarship.isExpired})"
 						style="display: inline-block;"> ${scholarship.isUpdated ? '已上架' : '未上架'}
-					</a></td>
+					
+					</a>${scholarship.isExpired}</td>
 					<td><a type="button" class="btn btn-danger"
 						href="javascript:void(0);"
 						onClick="deleteScholarship(${ scholarship.scholarshipId })">刪除</a>
