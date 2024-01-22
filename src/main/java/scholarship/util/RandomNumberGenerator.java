@@ -10,6 +10,7 @@ public class RandomNumberGenerator {
 	        System.out.println("Secure Random Code: " + randomCode);
 	    }
 	    */
+	
 	  public static String generateRandomCode() {
 	        SecureRandom secureRandom = new SecureRandom();
 	        // Generates a random integer between 0 and 999999 (inclusive)

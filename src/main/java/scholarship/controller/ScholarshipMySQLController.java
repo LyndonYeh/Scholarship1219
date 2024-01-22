@@ -136,6 +136,7 @@ public class ScholarshipMySQLController {
 			return "redirect:/mvc/scholarship/frontend/forgetpassword";
 		}
 	}
+	
 
 	@RequestMapping("/frontend/forgetpasswordverify")
 	public String verifyCode(Model model) {

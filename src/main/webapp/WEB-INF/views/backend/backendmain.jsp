@@ -5,8 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="currentURL"
-	value="''+${pageContext.request.requestURL}" />
+<c:set var="currentURL" value="''+${pageContext.request.requestURL}" />
 
 <!DOCTYPE html>
 
@@ -203,7 +202,8 @@
 
 					<td><a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
 					</td>
-					<td>${scholarship.scholarshipAmount}</td>
+					<td><fmt:formatNumber value="${scholarship.scholarshipAmount}"
+							type="currency" pattern="#,##0.##" /></td>
 					<td>${scholarship.contact }</td>
 					<td>${scholarship.contactNumber }</td>
 					<td ${scholarship.isExpired?'class=expried':'' }>${scholarship.stringEndDate}</td>
@@ -215,7 +215,7 @@
 						href="javascript:void(1);"
 						onClick="updateScholarship(${ scholarship.scholarshipId },${scholarship.isExpired })"
 						style="display: inline-block;"> ${scholarship.isUpdated ? '已上架' : '未上架'}
-					</a>${scholarship.isExpired?'<img src="../../images/expired.png" >':'' }</td>
+					</a>${scholarship.isExpired?'<img src="https://localhost:8443/Scholarship/images/expired.png" >':'' }</td>
 					<td><a type="button" class="btn btn-danger"
 						href="javascript:void(0);"
 						onClick="deleteScholarship(${ scholarship.scholarshipId })">刪除</a>

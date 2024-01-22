@@ -46,6 +46,10 @@ public class LoginInterceptor implements HandlerInterceptor {
 			if (URI.contains("/mvc/scholarship/backend/changeLunch/")) {
 				return true;
 			}
+			
+			if (URI.contains("/mvc/scholarship/backend/reset/")) {
+				return true;
+			}
 
 			// 後台包含 delete url : 給過
 			if (URI.contains("/mvc/scholarship/backend/delete/")) {
@@ -58,7 +62,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 			}
 
 		} else {
-			// 處理 frontend 網址授權
+			// 處理 frontend 網址授權	
+			if (URI.contains("/mvc/scholarship/logout")) {
+				return true;
+			}		
+			
 			if (URI.contains("/mvc/scholarship/frontend/")) {
 				return true;
 			}
