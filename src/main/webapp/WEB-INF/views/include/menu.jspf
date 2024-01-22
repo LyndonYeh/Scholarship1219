@@ -8,6 +8,7 @@
 <c:set var="currentURL"
 	value="''+${pageContext.request.requestURL}" />
 
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container-fluid">
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">

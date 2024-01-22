@@ -32,9 +32,11 @@
 <script type="text/javascript"
 	src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
+<!--  <script type="text/javascript"
+	src="http://localhost:8080/Scholarship/js/datatables_zh_tw.json"></script>-->
+	<!-- 啟用 https 重導 url -->
 <script type="text/javascript"
-	src="http://localhost:8080/Scholarship/js/datatables_zh_tw.json"></script>
-
+	src="https://localhost:8443/Scholarship/js/datatables_zh_tw.json"></script>
 
 
 <!-- 引入 DataTables 匯出列印功能 -->
@@ -65,26 +67,21 @@
 
 
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$('.pure-table')
-								.DataTable(
-										{
-											// 設定語言為繁體中文
-											"language" : {
-												"url" : "http://localhost:8080/Scholarship/js/datatables_zh_tw.json",
+	$(document).ready(function() {
+		$('.pure-table').DataTable({
+			// 設定語言為繁體中文
+			"language" : {
+			// 如果啟用 https, port 改為 8443
+			//"url" : "http://localhost:8080/Scholarship/js/datatables_zh_tw.json",
+			"url" : "https://localhost:8443/Scholarship/js/datatables_zh_tw.json",
+			},
+			//設定匯出功能
+			dom : 'lBfrtip',
+			buttons : [ 'copy', 'csv', 'excel', 'pdf', 'print' ]
+		});
 
-											},
-											//設定匯出功能
-											dom : 'lBfrtip',
-											buttons : [ 'copy', 'csv', 'excel',
-													'pdf', 'print' ]
-										});
-
-						table.buttons().container().appendTo(
-								'.pure-table_wrapper .col-md-6');
-					});
+		table.buttons().container().appendTo('.pure-table_wrapper .col-md-6');
+	});
 
 	function copySelectedValue() {
 		// Get the selected value from the dropdown

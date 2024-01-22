@@ -343,8 +343,7 @@ public class ScholarshipMySQLController {
 	public String indexBackend(@ModelAttribute Scholarship scholarship, Model model, HttpSession session) {
 		addBasicModelBackEnd(model, session);
 
-		model.addAttribute("submitBtnName", "新增");
-		model.addAttribute("_method", "POST");
+//		model.addAttribute("_method", "POST");
 
 		return "backend/backendmain";
 	}
@@ -474,7 +473,7 @@ public class ScholarshipMySQLController {
 	
 		User sessionData = (User) session.getAttribute("user");
 
-		List<Institution> instiutions = institutionDao.findAllInstitutions();
+		List<Institution> institutions = institutionDao.findAllInstitutions();
 		List<Scholarship> scholarships = scholarshipDao.findScholarshipByInstitutionId(sessionData.getInstitutionId());
 		List<User> users = userDao.findAllUsers();
 
@@ -485,7 +484,7 @@ public class ScholarshipMySQLController {
 		model.addAttribute("userId", sessionData.getUserId());
 		model.addAttribute("sessionInstitution", sessionInstitution.get());
 
-		model.addAttribute("institutions", instiutions); // 將機構資料傳給 jsp
+		model.addAttribute("institutions", institutions); // 將機構資料傳給 jsp
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp
 		model.addAttribute("users", users); // 取得目前最新 users 資料
 	}

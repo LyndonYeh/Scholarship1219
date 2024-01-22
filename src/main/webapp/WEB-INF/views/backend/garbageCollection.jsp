@@ -7,9 +7,43 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
-<!-- % List<ScholarshipUpdateRecord> ScholarshipUpdateRecords = (List<ScholarshipUpdateRecord>) request.getAttribute("cholarshipUpdateRecord");%> -->
+
 <html>
 <head>
+<script>
+    function startCountdown(endDate, countdownElementId) {
+        	endDate.setDate(endDate.getDate() + 30);
+        	// 設定單筆 scholarship 預計刪除時間 endDate + 30 days
+        function updateCountdown() {
+            const now = new Date();
+            const timeRemainingInSeconds = Math.floor((endDate - now) / 1000);
+
+            const days = Math.floor(timeRemainingInSeconds / (24 * 60 * 60));
+            const hours = Math.floor((timeRemainingInSeconds % (24 * 60 * 60)) / 3600);
+            const minutes = Math.floor((timeRemainingInSeconds % 3600) / 60);
+            const seconds = timeRemainingInSeconds % 60;
+
+            const countdownString = days + "天 " +
+            (hours < 10 ? "0" + hours : hours) + ":" +
+            (minutes < 10 ? "0" + minutes : minutes) + ":" +
+            (seconds < 10 ? "0" + seconds : seconds);
+
+            if (timeRemainingInSeconds < 0) {
+                clearInterval(countdownInterval);
+                countdownElement.textContent = '時間到！';
+            } else {
+                countdownElement.textContent = countdownString;
+            }
+        }
+
+        const countdownElement = document.getElementById(countdownElementId);
+        updateCountdown();
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+    }
+
+
+</script>
 <script type="text/javascript">
 			function deleteScholarship(scholarshipId) {
 				const url = '${pageContext.request.contextPath}/mvc/scholarship/backend/garbageCollection/' + scholarshipId;
@@ -30,6 +64,14 @@
 				}
 			}
 		</script>
+		<style type="text/css">
+		.expried{
+		color: red;
+		}
+		
+		
+		
+		</style>
 <link rel="shortcut icon" type="image/x-icon"
 	href="../../images/icon.png">
 <link
@@ -76,6 +118,7 @@
 					<th scope="col">獎學金額度</th>
 					<th scope="col">聯絡人</th>
 					<th scope="col">聯絡電話</th>
+					<th scope="col">永久刪除倒計時</th>
 					<th scope="col">復原按鈕</th>
 
 				</tr>
@@ -86,13 +129,18 @@
 					<tr>
 						<td>${scholarship.scholarshipId }</td>
 						<td>${scholarship.institution.institutionName }</td>
-						<td>
-						<a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
+						<td><a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
 						</td>
 						<td>${scholarship.scholarshipAmount}</td>
 						<td>${scholarship.contact }</td>
 						<td>${scholarship.contactNumber }</td>
-			
+						<td>
+							<div id="${scholarship.scholarshipId}"class="expried"></div> 
+							 <script>
+            				startCountdown(new Date('${scholarship.updatedTime}'), '${scholarship.scholarshipId}');
+        					</script>
+    					</td>
+
 						<td><a type="button" class="btn btn-warning"
 							href="javascript:void(0);"
 							onClick="deleteScholarship(${ scholarship.scholarshipId })">復原</a>
