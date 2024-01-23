@@ -215,7 +215,7 @@
 
 						onClick="updateScholarship(${ scholarship.scholarshipId },${scholarship.isExpired })"
 						style="display: inline-block;"> ${scholarship.isUpdated ? '已上架' : '未上架'}
-					</a>${scholarship.isExpired?'<img src="../../images/expired.png" >':'' }</td>
+					</a>${scholarship.isExpired?'<img src="https://localhost:8443/Scholarship/images/expired.png" >':'' }</td>
 					<td><a type="button" class="btn btn-danger"
 						href="javascript:void(0);"
 						onClick="deleteScholarship(${ scholarship.scholarshipId })">刪除</a>
