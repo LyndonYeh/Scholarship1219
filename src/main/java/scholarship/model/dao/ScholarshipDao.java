@@ -1,7 +1,6 @@
 package scholarship.model.dao; // Replace with your actual package name
 
 import java.util.*;
-
 import scholarship.bean.*;
 
 public interface ScholarshipDao {

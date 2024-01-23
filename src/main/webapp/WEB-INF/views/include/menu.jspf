@@ -68,10 +68,10 @@
 						</form>
 					</li>
 				</c:when>
-				<c:when test="${not empty sessionScope.githubUsername}">
+				<c:when test="${not empty sessionScope.username}">
 					<li class="nav-item"><a
 						class="nav-link d-flex justify-content-center align-items-center"
-						style="color: white;">Hi,${githubUsername}</a></li>
+						style="color: white;">Hi,${username}</a></li>
 					<li class="nav-item">
 						<form class="form-inline"
 							action="${pageContext.request.contextPath}/mvc/scholarship/logout">

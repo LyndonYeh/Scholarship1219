@@ -5,8 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="currentURL" value="''+${pageContext.request.requestURL}" />
-
 <!DOCTYPE html>
 
 <html>
@@ -98,10 +96,10 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td>${ sessionInstitution.institutionId}</td>
-				<td>${ sessionInstitution.institutionName}</td>
-				<td>${ sessionInstitution.contact}</td>
-				<td>${ sessionInstitution.contactNumber}</td>
+				<td>${sessionInstitution.institutionId}</td>
+				<td>${sessionInstitution.institutionName}</td>
+				<td>${sessionInstitution.contact}</td>
+				<td>${sessionInstitution.contactNumber}</td>
 			</tr>
 		</tbody>
 	</table>

@@ -83,7 +83,7 @@
 											//設定匯出功能
 											dom : 'lBfrtip',
 											buttons : [ 'copy', 'csv', 'excel',
-													'pdf', 'print' ]
+													'print']
 										});
 
 						table.buttons().container().appendTo(
@@ -91,10 +91,10 @@
 					});
 
 	function copySelectedValue() {
-		// Get the selected value from the dropdown
+		// 取得下拉清單中選擇的值
 		var selectedValue = document.getElementById("amountSelect").value;
 
-		// Set the value of the input field on the right
+		// 設定右側輸入欄位的值
 		document.getElementById("scholarshipAmount").value = selectedValue;
 	}
 </script>

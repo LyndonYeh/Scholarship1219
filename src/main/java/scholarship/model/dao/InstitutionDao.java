@@ -2,9 +2,7 @@ package scholarship.model.dao;
 
 import java.util.List;
 import java.util.Optional;
-
 import scholarship.bean.Institution;
-import scholarship.bean.User;
 
 public interface InstitutionDao {
 

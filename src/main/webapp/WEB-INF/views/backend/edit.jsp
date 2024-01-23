@@ -66,7 +66,7 @@ form {
 			<div class="input-group mb-3">
 				<span class="input-group-text">欲修改聯絡人</span><input type="text"
 					class="form-control" aria-label="Contact" id="contact"
-					name="contact" value=""maxlength="50">
+					name="contact" value="" maxlength="50">
 			</div>
 
 
@@ -80,12 +80,12 @@ form {
 			<div class="input-group mb-3">
 				<span class="input-group-text">欲修改連絡電話</span><input type="text"
 					class="form-control" aria-label="currentContact" id="contactNumber"
-					name="contactNumber" value=""maxlength="10">
+					name="contactNumber" value="" maxlength="10">
 				<div class="invalid-feedback">請輸入聯絡電話(最大長度10碼)</div>
 			</div>
 
 			<div class="input-group mb-3">
-				<span class="input-group-text">請輸入密碼</span><input type="text"
+				<span class="input-group-text">請輸入密碼</span><input type="password"
 					class="form-control" aria-label="password" id="password"
 					name="password" value="" required>
 
@@ -103,8 +103,7 @@ form {
 				</div>
 
 				<div class="col-md-auto">
-					<button type="submit" type="submit"
-						class="btn btn-outline-danger">確認修改</button>
+					<button type="submit" type="submit" class="btn btn-outline-danger">確認修改</button>
 				</div>
 			</div>
 
