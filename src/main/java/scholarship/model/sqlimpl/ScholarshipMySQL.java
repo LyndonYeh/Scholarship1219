@@ -88,7 +88,6 @@ public class ScholarshipMySQL implements ScholarshipDao {
     	params.put("scholarshipAmount", scholarship.getScholarshipAmount());
     	params.put("entityId", scholarship.getEntityId());
     	
-    	//params.put("updatedTime", Date.valueOf(scholarship.getUpdatedTime()));
     	params.put("updatedTime", format.format(System.currentTimeMillis()));
     	params.put("startDate", scholarship.getStartDate());
     	params.put("endDate", scholarship.getEndDate());

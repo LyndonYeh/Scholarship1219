@@ -2,6 +2,8 @@ package scholarship.util;
 import io.jsonwebtoken.Jwts;
 import java.util.Date;
 
+
+// 產生 jwt token 給重設密碼 url
 public class JwtGenerator {
 
     private static final String SECRET_KEY = "test"; 

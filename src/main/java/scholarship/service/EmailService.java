@@ -20,13 +20,14 @@ public class EmailService {
         final String password = "knvvsrrpmbnhxevv";
 
         
+        // Gmail smtp 設置
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", "smtp.gmail.com"); 
         properties.put("mail.smtp.port", "587"); // 設定 port 587
 
-        // 要再設定把 credential 存入安全地方
+     
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -51,7 +52,6 @@ public class EmailService {
     // 測試用方法, 帶入收信者到 toEmai, 直接執行 application 
     public static void main(String[] args) throws MessagingException {
 		  try {
-	            // Replace these values with an actual email address and verification code
 	            String toEmail = "dave.wenyu@gmail.com";
 	            String verificationCode = RandomNumberGenerator.generateRandomCode();
 	      

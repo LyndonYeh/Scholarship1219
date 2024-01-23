@@ -17,7 +17,7 @@ public class InstitutionMySQL implements InstitutionDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    
+
     @Override
     public int addInstitution(Institution institution) {
         String sql = "INSERT INTO scholarshipv1.institution (institutionId, institutionName, contact, contactNumber) " +
@@ -32,7 +32,6 @@ public class InstitutionMySQL implements InstitutionDao {
     }
     
 
-    
     @Override
     public Boolean updateContactById(String institutionId, String newContact) {
         String sql = "UPDATE scholarshipv1.institution SET contact = :newContact WHERE institutionId = :institutionId";
@@ -44,8 +43,7 @@ public class InstitutionMySQL implements InstitutionDao {
         return rowsUpdated > 0;
     }
 
-    
-    
+
     @Override
     public Boolean updateContactNumberById(String institutionId, String newContactNumber) {
         String sql = "UPDATE scholarshipv1.institution  SET contactNumber = :newContactNumber WHERE institutionId = :institutionId";
@@ -87,8 +85,7 @@ public class InstitutionMySQL implements InstitutionDao {
         return Optional.ofNullable(institution);
 	}
 	
-	
-	
+
 	@Override
 	public Optional<Institution> findInstitutionByInstitutionId(String institutionId) {
 		String sql = "SELECT * FROM scholarshipv1.institution where institutionId = :institutionId";

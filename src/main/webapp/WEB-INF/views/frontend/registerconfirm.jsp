@@ -134,7 +134,7 @@ form {
 					});
 				}
 
-				// Password mismatch validation
+				// Password 驗證
 				var password = form.querySelector('#password');
 				var cfpassword = form.querySelector('#cfpassword');
 				var passwordMismatch = form.querySelector('#passwordMismatch');

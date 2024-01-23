@@ -2,7 +2,6 @@ package scholarship.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +60,6 @@ public class UserService {
 	 * 處理登入錯誤
 	 */
 	private void handleLoginFailure(HttpSession session, Model model, String message) {
-		// 設定共用 session
 		session.invalidate();
 		model.addAttribute("loginMessage", message);
 	}
@@ -118,6 +116,9 @@ public class UserService {
 		return isCodeValidate;
 	}
 
+	/*
+	 * 重設密碼
+	 */
 	public String resetPassword(String jwt, String newpassword, HttpSession session, Model model) {
 		String sessionUsername = (String) session.getAttribute("userEmail");
 		Optional<User> userOpt = userDao.findUserByUsername(sessionUsername);
@@ -127,6 +128,9 @@ public class UserService {
 		return "login";
 	}
 
+	/*
+	 * 驗證註冊信箱
+	 */
 	public Boolean validateRegisterMail(String username, Model model, HttpSession session,
 			RedirectAttributes redirectAttributes) {
 		List<User> users = userDao.findAllUsers();
@@ -150,14 +154,12 @@ public class UserService {
 		return isMailValidate;
 	}
 
+	/*
+	 * 註冊使用者
+	 */
 	@Transactional
 	public void registerUser(String username, String password, String institutionName, String institutionId,
 			String contact, String contactNumber) throws Exception {
-
-		Optional<User> existingUserOpt = userDao.findUserByUsername(username);
-		if (existingUserOpt.isPresent()) {
-			throw new Exception("電子郵件已被註冊");
-		}
 
 		Institution institution = new Institution();
 		institution.setInstitutionId(institutionId);
@@ -176,6 +178,9 @@ public class UserService {
 
 	}
 
+	/*
+	 * 驗證註冊驗證碼
+	 */
 	public Boolean validateRegisterVerifyCode(String verificationCode, HttpSession session,
 			RedirectAttributes redirectAttributes) {
 
@@ -188,6 +193,9 @@ public class UserService {
 		return isCodeValidate;
 	}
 
+	/*
+	 * 驗證註冊機構, 檢查是否有重複機構Id或機構名稱
+	 */
 	public Boolean validateRegisterInfo(String institutionName, String institutionId,
 			RedirectAttributes redirectAttributes) {
 		List<Institution> institutions = institutionDao.findAllInstitutions();
@@ -208,6 +216,10 @@ public class UserService {
 		return isRegisterValidate;
 	}
 
+	
+	/*
+	 * 修改使用者表單頁
+	 */
 	public void showEditUser(User user, HttpSession session, Model model) {
 		User sessionData = user;
 		// user 被設定成 controller 的 session 抓取值: User user
@@ -221,9 +233,11 @@ public class UserService {
 		// 渲染到 jsp 可用的 attribute
 	}
 
+	/*
+	 * 修改使用者
+	 */
 	public String editUser(String contact, String contactNumber, String password, HttpSession session, Model model,
 			RedirectAttributes redirectAttributes) {
-//		String password
 		User sessionData = (User) session.getAttribute("user");
 		String sessionInstitutionId = sessionData.getInstitutionId();
 		if (BCrypt.checkpw(password, sessionData.getPassword())) {

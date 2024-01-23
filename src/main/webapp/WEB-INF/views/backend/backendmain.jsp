@@ -1,4 +1,3 @@
-
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -11,6 +10,7 @@
 <head>
 
 <script type="text/javascript">
+			//刪除函數
 			function deleteScholarship(scholarshipId) {
 				const url = '${pageContext.request.contextPath}/mvc/scholarship/backend/delete/' + scholarshipId;
 				if(confirm('是否要刪除 ?')) {
@@ -29,6 +29,7 @@
 					});
 				}
 			}
+			// 驗證過期資訊
 			function updateScholarship(scholarshipId, isExpired) {
 			    const url2 = '${pageContext.request.contextPath}/mvc/scholarship/backend/changeLunch/' + scholarshipId;
 			    const url3 = '${pageContext.request.contextPath}/mvc/scholarship/backend';
@@ -95,6 +96,7 @@
 		</thead>
 		<tbody>
 			<tr>
+				<!-- jsp 渲染後臺資料 -->
 				<td>${sessionInstitution.institutionId}</td>
 				<td>${sessionInstitution.institutionName}</td>
 				<td>${sessionInstitution.contact}</td>
@@ -108,7 +110,6 @@
 			<div class="row g-3">
 				<sp:input path="scholarshipId" type="hidden" />
 				<input name="_method" type="hidden" value="${ _method }" />
-				<!-- hidden -->
 				<div class="col-md-auto">
 					<sp:input path="scholarshipName" type="text" placeholder="請輸入獎學金名稱"
 						class="form-control rounded" required="required" />
@@ -210,7 +211,6 @@
 					<td><a type="button"
 						class="btn ${scholarship.isUpdated ? 'btn-success' : 'btn-secondary'}"
 						href="javascript:void(1);"
-
 						onClick="updateScholarship(${ scholarship.scholarshipId },${scholarship.isExpired })"
 						style="display: inline-block;"> ${scholarship.isUpdated ? '已上架' : '未上架'}
 					</a>${scholarship.isExpired?'<img src="https://localhost:8443/Scholarship/images/expired.png" >':'' }</td>

@@ -45,6 +45,7 @@
 
 </script>
 <script type="text/javascript">
+			// 復原邏輯
 			function deleteScholarship(scholarshipId) {
 				const url = '${pageContext.request.contextPath}/mvc/scholarship/backend/garbageCollection/' + scholarshipId;
 				if(confirm('是否要復原 ?')) {
