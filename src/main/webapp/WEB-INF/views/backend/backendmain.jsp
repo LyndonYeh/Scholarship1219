@@ -63,7 +63,6 @@
 			            });
 			    }
 			}
-
 		</script>
 <style type="text/css">
 .expried {
@@ -211,6 +210,7 @@
 					<td><a type="button"
 						class="btn ${scholarship.isUpdated ? 'btn-success' : 'btn-secondary'}"
 						href="javascript:void(1);"
+
 						onClick="updateScholarship(${ scholarship.scholarshipId },${scholarship.isExpired })"
 						style="display: inline-block;"> ${scholarship.isUpdated ? '已上架' : '未上架'}
 					</a>${scholarship.isExpired?'<img src="https://localhost:8443/Scholarship/images/expired.png" >':'' }</td>

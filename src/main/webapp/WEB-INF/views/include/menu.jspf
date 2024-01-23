@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="javax.servlet.http.HttpSession"%>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
-<!-- toString() IDE 會報錯 網頁不會 -->
+
 <c:set var="currentURL"
 	value="''+${pageContext.request.requestURL}" />
 
