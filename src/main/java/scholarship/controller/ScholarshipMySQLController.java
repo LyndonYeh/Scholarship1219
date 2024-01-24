@@ -146,7 +146,6 @@ public class ScholarshipMySQLController {
 		return "redirect:/mvc/scholarship/login";
 	}
 
-	
 	/**
 	 * 註冊信箱頁面
 	 */
@@ -198,23 +197,17 @@ public class ScholarshipMySQLController {
 		Boolean isRegisterInfoValidate = userService.validateRegisterInfo(institutionName, institutionId,
 				redirectAttributes);
 
-		if (isRegisterCodeValidate) {
-			if (isRegisterInfoValidate) {
-				try {
-					// 若通過驗證, 註冊使用者
-					userService.registerUser(username, password, institutionName, institutionId, contact,
-							contactNumber);
-					return "redirect:/mvc/scholarship/login";
-				} catch (Exception e) {
-					e.printStackTrace();
-					return "redirect:/mvc/scholarship/frontend/registerconfirm";
-				}
-			} else {
-				return "redirect:/mvc/scholarship/frontend/registerconfirm";
+		if (isRegisterCodeValidate && isRegisterInfoValidate) {
+			try {
+				// 若通過驗證, 註冊使用者
+				userService.registerUser(username, password, institutionName, institutionId, contact, contactNumber);
+				return "redirect:/mvc/scholarship/login";
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} else {
-			return "redirect:/mvc/scholarship/frontend/registerconfirm";
 		}
+		return "redirect:/mvc/scholarship/frontend/registerconfirm";
+
 	}
 
 	/**
@@ -408,6 +401,7 @@ public class ScholarshipMySQLController {
 
 	/**
 	 * 後台首頁基礎資料
+	 * 
 	 * @param model
 	 * @param session 後台根據Institution顯示資料
 	 */
@@ -432,7 +426,7 @@ public class ScholarshipMySQLController {
 	}
 
 	/**
-	 * 前台首頁基礎資料 
+	 * 前台首頁基礎資料
 	 */
 	private void addBasicModelFrontEnd(Model model) {
 		List<Institution> instiutions = institutionDao.findAllInstitutions();
