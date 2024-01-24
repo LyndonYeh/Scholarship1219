@@ -256,6 +256,10 @@ public class ScholarshipMySQLController {
 		model.addAttribute("_method", "POST");
 		return "frontend/scholarmain";
 	}
+	
+	/**
+	 * 篩選獎學金資料
+	 */
 
 	@PostMapping("/frontend")
 	public String findScholarship(@Valid Scholarship scholarship, BindingResult result, Model model) {
@@ -288,7 +292,7 @@ public class ScholarshipMySQLController {
 	}
 
 	/**
-	 * 垃圾回收頁
+	 * 資源回收頁
 	 */
 	@GetMapping("/backend/garbageCollection")
 	public String garbageCollection(@ModelAttribute Scholarship scholarship, Model model, HttpSession session) {
