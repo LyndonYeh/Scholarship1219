@@ -319,7 +319,6 @@ public class ScholarshipMySQLController {
 		if (result.hasErrors()) { // 有錯誤發生
 			// 自動會將 errors 的資料放在 model 中
 
-			model.addAttribute("submitBtnName", "建立");
 			model.addAttribute("_method", "POST");
 			model.addAttribute("scholarship", scholarship); // 給 form 表單用的 (ModelAttribute)
 

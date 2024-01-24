@@ -68,6 +68,7 @@
 
 
 <script type="text/javascript">
+
 	$(document)
 			.ready(
 					function() {
@@ -82,8 +83,7 @@
 											},
 											//設定匯出功能
 											dom : 'lBfrtip',
-											buttons : [ 'copy', 'csv', 'excel',
-													'print']
+											buttons : [ 'copy', 'csv', 'excel','print']
 										});
 
 						table.buttons().container().appendTo(
@@ -170,8 +170,8 @@
 						<td>${scholarship.entity.entityName}</td>
 						<td><a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
 						</td>
-						<td><fmt:formatNumber
-								value="${scholarship.scholarshipAmount}" type="currency" pattern="#,##0.##"/></td>
+
+						<td><fmt:formatNumber value="${scholarship.scholarshipAmount}" type="currency" pattern="#,##0.##"/></td>
 						<td>${scholarship.stringEndDate}</td>
 						<td>${scholarship.institution.contact }</td>
 						<td>${scholarship.institution.contactNumber }</td>
