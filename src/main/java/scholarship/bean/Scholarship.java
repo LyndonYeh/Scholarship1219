@@ -1,33 +1,20 @@
 package scholarship.bean;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
-import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.Gson;
 
 /**
  * 3. 獎學金上傳紀錄
- * +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
- * | scholoarshipId | userId | institutionId | scholarshipName |
- * scholarshipAmount | updatedTime | StartDate | EndDate | isExpired | web url |
- * isUpdated |
- * +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
- * | 301 | 101 | 25570111 | 行天宮助寒獎學金 | 50000 | 2023/12/13 05:00 p.m | 2023/05/03
- * | 2023/05/10 | true | www.book.com.tw | true |
- * +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
- * 
- * 
- * 
- * 
+ * +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+ * | scholoarshipId | userId | institutionId |  scholarshipName  | scholarshipAmount |  entityId  |          updatedTime             |    StartDate     |     EndDate    | isExpired  |        webUrl       | isUpdated | contact | contactNumber   |
+ * +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+ * |          101          |      1     | 25570111  | 行天宮助寒獎學金 |            50000             |       1       |    2023/12/13 15:00          | 2023/05/03  |  2023/05/04 |        0       |  example.com   |        0        | 李先生 |   0988777666     |
+ * +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
  */
 
-
-//-----------------------------屬性----------------------------------------
 public class Scholarship {
 
 	private Integer scholarshipId;
@@ -49,12 +36,11 @@ public class Scholarship {
     private String contactNumber;
     private String contact;
 	
+  //設定關聯
 	private Institution institution;
 	private Entity entity;
 	
-	
-	
-//-----------------------------建構子----------------------------------------
+
 	public Scholarship() {
 
 	}
@@ -66,12 +52,11 @@ public class Scholarship {
 		this.scholarshipName = scholarshipName;
 		this.entityId = entityId;
 		this.scholarshipAmount = scholarshipAmount;
-		this.updatedTime = updatedTime; // now time
+		this.updatedTime = updatedTime; 
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.webUrl = webUrl;
 	}
-	
 	
 	
 	public Scholarship(Integer scholarshipId, Integer userId, String institutionId, String scholarshipName,
@@ -97,7 +82,7 @@ public class Scholarship {
 		this.entity = entity;
 	}
 
-	//---------------------------方法----------------------------------------
+
 	public Integer getScholarshipId() {
 		return scholarshipId;
 	}
@@ -105,6 +90,7 @@ public class Scholarship {
 	public void setScholarshipId(Integer scholarshipId) {
 		this.scholarshipId = scholarshipId;
 	}
+	
 	public Integer getUserId() {
 		return userId;
 	}
@@ -112,6 +98,7 @@ public class Scholarship {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+	
 	public void setInstitutionId(String institutionId) {
 		this.institutionId = institutionId;
 	}
@@ -119,7 +106,6 @@ public class Scholarship {
 	public String getInstitutionId() {
 		return institutionId;
 	}
-	
 	
 	public String getScholarshipName() {
 		return scholarshipName;
@@ -157,6 +143,7 @@ public class Scholarship {
 		return endDate;
 	}
 	
+	// 獲取特定格式時間
 	public String getStringEndDate() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); 
 	        return format.format(this.endDate);
@@ -178,7 +165,6 @@ public class Scholarship {
 		this.isUpdated = isUpdated;
 	}
 
-	
 	public String getWebUrl() {
 		return webUrl;
 	}
@@ -186,6 +172,7 @@ public class Scholarship {
 	public void setWebUrl(String webUrl) {
 		this.webUrl = webUrl;
 	}
+	
 	public Boolean getIsExpired() {
 		return isExpired;
 	}
@@ -214,7 +201,6 @@ public class Scholarship {
 		return entity;
 	}
 	
-
 	public String getContactNumber() {
 		return contactNumber;
 	}
@@ -234,4 +220,5 @@ public class Scholarship {
 	public String toString() {
 		return new Gson().toJson(this);
 	}
+	
 }

@@ -15,7 +15,7 @@
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 				<form
-					action="${pageContext.request.contextPath}/mvc/scholarship/backend/reset/${strUUID}"
+					action="${pageContext.request.contextPath}/mvc/scholarship/backend/reset/${jwt}"
 					method="post" class="needs-validation" novalidate>
 					<div class="mb-3">
 						<label for="newPassword" class="form-label">輸入新密碼</label>
@@ -36,7 +36,7 @@
 						</div>
 
 					</div>
-					<div id="passwordMatch">${resetPasswordErrorMessage}</div>
+					<div id="passwordMatch">${resetErrorMessage}</div>
 					<button id="resetPassword" class="btn btn-outline-primary"
 						type="submit" onclick="validatePassword()">重設密碼</button>
 				</form>
@@ -60,7 +60,7 @@
 				return false;
 
 			} else {
-				passwordMatch.innerHTML = "驗證成功";
+				passwordMatch.innerHTML = "重設成功";
 				passwordMatch.style.color = "green";
 				return true;
 			}

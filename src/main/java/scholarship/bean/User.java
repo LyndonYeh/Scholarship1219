@@ -3,20 +3,20 @@ import com.google.gson.Gson;
 
 /*
 	2. 使用者
-	+--------+----------+--------------------------+
+	+-------------+-----------------------+-------------------------------------+------------------+
 	| userId | institutionId   |          userName         | password | 
-	+--------+----------+--------------------------+
+	+------------+------------------------+-------------------------------------+------------------+
 	|  101   | 25575888	 | jojo123@gmail.com  | pass123  |
 	|  102   | 25575889	 | jojo124@gmail.com  | pass456  |
 	|  103   | 25575881 	 | jojo125@gmail.com  | pass789  |
-	+--------+----------+--------------------------+
+	+------------+------------------------+-------------------------------------+------------------+
 */
 	
 public class User {
-	private Integer userId; // 使用者 id
-	private String institutionId; // 機構 id
-	private String username; // 使用者名稱
-	private String password; // 使用者密碼
+	private Integer userId; 
+	private String institutionId; 
+	private String username; 
+	private String password; 
 	
 	//設定關聯
 	private Institution institution;
@@ -34,12 +34,10 @@ public class User {
 		this.institutionId = institutionId;
 	}
 	
-	
 	public User() {
 		
 	}
 
-	
 	public Institution getInstitution() {
 		return institution;
 	}
@@ -88,5 +86,6 @@ public class User {
 	public String toString() {
 		return new Gson().toJson(this);
 	}
+	
 	
 }

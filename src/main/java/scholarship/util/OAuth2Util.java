@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class OAuth2Util {
 	// GitHub OAuth 2.0 的客戶端 ID 和密鑰。這些應該在 GitHub 設置中生成。
-	// 我們的應用程序的回調 URL(REDIRECT_URI)，這應該與在 GitHub 設置中的回調 URL 相匹配。
+	// 應用程序的回調 URL(REDIRECT_URI)，這應該與在 GitHub 設置中的回調 URL 相匹配。
 	
 	public final static String CLIENT_ID = "69ca3c6121d7147bf501";
     private final static String CLIENT_SECRET = "25472077ff1979b5d883fce6658a66cca194b4e4";	

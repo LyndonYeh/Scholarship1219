@@ -1,9 +1,7 @@
 package scholarship.model.dao;
 
 import java.util.Optional;
-
 import scholarship.bean.Entity;
-import scholarship.bean.Institution;
 
 public interface EntityDao {
 	

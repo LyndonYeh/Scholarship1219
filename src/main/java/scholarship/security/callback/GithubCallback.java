@@ -1,10 +1,6 @@
 package scholarship.security.callback;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,13 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.protocol.HttpService;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import scholarship.bean.User;
-import scholarship.model.dao.UserDao;
-import scholarship.service.UserService;
 import scholarship.util.OAuth2Util;
 
 @WebServlet(value = "/secure/callback/oauth2")
@@ -52,7 +42,7 @@ public class GithubCallback extends HttpServlet {
 		String username = userInfoObject.getString("login");
 		
 		HttpSession session = req.getSession();
-		session.setAttribute("githubUsername", username+"(GitHub)");
+		session.setAttribute("username", username+"(GitHub)");
 		resp.getWriter().println(session.getAttribute("githubUsername"));
 		
 		resp.sendRedirect("http://localhost:8080/Scholarship/mvc/scholarship/frontend");
