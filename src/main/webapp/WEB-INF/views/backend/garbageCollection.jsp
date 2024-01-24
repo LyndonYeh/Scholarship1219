@@ -11,68 +11,79 @@
 <html>
 <head>
 <script>
+//定義一個名為 startCountdown 的函數，接受結束日期（endDate）和倒數計時元素的 ID（countdownElementId）作為參數
     function startCountdown(endDate, countdownElementId) {
         	endDate.setDate(endDate.getDate() + 30);
-        	// 設定單筆 scholarship 預計刪除時間 endDate + 30 days
+        // 將結束日期設定為當前日期的30天後
         function updateCountdown() {
+        	// 取得當前日期
             const now = new Date();
             const timeRemainingInSeconds = Math.floor((endDate - now) / 1000);
 
+            // 計算天數、小時、分鐘和秒數
             const days = Math.floor(timeRemainingInSeconds / (24 * 60 * 60));
             const hours = Math.floor((timeRemainingInSeconds % (24 * 60 * 60)) / 3600);
             const minutes = Math.floor((timeRemainingInSeconds % 3600) / 60);
             const seconds = timeRemainingInSeconds % 60;
 
+        	 // 構建倒數計時字串，以顯示剩餘時間
             const countdownString = days + "天 " +
             (hours < 10 ? "0" + hours : hours) + ":" +
             (minutes < 10 ? "0" + minutes : minutes) + ":" +
             (seconds < 10 ? "0" + seconds : seconds);
 
+       		// 如果剩餘時間小於零，表示時間到，停止倒數計時並顯示提示訊息
             if (timeRemainingInSeconds < 0) {
                 clearInterval(countdownInterval);
                 countdownElement.textContent = '時間到！';
             } else {
+            	// 更新倒數計時元素的內容為倒數計時字串
                 countdownElement.textContent = countdownString;
             }
         }
 
+     // 取得倒數計時元素
         const countdownElement = document.getElementById(countdownElementId);
-        updateCountdown();
+     // 初始化倒數計時的顯示   
+     updateCountdown();
 
+ 	 // 設定每秒更新一次倒數計時的間隔，並保存 setInterval 的引用以便之後清除
         const countdownInterval = setInterval(updateCountdown, 1000);
     }
 
 
 </script>
 <script type="text/javascript">
-			// 復原邏輯
+//定義一個名為 deleteScholarship 的函數，接受學習資助的 ID（scholarshipId）作為參數
 			function deleteScholarship(scholarshipId) {
+				// 構建刪除資助的 URL，使用模板字面量插入學習資助的 ID			
 				const url = '${pageContext.request.contextPath}/mvc/scholarship/backend/garbageCollection/' + scholarshipId;
+				// 使用 confirm 函數顯示確認對話框，確認是否要復原
 				if(confirm('是否要復原 ?')) {
 					fetch(url, {method: 'DELETE'})
 					.then(response => {
+						// 檢查回應是否成功或已重定向
 						if(response.ok || response.redirected) {
 							console.log(response);
-
+							// 如果成功，將頁面重新導向到回應的 URL
 							location.href = response.url;
 						} else {
+							// 如果失敗，輸出錯誤訊息到控制台
 							console.log('delete fail');
 						}
 					})
 					.catch(error => {
+						// 捕獲任何發生的錯誤，並輸出到控制台
 						console.log('delete error: ', error);
 					});
 				}
 			}
 		</script>
-		<style type="text/css">
-		.expried{
-		color: red;
-		}
-		
-		
-		
-		</style>
+<style type="text/css">
+.expried {
+	color: red;
+}
+</style>
 <link rel="shortcut icon" type="image/x-icon"
 	href="../../images/icon.png">
 <link
@@ -136,11 +147,10 @@
 						<td>${scholarship.contact }</td>
 						<td>${scholarship.contactNumber }</td>
 						<td>
-							<div id="${scholarship.scholarshipId}"class="expried"></div> 
-							 <script>
+							<div id="${scholarship.scholarshipId}" class="expried"></div> <script>
             				startCountdown(new Date('${scholarship.updatedTime}'), '${scholarship.scholarshipId}');
         					</script>
-    					</td>
+						</td>
 
 						<td><a type="button" class="btn btn-warning"
 							href="javascript:void(0);"

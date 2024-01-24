@@ -114,20 +114,22 @@ form {
 
 </body>
 <script type="text/javascript">
+	//匿名函數，立即執行函數 (IIFE) 以避免變數污染全域空間
 	(function() {
 		'use strict'
 
-		// Fetch all the forms we want to apply custom Bootstrap validation styles to
+		// 取得所有希望套用自訂 Bootstrap 驗證樣式的表單
 		var forms = document.querySelectorAll('.needs-validation')
 
-		// Loop over them and prevent submission
+		// 迴圈遍歷這些表單並阻止預設提交行為
 		Array.prototype.slice.call(forms).forEach(function(form) {
 			form.addEventListener('submit', function(event) {
+				// 如果表單未通過驗證，阻止事件的預設行為並停止事件冒泡
 				if (!form.checkValidity()) {
 					event.preventDefault()
 					event.stopPropagation()
 				}
-
+				// 添加 'was-validated' 類別以套用 Bootstrap 的驗證樣式
 				form.classList.add('was-validated')
 			}, false)
 		})

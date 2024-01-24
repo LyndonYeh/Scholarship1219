@@ -44,49 +44,58 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		// 定義一個名為 validatePassword 的函數，用於檢驗密碼規則及確認密碼是否一致
 		function validatePassword() {
+			// 取得新密碼和確認密碼的值以及顯示結果的元素
 			var newPassword = document.getElementById("newPassword").value;
 			var confirmPassword = document.getElementById("confirmPassword").value;
 			var passwordMatch = document.getElementById("passwordMatch");
+			// 定義密碼的正則表達式，要求至少包含一個大寫、一個小寫字母和一個數字
 			var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
 
+			// 檢查新密碼和確認密碼是否一致
 			if (newPassword !== confirmPassword) {
+				// 如果不一致，顯示錯誤訊息並返回 false
 				passwordMatch.innerHTML = "密碼不一致";
 				passwordMatch.style.color = "red";
 				return false;
 			} else if (!passwordRegex.test(newPassword)) {
+				// 如果新密碼不符合規則，顯示錯誤訊息並返回 false
 				passwordMatch.innerHTML = "至少包含一個大寫及一個小寫英文字母及數字";
 				passwordMatch.style.color = "red";
 				return false;
-
 			} else {
+				// 如果通過檢驗，顯示成功訊息並返回 true
 				passwordMatch.innerHTML = "重設成功";
 				passwordMatch.style.color = "green";
 				return true;
 			}
 		}
 
+		// 立即執行函數 (IIFE) 以避免變數污染全域空間
 		(function() {
-			'use strict'
+			'use strict';
 
-			// Fetch all the forms we want to apply custom Bootstrap validation styles to
-			var forms = document.querySelectorAll('.needs-validation')
+			// 取得所有希望套用自訂 Bootstrap 驗證樣式的表單
+			var forms = document.querySelectorAll('.needs-validation');
 
-			// Loop over them and prevent submission
+			// 迴圈遍歷這些表單並阻止提交，同時檢查密碼是否通過驗證
 			Array.prototype.slice.call(forms).forEach(
 					function(form) {
 						form.addEventListener('submit', function(event) {
+							// 如果密碼驗證不通過或表單驗證不通過，阻止預設的提交行為
 							if (!validatePassword() || !form.checkValidity()) {
-								event.preventDefault()
-								event.stopPropagation()
+								event.preventDefault();
+								event.stopPropagation();
+								// 將表單中的每個輸入元素添加 'is-invalid' 類別以套用驗證樣式
 								var inputs = form.querySelectorAll('input');
 								Array.prototype.slice.call(inputs).forEach(
 										function(input) {
 											input.classList.add('is-invalid');
 										});
 							}
-						}, false)
-					})
+						}, false);
+					});
 		})();
 	</script>
 </body>
