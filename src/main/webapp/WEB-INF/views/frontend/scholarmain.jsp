@@ -77,7 +77,7 @@
 			},
 			//設定匯出功能
 			dom : 'lBfrtip',
-			buttons : [ 'copy', 'csv', 'excel', 'pdf', 'print' ]
+			buttons : [ 'copy', 'csv', 'excel', 'print' ]
 		});
 
 		table.buttons().container().appendTo('.pure-table_wrapper .col-md-6');
@@ -164,7 +164,7 @@
 						<td><a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
 						</td>
 						<td>${scholarship.scholarshipAmount}</td>
-						<td>${scholarship.endDate}</td>
+						<td>${scholarship.stringEndDate}</td>
 						<td>${scholarship.institution.contact }</td>
 						<td>${scholarship.institution.contactNumber }</td>
 					</tr>

@@ -62,7 +62,7 @@ entity is restricted of the following: ('kindergarten', ''primary school','middl
 1. 新增一筆獎學金
 2. 修改獎學金資訊
 	//(1)根據 scholoarshipId 修改獎學金期間
-	(2)根據 itemId/ scholoarshipId 更改上架狀態
+	(2)根據  scholoarshipId 更改上架狀態
 	//(3)根據 itemId 修改聯絡資訊 包含網址
 3. 刪除一筆獎學金
 4. 查詢獎學金紀錄(包含上架與否與過期與否 僅限項目所有方)
