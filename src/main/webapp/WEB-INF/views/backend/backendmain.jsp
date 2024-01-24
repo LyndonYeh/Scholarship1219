@@ -10,7 +10,7 @@
 <head>
 
 <script type="text/javascript">
-			//刪除函數
+			//驗證刪除
 			function deleteScholarship(scholarshipId) {
 				const url = '${pageContext.request.contextPath}/mvc/scholarship/backend/delete/' + scholarshipId;
 				if(confirm('是否要刪除 ?')) {
