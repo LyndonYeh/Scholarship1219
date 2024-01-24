@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon"
 	href="../../images/icon.png">
-
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -43,7 +42,8 @@ form {
 	<div class="d-flex justify-content-center  align-items-center vh-80 ">
 
 		<form class="row g-3 needs-validation " method="post"
-			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/registerconfirm">
+			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/registerconfirm"
+			novalidate>
 
 			<div class="mb-3">
 				<input type="text" class="form-control" id="username"
@@ -58,8 +58,6 @@ form {
 						id="password" name="password" value="" required>
 					<div class="invalid-feedback">請輸入有效密碼</div>
 				</div>
-
-
 
 				<div class="mb-3">
 					<label for="cfpassword" class="form-label">密碼確認</label> <input
@@ -125,6 +123,10 @@ form {
 
 		Array.prototype.slice.call(forms).forEach(function(form) {
 			form.addEventListener('submit', function(event) {
+				var password = form.querySelector('#password');
+				var cfpassword = form.querySelector('#cfpassword');
+				var passwordMismatch = form.querySelector('#passwordMismatch');
+
 				if (!form.checkValidity()) {
 					event.preventDefault();
 					event.stopPropagation();
@@ -133,11 +135,6 @@ form {
 						input.classList.add('is-invalid');
 					});
 				}
-
-				// Password 驗證
-				var password = form.querySelector('#password');
-				var cfpassword = form.querySelector('#cfpassword');
-				var passwordMismatch = form.querySelector('#passwordMismatch');
 
 				if (password.value !== cfpassword.value) {
 					passwordMismatch.style.display = 'block';
@@ -153,6 +150,12 @@ form {
 					password.setCustomValidity('至少包含一個大寫及一個小寫英文字母及數字');
 				} else {
 					password.setCustomValidity('');
+				}
+
+				// Check if there are still validation errors before allowing form submission
+				if (!form.checkValidity()) {
+					event.preventDefault();
+					event.stopPropagation();
 				}
 
 				form.classList.add('was-validated');
