@@ -71,7 +71,8 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
         namedParameterJdbcTemplate.update(sql, params);
     }
-    //垃圾桶
+    
+ 
     @Override
     public void addScholarshipToGarbageCollection(Scholarship scholarship) {
     	String sql = "INSERT INTO scholarshipv1.garbageCollection ( userId, institutionId, scholarshipName, scholarshipAmount, entityId, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated, contact, contactNumber) " +
@@ -101,7 +102,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
     }
 
     
-    
+   
     @Override
     public Boolean updateLauchStatusbyId(Integer scholarshipId, Boolean isUpdated) {
         String sql = "UPDATE scholarshipv1.scholarshiprecord SET isUpdated = :isUpdated WHERE scholarshipId = :scholarshipId";
@@ -114,7 +115,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
     }
 
     
-    
+  
     @Override
     public Boolean removeScholarshipById(Integer scholarshipId) {
         String sql = "DELETE FROM  scholarshipv1.scholarshiprecord WHERE scholarshipId = :scholarshipId";

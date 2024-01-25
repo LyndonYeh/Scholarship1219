@@ -8,7 +8,7 @@ import scholarship.bean.User;
 public interface UserDao {
 	
 		/**
-		 * 1. 註冊帳號密碼
+		 * 1. 註冊帳號密碼 (新增使用者)
 		 * @param user
 		 */
 		int addUser(User user);
@@ -16,11 +16,11 @@ public interface UserDao {
 
 
 		/**
-		 * 2. 修改密碼
+		 * 2. 根據userId修改密碼
 		 * @param 使用者 ID, 新密碼
 		 * @return 是否刪除成功
 		 */
-		
+
 		Boolean updateUserPasswordById(Integer userId, String newPassword);
 
 		/**
@@ -29,14 +29,17 @@ public interface UserDao {
 		 */
 		List<User> findAllUsers();
 		
-		/*
-		 * 4. 根據使用者名稱查找使用者(登入用-單筆)
-		 * 
+		/**
+		 * 4. 根據username修改密碼
+		 * @param username
+		 * @return 是否查詢成功
 		 */
 		Optional<User> findUserByUsername(String username);
 		
-		/*
-		 * 5. 根據使用者ID查找使用者(單筆)
+		/**
+		 * 5. 根據userId查找使用者
+		 * @param userId
+		 * @return Optional user
 		 */
 		
 		Optional<User> findUserById(Integer userId);

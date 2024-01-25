@@ -66,12 +66,11 @@
 6. 根據機構名稱查詢機構是否已存在
 
 使用者 user:
-1. 註冊 (帳號、密碼)
-2. 修改帳號
-3. 修改密碼
-4. 查詢所有使用者
-5. 根據使用者名稱查找使用者(登入用-單筆)
-6. 根據使用者ID查找使用者(單筆)
+1. 註冊帳號密碼 (新增使用者)
+2. 根據userId修改密碼
+3. 查詢所有使用者
+4. 根據username查找使用者
+5. 根據userId查找使用者
 		
 獎學金上傳紀錄 Scholarship:
 1. 新增一筆獎學金
@@ -85,12 +84,12 @@
 	7-2 根據entityId/scholarshipAmount查詢獎學金 
 	7-3 根據scholarshipAmount查詢獎學金
 	7-4 根據scholarshipId查詢獎學金 
-	
+8. 根據scholarshipId刪除獎學金至資源回收桶
+
 資源回收桶 GgarbageCollection:
-1. 根據 scholarshipId 刪除獎學金至資源回收桶
-2. 根據 scholarshipId 將獎學金移出資源回收桶(復原)
-3. 根據 institutionId 從資源回收桶查詢一筆獎學金紀錄
-4. 根據 scholarshipId 從資源回收桶查詢一筆獎學金紀錄
+1. 根據 scholarshipId 刪除資源回收桶的獎學金(復原)
+2. 根據 institutionId 從資源回收桶查詢一筆獎學金紀錄
+3. 根據 scholarshipId 從資源回收桶查詢一筆獎學金紀錄
 
 
 身分別
@@ -141,7 +140,7 @@ MySQL
         - 輸入無效密碼 : 顯示錯誤
             - 不符合大寫小與數字規則
             - 不一致
-            - 重設成功後, 重設密碼頁將失效(再次訪問, 頁面會強制重新導向loginPage)
+            - 重設成功後, 重設密碼頁將失效(再次訪問, 頁面會強制重新導向登入頁)
 
 5. GitHub登入
     5-1. 登入 : menu 顯示前台 username
@@ -154,6 +153,8 @@ MySQL
 
 7. 修改會員資料
     9-1. 修改聯絡人 / 連絡電話
+        - 已登入的聯絡人透過url只能進入自己userId的網址:https://localhost:8443/Scholarship/mvc/scholarship/backend/edit/8
+        - 輸入其他的 userId 將會被攔截重新導向至登入頁
     9-2. 輸入密碼確認修改
     9-3. 重設密碼連結至重設密碼頁
 
