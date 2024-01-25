@@ -383,6 +383,7 @@ public class ScholarshipMySQLController {
 		Scholarship dScholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
 		scholarshipDao.addScholarshipToGarbageCollection(dScholarship);
 
+		// 刪除獎學金紀錄
 		boolean rowcount = scholarshipDao.removeScholarshipById(scholarshipId);
 		System.out.println("delete User rowcount = " + rowcount);
 		return "redirect:/mvc/scholarship/backend"; // 重導到 user 首頁
