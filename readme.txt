@@ -84,7 +84,7 @@
 	7-1 根據entityId查詢獎學金
 	7-2 根據entityId/scholarshipAmount查詢獎學金 
 	7-3 根據scholarshipAmount查詢獎學金
-	7-4	根據scholarshipId查詢獎學金 
+	7-4 根據scholarshipId查詢獎學金 
 	
 資源回收桶 GgarbageCollection:
 1. 根據 scholarshipId 刪除獎學金至資源回收桶
@@ -150,8 +150,7 @@ MySQL
 已登入
 
 6. 前台
-    6-9-1. menu 顯示新增 : 
-        - 後台首頁
+    6-1. menu 顯示新增 : 後台首頁
 
 7. 修改會員資料
     9-1. 修改聯絡人 / 連絡電話
