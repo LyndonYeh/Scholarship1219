@@ -351,12 +351,21 @@ public class ScholarshipMySQLController {
 	public String getUser(@PathVariable("scholarshipId") Integer scholarshipId, Model model, HttpSession session) {
 
 		addBasicModelBackEnd(model, session);
-
-		Scholarship scholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
-		model.addAttribute("scholarship", scholarship);
-		model.addAttribute("submitBtnName", "新增");
-		model.addAttribute("_method", "POST");
-		return "/backend/backendmain";
+		
+		User sessionData = (User) session.getAttribute("user");
+		
+		Institution  sessionInstitution = institutionDao.findInstitutionByInstitutionId(sessionData.getInstitutionId()).get();
+		
+		String sessionInstitutionId =sessionInstitution.getInstitutionId();
+		
+		Scholarship passScholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
+		
+		if(sessionInstitutionId.equals(passScholarship.getInstitutionId())){
+			Scholarship scholarship = scholarshipDao.findScholarshipById(scholarshipId).get();
+			model.addAttribute("scholarship", scholarship);
+			return "/backend/backendmain";
+		};
+		return "redirect:/mvc/scholarship/backend";	
 	}
 
 	/**
@@ -423,6 +432,7 @@ public class ScholarshipMySQLController {
 		model.addAttribute("username", sessionData.getUsername());
 		model.addAttribute("userId", sessionData.getUserId());
 		model.addAttribute("sessionInstitution", sessionInstitution.get());
+
 
 		model.addAttribute("institutions", institutions); // 將機構資料傳給 jsp
 		model.addAttribute("scholarships", scholarships); // 將獎學金資料傳給 jsp

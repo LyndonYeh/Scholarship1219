@@ -8,8 +8,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import scholarship.bean.User;
-
+// copy 路徑攔截
 // 設定 Interceptor 攔截路徑
+
 public class LoginInterceptor implements HandlerInterceptor {
 
 	@Override
