@@ -157,12 +157,12 @@
 
 				<div class="col-md-auto">
 					<sp:input class="form-control rounded" path="contact" type="text"
-						placeholder="請輸入聯絡人" />
+						placeholder="${sessionInstitution.contact}(預設)" />
 				</div>
 
 				<div class="col-md-auto">
 					<sp:input class="form-control rounded" path="contactNumber"
-						type="text" placeholder="請輸入聯絡電話" />
+						type="text" placeholder="${sessionInstitution.contactNumber}(預設)" />
 				</div>
 
 				<div class="col-md-auto">

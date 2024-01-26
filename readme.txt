@@ -1,3 +1,14 @@
+To-dos:
+1. sql 新增真實獎學金資訊網址 script 和 資料庫: ok 
+    - 網址: https://www.ccf.org.tw/37/news/NTI1Ng/detail
+            - 家扶基金會
+            - 身分別: 大專 / 金額: 20000 
+2. placeholder 帶入 session 資料: ok
+3. live demo : 登入 新增 上架 
+4. Jmeter 測試
+
+
+Entity: 
  1.獎助機構 institution
 +----------------+--------------------+-----------+-----------------+
 | institutionId  |    institutionName | contact   |  contactNumber  | 
