@@ -74,19 +74,19 @@ CREATE TABLE scholarshipv1.garbageCollection (
 
 
 INSERT INTO scholarshipv1.institution (`institutionId`,`institutionName`, `contact`, `contactNumber`) VALUES 
-('25371548','行天宮', '李先生', '0912345678'), 
+('52628812','家扶基金會', '李先生', '0912345678'), 
 ('25371549','教育部', '陳小姐', '028922210'), 
 ('25348848','勞動部', '張先生', '07998441');
 
 INSERT INTO scholarshipv1.user (`institutionId`,`userName`, `password`) VALUES
-('25371548', 'dave.wenyu@gmail.com', '$2a$05$FDHt7rx0kB74Vs0mon5GWugT4cGOFvDSYra/qdZr8y5DS2fCAs0ta'),
+('52628812', 'dave.wenyu@gmail.com', '$2a$05$FDHt7rx0kB74Vs0mon5GWugT4cGOFvDSYra/qdZr8y5DS2fCAs0ta'),
 ('25371549','lyndonyeh@gmail.com', '$2a$05$0ppuj4QdEyWAnlNf7IbWFObR9.NH1rSIgTaTJ1WyNvAyd9iWtR7uW'),
 ('25348848','alicelu@gmail.com', '$2a$05$wbUIDjEtLQ5J8mzwIiDE1Op5nz4N6XNclJxFEtehQg2Bodhj22G2K');
 
 INSERT INTO scholarshipv1.scholarshiprecord (`institutionId`,`scholarshipName`, `scholarshipAmount`, `entityid`,startDate,endDate,webUrl,contact,contactNumber) VALUES
-('25371548','Scholarship 1', 1000, 1,'2024-01-10','2024-01-15','https://tw.yahoo.com/','李小姐','0987878787'),
-('25371549','Scholarship 2', 10000, 2,'2024-01-10','2024-01-15','https://tw.yahoo.com/','李小姐','0987878787'),
-('25348848','Scholarship 3', 35000, 3,'2024-01-10','2024-01-15','https://tw.yahoo.com/','李小姐','0987878787');
+('52628812','新光人壽獎學金', 3000, 4,'2024-03-01','2024-03-31','https://www.sklsf.org/','李小姐','0222886655'),
+('52628812','鴻海獎學金', 100000, 2,'2024-09-01','2024-09-25','https://www.foxconnfoundation.org/plan/scholar/ejsschool/questions/class_a','陸小姐','0800860880'),
+('52628812','行天宮資優生獎助學金', 200000, 5,'2024-01-01','2024-03-10','https://www.ht.org.tw/religion177.htm','陳先生','0987878787');
 
 INSERT INTO scholarshipv1.entity (`entityid`, `entityName`) VALUES
 ('1', '幼稚園'),
