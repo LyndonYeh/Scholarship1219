@@ -113,7 +113,7 @@
 			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/"
 			class="mb-3">
 			<div class="row g-3">
-				<div class="col-md-auto">
+				<div class="col-xl-3 col-md-12">
 					<sp:select class="form-select" path="entityId">
 						<sp:option value="0" style="color: grey; font-style: italic;"
 							label="身分別:全選"></sp:option>
@@ -125,7 +125,7 @@
 						<sp:option value="6" label="研究所"></sp:option>
 					</sp:select>
 				</div>
-				<div class="col-md-auto">
+				<div class="col-xl-3 col-md-12">
 					<select id="amountSelect" class="form-select"
 						onchange="copySelectedValue()">
 
@@ -138,11 +138,11 @@
 						<option value="100000">100,000</option>
 					</select>
 				</div>
-				<div class="col-md-auto">
+				<div class="col-xl-3 col-md-12">
 					<sp:input type="number" path="scholarshipAmount"
 						class="form-control rounded" placeholder="或:手動輸入搜尋" />
 				</div>
-				<div class="col-md-auto">
+				<div class="col-xl-3 col-md-12">
 					<button type="submit" class="btn btn-outline-secondary">送出</button>
 				</div>
 			</div>
