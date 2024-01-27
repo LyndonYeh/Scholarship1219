@@ -73,14 +73,18 @@
 <link rel="shortcut icon" type="image/x-icon"
 	href="../../images/icon.png">
 <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
 	rel="stylesheet">
 <script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-<meta charset="UTF-8">
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+	crossorigin="anonymous"></script>
+<meta name="viewport" charset="UTF-8">
 <title>獎學網後台</title>
 </head>
 <body>
@@ -109,18 +113,16 @@
 			action="${pageContext.request.contextPath}/mvc/scholarship/backend">
 			<div class="row g-3">
 				<sp:input path="scholarshipId" type="hidden" />
-			
-					<input name="_method" type="hidden" value="${ _method }" />
-					<div class="col-xl-3 col-md-12">
-						<sp:input path="scholarshipName" type="text"
-							placeholder="請輸入獎學金名稱" class="form-control rounded"
-							required="required" />
-					</div>
-					<div class="col-xl-3 col-md-12">
-						<sp:input path="webUrl" type="text" class="form-control rounded"
-							placeholder="請輸入獎學金網址，例:https://123/"
-							required="required" />
-					</div>
+
+				<input name="_method" type="hidden" value="${ _method }" />
+				<div class="col-xl-3 col-md-12">
+					<sp:input path="scholarshipName" type="text" placeholder="請輸入獎學金名稱"
+						class="form-control rounded" required="required" />
+				</div>
+				<div class="col-xl-3 col-md-12">
+					<sp:input path="webUrl" type="text" class="form-control rounded"
+						placeholder="請輸入獎學金網址，例:https://123/" required="required" />
+				</div>
 				<div class=" col-xl-1 col-md-12 ">
 					<label class=" mt-2">開始日期</label>
 				</div>
