@@ -118,7 +118,7 @@
 					</div>
 					<div class="col-xl-3 col-md-12">
 						<sp:input path="webUrl" type="text" class="form-control rounded"
-							placeholder="請輸入獎學金網址，例:https://123/" style="width: 300px"
+							placeholder="請輸入獎學金網址，例:https://123/"
 							required="required" />
 					</div>
 				<div class=" col-xl-1 col-md-12 ">
@@ -130,7 +130,7 @@
 						placeholder="Start Date" required="required" />
 				</div>
 				<div class="col-xl-1 col-md-12">
-					<label class=" ms-3 mt-2">截止日期</label>
+					<label class=" mt-2">截止日期</label>
 				</div>
 				<div class="col-xl-2 col-md-12 text-center">
 					<sp:input path="endDate" type="date" class="form-control rounded"
