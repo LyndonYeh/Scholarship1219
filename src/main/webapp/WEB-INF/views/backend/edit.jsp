@@ -66,7 +66,8 @@ form {
 			<div class="input-group mb-3">
 				<span class="input-group-text">欲修改聯絡人</span><input type="text"
 					class="form-control" aria-label="Contact" id="contact"
-					name="contact" value="" required maxlength="50">
+					name="contact" value="" maxlength="50"required>
+					<div class="invalid-feedback">請輸入聯絡人</div>
 			</div>
 
 
@@ -80,12 +81,12 @@ form {
 			<div class="input-group mb-3">
 				<span class="input-group-text">欲修改連絡電話</span><input type="text"
 					class="form-control" aria-label="currentContact" id="contactNumber"
-					name="contactNumber" value="" required maxlength="10">
+					name="contactNumber" value="" maxlength="10" required>
 				<div class="invalid-feedback">請輸入聯絡電話(最大長度10碼)</div>
 			</div>
 
 			<div class="input-group mb-3">
-				<span class="input-group-text">請輸入密碼</span><input type="text"
+				<span class="input-group-text">請輸入密碼</span><input type="password"
 					class="form-control" aria-label="password" id="password"
 					name="password" value="" required>
 
@@ -103,8 +104,7 @@ form {
 				</div>
 
 				<div class="col-md-auto">
-					<button type="submit" type="submit"
-						class="btn btn-outline-danger">確認修改</button>
+					<button type="submit" type="submit" class="btn btn-outline-danger">確認修改</button>
 				</div>
 			</div>
 
@@ -115,20 +115,22 @@ form {
 
 </body>
 <script type="text/javascript">
+	//匿名函數，立即執行函數 (IIFE) 以避免變數污染全域空間
 	(function() {
 		'use strict'
 
-		// Fetch all the forms we want to apply custom Bootstrap validation styles to
+		// 取得所有希望套用自訂 Bootstrap 驗證樣式的表單
 		var forms = document.querySelectorAll('.needs-validation')
 
-		// Loop over them and prevent submission
+		// 迴圈遍歷這些表單並阻止預設提交行為
 		Array.prototype.slice.call(forms).forEach(function(form) {
 			form.addEventListener('submit', function(event) {
+				// 如果表單未通過驗證，阻止事件的預設行為並停止事件冒泡
 				if (!form.checkValidity()) {
 					event.preventDefault()
 					event.stopPropagation()
 				}
-
+				// 添加 'was-validated' 類別以套用 Bootstrap 的驗證樣式
 				form.classList.add('was-validated')
 			}, false)
 		})

@@ -5,17 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
-
-import scholarship.bean.Institution;
 import scholarship.bean.User;
 import scholarship.model.dao.UserDao;
 
@@ -25,10 +20,7 @@ public class UserMySQL implements UserDao {
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
-
+	
 	@Override
 	public int addUser(User user) {
 		String sql = "INSERT INTO User (username, password, institutionId) VALUES (:username, :password, :institutionId)";
@@ -43,41 +35,6 @@ public class UserMySQL implements UserDao {
 		return namedParameterJdbcTemplate.update(sql, params);
 	}
 
-	@Override
-	public int addGoogleUser(User user) {
-		String sql = "INSERT INTO User (username) VALUES (:username)";
-		Map<String, Object> params = new HashMap<>();
-		params.put("username", user.getUsername());
-		return namedParameterJdbcTemplate.update(sql, params);
-	}
-
-	
-	@Override
-	public Boolean updateUsernameById(Integer userId, String password, String newUserName) {
-		String sql = "UPDATE User SET userName = :newUserName WHERE userId = :userId AND password = :password";
-		Map<String, Object> params = new HashMap<>();
-		params.put("userId", userId);
-		params.put("password", password);
-		params.put("newUserName", newUserName);
-
-		int rowsUpdated = namedParameterJdbcTemplate.update(sql, params);
-		return rowsUpdated > 0;
-	}
-
-	
-	@Override
-	public Boolean updateUserPasswordById(Integer userId, String oldPassword, String newPassword) {
-		String sql = "UPDATE User SET password = :newPassword WHERE userId = :userId AND password = :oldPassword";
-		Map<String, Object> params = new HashMap<>();
-		params.put("userId", userId);
-		params.put("oldPassword", oldPassword);
-		params.put("newPassword", newPassword);
-
-		int rowsUpdated = namedParameterJdbcTemplate.update(sql, params);
-		return rowsUpdated > 0;
-	}
-
-	
 	@Override
 	public Boolean updateUserPasswordById(Integer userId, String newPassword) {
 		String sql = "UPDATE User SET password = :newPassword WHERE userId = :userId";

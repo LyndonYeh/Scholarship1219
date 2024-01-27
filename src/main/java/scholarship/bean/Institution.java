@@ -1,23 +1,13 @@
 package scholarship.bean;
-
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
 import com.google.gson.Gson;
 
 /**
  * 1. 獎助機構
-+--------------------------------------------------------------+
-| institutionId     |     institutionName     | contact    | contact number  |  
-+--------------------------------------------------------------+
++---------------------------------------------------------------------------------------------------------------------+
+| institutionId     |    institutionName      | contact    | contact number  |  
++---------------------------------------------------------------------------------------------------------------------+
 |    25570111    |   行天宮助寒獎學金  | 陳小姐    |  0912345678     |
-+--------------------------------------------------------------+
++---------------------------------------------------------------------------------------------------------------------+
  */
 
 
@@ -32,6 +22,7 @@ public class Institution {
 	public Institution() {
 	
 	}
+	
 	public Institution(String institutionName, String institutionId, String contactNumber, String contact) {
 		this.institutionName = institutionName;
 		this.institutionId = institutionId;

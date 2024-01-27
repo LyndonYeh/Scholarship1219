@@ -71,7 +71,8 @@ public class ScholarshipMySQL implements ScholarshipDao {
 
         namedParameterJdbcTemplate.update(sql, params);
     }
-    //這個是垃圾桶的新增
+    
+ 
     @Override
     public void addScholarshipToGarbageCollection(Scholarship scholarship) {
     	String sql = "INSERT INTO scholarshipv1.garbageCollection ( userId, institutionId, scholarshipName, scholarshipAmount, entityId, updatedTime, startDate, endDate, isExpired, webUrl, isUpdated, contact, contactNumber) " +
@@ -88,7 +89,6 @@ public class ScholarshipMySQL implements ScholarshipDao {
     	params.put("scholarshipAmount", scholarship.getScholarshipAmount());
     	params.put("entityId", scholarship.getEntityId());
     	
-    	//params.put("updatedTime", Date.valueOf(scholarship.getUpdatedTime()));
     	params.put("updatedTime", format.format(System.currentTimeMillis()));
     	params.put("startDate", scholarship.getStartDate());
     	params.put("endDate", scholarship.getEndDate());
@@ -102,7 +102,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
     }
 
     
-    
+   
     @Override
     public Boolean updateLauchStatusbyId(Integer scholarshipId, Boolean isUpdated) {
         String sql = "UPDATE scholarshipv1.scholarshiprecord SET isUpdated = :isUpdated WHERE scholarshipId = :scholarshipId";
@@ -115,7 +115,7 @@ public class ScholarshipMySQL implements ScholarshipDao {
     }
 
     
-    
+  
     @Override
     public Boolean removeScholarshipById(Integer scholarshipId) {
         String sql = "DELETE FROM  scholarshipv1.scholarshiprecord WHERE scholarshipId = :scholarshipId";
@@ -254,12 +254,6 @@ public class ScholarshipMySQL implements ScholarshipDao {
 		scholarship.setInstitution(addInstitution.get());
 		scholarship.setEntity(addEntity.get());
 	}
-	
-//	private void enrichScholarshipWithEntity(Scholarship scholarship) {
-//		// 注入 Entity 到 Scholarship
-//		
-//		
-//	}
 	
 	
 }

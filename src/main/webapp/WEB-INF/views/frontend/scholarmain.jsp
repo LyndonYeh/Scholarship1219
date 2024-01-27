@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="sp" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 
 <!DOCTYPE html>
@@ -32,9 +33,11 @@
 <script type="text/javascript"
 	src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
+<!--  <script type="text/javascript"
+	src="http://localhost:8080/Scholarship/js/datatables_zh_tw.json"></script>-->
+<!-- 啟用 https 重導 url -->
 <script type="text/javascript"
-	src="http://localhost:8080/Scholarship/js/datatables_zh_tw.json"></script>
-
+	src="https://localhost:8443/Scholarship/js/datatables_zh_tw.json"></script>
 
 
 <!-- 引入 DataTables 匯出列印功能 -->
@@ -65,6 +68,7 @@
 
 
 <script type="text/javascript">
+
 	$(document)
 			.ready(
 					function() {
@@ -73,13 +77,13 @@
 										{
 											// 設定語言為繁體中文
 											"language" : {
-												"url" : "http://localhost:8080/Scholarship/js/datatables_zh_tw.json",
-
+												// 如果啟用 https, port 改為 8443
+												//"url" : "http://localhost:8080/Scholarship/js/datatables_zh_tw.json",
+												"url" : "https://localhost:8443/Scholarship/js/datatables_zh_tw.json",
 											},
 											//設定匯出功能
 											dom : 'lBfrtip',
-											buttons : [ 'copy', 'csv', 'excel',
-													'pdf', 'print' ]
+											buttons : [ 'copy', 'csv', 'excel','print']
 										});
 
 						table.buttons().container().appendTo(
@@ -87,10 +91,10 @@
 					});
 
 	function copySelectedValue() {
-		// Get the selected value from the dropdown
+		// 取得下拉清單中選擇的值
 		var selectedValue = document.getElementById("amountSelect").value;
 
-		// Set the value of the input field on the right
+		// 設定右側輸入欄位的值
 		document.getElementById("scholarshipAmount").value = selectedValue;
 	}
 </script>
@@ -166,8 +170,9 @@
 						<td>${scholarship.entity.entityName}</td>
 						<td><a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
 						</td>
-						<td>${scholarship.scholarshipAmount}</td>
-						<td>${scholarship.endDate}</td>
+
+						<td><fmt:formatNumber value="${scholarship.scholarshipAmount}" type="currency" pattern="#,##0.##"/></td>
+						<td>${scholarship.stringEndDate}</td>
 						<td>${scholarship.institution.contact }</td>
 						<td>${scholarship.institution.contactNumber }</td>
 					</tr>

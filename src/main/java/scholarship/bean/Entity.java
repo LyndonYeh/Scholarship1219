@@ -3,13 +3,13 @@ package scholarship.bean;
 /**
  * 4. 身分別
 +----------------------------------------+
-| entityId  | entityName |     
+| entityId  | entityName  |     
 +----------------------------------------+
 |    1          |   幼稚園       | 
 |    2          |    國小          | 
 |    3          |    國中          | 
 |    4          |    高中          | 
-|    5          |    大學 
+|    5          |    大學		   |
 |    6          |   幼稚園       | 
 +----------------------------------------+
  */
@@ -32,5 +32,5 @@ public class Entity {
 		this.entityName = entityName;
 	}
 
-
+	
 }

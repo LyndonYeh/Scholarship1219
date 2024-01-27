@@ -34,24 +34,28 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		(function() {
-			'use strict'
+	// 立即執行函數 (IIFE) 以避免變數污染全域空間
+	(function() {
+	    'use strict';
 
-			// Fetch all the forms we want to apply custom Bootstrap validation styles to
-			var forms = document.querySelectorAll('.needs-validation')
+	    // 取得所有希望套用自訂 Bootstrap 驗證樣式的表單
+	    var forms = document.querySelectorAll('.needs-validation');
 
-			// Loop over them and prevent submission
-			Array.prototype.slice.call(forms).forEach(function(form) {
-				form.addEventListener('submit', function(event) {
-					if (!form.checkValidity()) {
-						event.preventDefault()
-						event.stopPropagation()
-					}
+	    // 迴圈遍歷這些表單並阻止提交，同時套用 Bootstrap 驗證樣式
+	    Array.prototype.slice.call(forms).forEach(function(form) {
+	        form.addEventListener('submit', function(event) {
+	            // 如果表單未通過驗證，阻止預設的提交行為並停止事件冒泡
+	            if (!form.checkValidity()) {
+	                event.preventDefault();
+	                event.stopPropagation();
+	            }
 
-					form.classList.add('was-validated')
-				}, false)
-			})
-		})()
+	            // 添加 'was-validated' 類別以套用 Bootstrap 的驗證樣式
+	            form.classList.add('was-validated');
+	        }, false);
+	    });
+	})();
+
 	</script>
 </body>
 </html>

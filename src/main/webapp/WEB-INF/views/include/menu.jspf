@@ -4,7 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="javax.servlet.http.HttpSession"%>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
-<!-- toString() IDE 會報錯 網頁不會 -->
+
+<!-- 設定url變數 -->
 <c:set var="currentURL"
 	value="''+${pageContext.request.requestURL}" />
 
@@ -13,7 +14,7 @@
 	<div class="container-fluid">
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
+				<!-- 設定路徑篩選 -->
 				<c:choose>
 					<c:when test="${fn:endsWith(currentURL, 'backendmain.jsp')}">
 						<li class="navbar-brand"><a class="nav-link active"
@@ -68,10 +69,10 @@
 						</form>
 					</li>
 				</c:when>
-				<c:when test="${not empty sessionScope.githubUsername}">
+				<c:when test="${not empty sessionScope.username}">
 					<li class="nav-item"><a
 						class="nav-link d-flex justify-content-center align-items-center"
-						style="color: white;">Hi,${githubUsername}</a></li>
+						style="color: white;">Hi,${username}</a></li>
 					<li class="nav-item">
 						<form class="form-inline"
 							action="${pageContext.request.contextPath}/mvc/scholarship/logout">

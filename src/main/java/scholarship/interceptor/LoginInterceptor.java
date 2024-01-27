@@ -8,6 +8,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import scholarship.bean.User;
+// copy 路徑攔截
+// 設定 Interceptor 攔截路徑
 
 public class LoginInterceptor implements HandlerInterceptor {
 
@@ -28,13 +30,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 				return true;
 			}
 
-			// 處理 backend 網址授權
 			// 等於後台首頁 : 給過
 			if (URI.equals("/Scholarship/mvc/scholarship/backend")) {
 				return true;
 			}
 
-			// 後台包含 copy url : 給過
+			// 後台包含 copy : 給過
 			if (URI.contains("/mvc/scholarship/backend/copy/")) {
 				return true;
 			}
@@ -42,23 +43,35 @@ public class LoginInterceptor implements HandlerInterceptor {
 			if (URI.contains("/mvc/scholarship/backend/garbageCollection")) {
 				return true;
 			}
-			// 後台包含 change url : 給過
+			
+			// 後台包含 change : 給過
 			if (URI.contains("/mvc/scholarship/backend/changeLunch/")) {
 				return true;
 			}
+			
+			// 後台包含 reset : 給過
+			if (URI.contains("/mvc/scholarship/backend/reset/")) {
+				return true;
+			}
 
-			// 後台包含 delete url : 給過
+			// 後台包含 delete : 給過
 			if (URI.contains("/mvc/scholarship/backend/delete/")) {
 				return true;
 			}
 
-			// logout: 給過
+			// 後台包含 logout: 給過
 			if (URI.contains("/mvc/scholarship/logout")) {
 				return true;
 			}
 
 		} else {
-			// 處理 frontend 網址授權
+			
+			// 處理 frontend 網址授權	
+			// 因為 github attribute 為 username 而非 user, 所以幫他設登出的排除條款
+			if (URI.contains("/mvc/scholarship/logout")) {
+				return true;
+			}		
+			
 			if (URI.contains("/mvc/scholarship/frontend/")) {
 				return true;
 			}
@@ -67,7 +80,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 				return true;
 			}
 
-			// 處理 backend reset 網址授權
+			// 處理 reset 網址授權 (因為前端 reset 為未登入狀態)
 			if (URI.contains("/mvc/scholarship/backend/reset/")) {
 				return true;
 			}
