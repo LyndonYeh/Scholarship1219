@@ -6,58 +6,9 @@
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
 
 
+
 <!-- 設定url變數 -->
 <c:set var="currentURL" value="''+${pageContext.request.requestURL}" />
-
-
-<!--  <<<<<<< HEAD
-<nav class="navbar navbar-expand navbar-dark bg-dark">
-	<div class="container-fluid">
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
-				<!-- 設定路徑篩選 -->
-				<!--<c:choose>
-					<c:when test="${fn:endsWith(currentURL, 'backendmain.jsp')}">
-						<li class="navbar-brand"><a class="nav-link active"
-							aria-current="page"
-							href="${pageContext.request.contextPath}/mvc/scholarship/frontend">獎學金列表</a></li>
-						<li
-							class="nav-item  d-flex justify-content-center align-items-center"><a
-							class="nav-link active" aria-current="page"
-							href="${pageContext.request.contextPath}/mvc/scholarship/backend/edit/${userId}">修改會員資料</a></li>
-
-						<li
-							class="nav-item  d-flex justify-content-center align-items-center"><a
-							class="nav-link active" aria-current="page"
-							href="${pageContext.request.contextPath}/mvc/scholarship/backend/garbageCollection">資源回收桶</a></li>
-					</c:when>
-					<c:when test="${fn:endsWith(currentURL, 'garbageCollection.jsp')}">
-						<li class="navbar-brand"><a class="nav-link active"
-							aria-current="page"
-							href="${pageContext.request.contextPath}/mvc/scholarship/frontend">獎學金列表</a></li>
-						<li
-							class="nav-item  d-flex justify-content-center align-items-center"><a
-							class="nav-link active" aria-current="page"
-							href="${pageContext.request.contextPath}/mvc/scholarship/backend">後台首頁</a></li>
-
-					</c:when>
-					<c:when
-						test="${currentURL.contains('frontend') and not empty sessionScope.user}">
-						<li class="navbar-brand"><a class="nav-link active"
-							aria-current="page"
-							href="${pageContext.request.contextPath}/mvc/scholarship/frontend">獎學金列表</a></li>
-						<li
-							class="nav-item  d-flex justify-content-center align-items-center"><a
-							class="nav-link active" aria-current="page"
-							href="${pageContext.request.contextPath}/mvc/scholarship/backend">後台首頁</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="navbar-brand"><a class="nav-link active"
-							aria-current="page"
-							href="${pageContext.request.contextPath}/mvc/scholarship/frontend">獎學金列表</a></li>
-					</c:otherwise>
-				</c:choose>
-			</ul>-->
 
 <nav class="navbar fixed-top navbar-expand navbar-dark bg-dark">
 	<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
