@@ -13,10 +13,10 @@
 
 
 <link rel="shortcut icon" type="image/x-icon"
+
 	href="/Scholarship/images/icon.png">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
 	rel="stylesheet">
@@ -32,6 +32,7 @@
 <script type="text/javascript" charset="utf8"
 	src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <!-- 引入 DataTables -->
 <script type="text/javascript"
@@ -104,10 +105,17 @@
 </script>
 
 </head>
-<meta charset="UTF-8">
+<meta name="viewport" charset="UTF-8">
+<style>
+body {
+	padding-top: 100px;
+}
+
+table {
+	margin-top: 30px;
+}
+</style>
 <title>獎學網首頁</title>
-
-
 </head>
 <body>
 	<!-- menu -->
@@ -117,7 +125,7 @@
 			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/"
 			class="mb-3">
 			<div class="row g-3">
-				<div class="col-md-auto">
+				<div class="col-xl-3 col-md-12">
 					<sp:select class="form-select" path="entityId">
 						<sp:option value="0" style="color: grey; font-style: italic;"
 							label="身分別:全選"></sp:option>
@@ -129,7 +137,7 @@
 						<sp:option value="6" label="研究所"></sp:option>
 					</sp:select>
 				</div>
-				<div class="col-md-auto">
+				<div class="col-xl-3 col-md-12">
 					<select id="amountSelect" class="form-select"
 						onchange="copySelectedValue()">
 
@@ -142,11 +150,11 @@
 						<option value="100000">100,000</option>
 					</select>
 				</div>
-				<div class="col-md-auto">
+				<div class="col-xl-3 col-md-12">
 					<sp:input type="number" path="scholarshipAmount"
 						class="form-control rounded" placeholder="或:手動輸入搜尋" />
 				</div>
-				<div class="col-md-auto">
+				<div class="col-xl-3 col-md-12">
 					<button type="submit" class="btn btn-outline-secondary">送出</button>
 				</div>
 			</div>

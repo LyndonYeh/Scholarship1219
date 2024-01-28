@@ -87,40 +87,50 @@
 <link rel="shortcut icon" type="image/x-icon"
 	href="/Scholarship/images/icon.png">
 <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
 	rel="stylesheet">
 <script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
+<style>
+body {
+	padding-top: 70px;
+}
+</style>
 <title>資源回收頁</title>
+
 </head>
 <body>
 	<%@include file="../include/menu.jspf"%>
-	<tr>
-		<td valign="top">
-			<table class="table">
-				<thead class="bg bg-dark text-light">
-					<tr>
-						<th>統一編號</th>
-						<th>機構名稱</th>
-						<th>預設聯絡人</th>
-						<th>預設聯絡電話</th>
-					</tr>
-				</thead>
-				<tbody>
-					<td scope="row">${ sessionInstitution.institutionId}</td>
+	<div id="main">
+
+		<table class="table">
+			<thead class="bg bg-dark text-light">
+				<tr>
+					<th>統一編號</th>
+					<th>機構名稱</th>
+					<th>預設聯絡人</th>
+					<th>預設聯絡電話</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>${ sessionInstitution.institutionId}</td>
 					<td>${ sessionInstitution.institutionName}</td>
 					<td>${ sessionInstitution.contact}</td>
 					<td>${ sessionInstitution.contactNumber}</td>
+				</tr>
+			</tbody>
+		</table>
 
-				</tbody>
-			</table>
 
-		</td>
-	<tr>
 		<table class="table table-light">
 			<thead>
 				<tr>
@@ -163,6 +173,7 @@
 
 			</tbody>
 		</table>
+	</div>
 </body>
 
 </html>

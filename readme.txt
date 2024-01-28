@@ -1,3 +1,23 @@
+To-dos:
+1. sql 新增真實獎學金資訊網址 script 和 to-dos 資料庫: ok 
+    - 網址: https://www.ccf.org.tw/37/news/NTI1Ng/detail
+            - 家扶基金會
+            - 身分別: 大專 / 金額: 20,000 / 日期  2024 年 7 月 1 日起至 2024 年 7 月 28 日 
+2. placeholder 帶入 session 資料: ok
+3. live demo : 
+    - 登入
+    - 開前台分頁
+        - 上架
+        - 新增獎學金
+        - 下架
+    - 刪除
+    - 資源回收桶
+    - 復原
+
+4. Jmeter 測試 : 新增 / 修改
+
+
+Entity: 
  1.獎助機構 institution
 +----------------+--------------------+-----------+-----------------+
 | institutionId  |    institutionName | contact   |  contactNumber  | 
@@ -184,3 +204,45 @@ MySQL
     9-1. 顯示永久刪除倒數時間
     9-2. 設定定期清除功能 : 時間到期後自動從資料庫中永久刪除
     9-3. 復原 : 資料回復至後台首頁
+
+
+Jemetr 測試資料
+完整報告請參考: https://github.com/LyndonYeh/Scholarship1219/tree/main/Jmeter
+
+新增獎學金次數: 3000
+登入次數: 40
+
+測試腳本
+執行緒: 10個
+啟動延遲: 5秒
+迴圈持續時間: 20分鐘
+
+測試腳本流程 
+
+5秒內登入10個用戶
+每名用戶呼叫100次請求
+重複3次
+
+彙整報告
+
+總請求次數(#Samples): 3040次
+平均響應時間(Average): 3918(ms)
+最小響應時間(Min): 1(ms)
+最大響應時間(Max): 48363(ms)
+50％ 用戶的響應時間(Median): 3940.00(ms)
+標準偏移量/標準差(Std.Dev): 986.29
+錯誤率(Error %): 0.92%
+每秒請求吞吐量(Throughtput): 2.52/sec
+每秒收到流量(Received KB/sec): 3772.19 
+每秒發送流量(Send KB/sec): 0.61
+
+
+#Samples: 本次測試共發出了多少次請求
+Average: Request 的平均響應時間
+Median: 中位數 (50％ 用戶的響應時間)
+Error%: 本次測試中出現錯誤的請求的數量/請求的總數
+Throughput: 吞吐量，默認情況下表示每秒完成的請求數(Request per Second)，伺服器能夠接受的最大速率
+KB/Sec: 每秒從伺服器接收到的數據量
+ThreadGroup 線程組: 代表一定數量的並發用戶，它可以用來模擬並發用戶發送請求
+Ramp-up period: 指每個請求發生的總時間間隔，單位: 秒
+

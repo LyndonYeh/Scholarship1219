@@ -318,10 +318,8 @@ public class ScholarshipMySQLController {
 		// 判斷驗證是否通過?
 		if (result.hasErrors()) { // 有錯誤發生
 			// 自動會將 errors 的資料放在 model 中
-
 			model.addAttribute("_method", "POST");
 			model.addAttribute("scholarship", scholarship); // 給 form 表單用的 (ModelAttribute)
-
 			return "backendmain";
 		}
 
@@ -414,7 +412,6 @@ public class ScholarshipMySQLController {
 
 	/**
 	 * 後台首頁基礎資料
-	 * 
 	 * @param model
 	 * @param session 後台根據Institution顯示資料
 	 */
