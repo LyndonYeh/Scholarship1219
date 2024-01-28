@@ -52,7 +52,7 @@
 						aria-current="page"
 						href="${pageContext.request.contextPath}/mvc/scholarship/frontend">獎學金列表</a></li>
 					<li
-						class="nav-item  d-flex ms-3 justify-content-start align-items-start mt-2 "><a
+						class="nav-item  d-flex ms-3 justify-content-start align-items-start mt-2 mb-0"><a
 						class="nav-link active" aria-current="page"
 						href="${pageContext.request.contextPath}/mvc/scholarship/backend">後台首頁</a></li>
 				</c:when>

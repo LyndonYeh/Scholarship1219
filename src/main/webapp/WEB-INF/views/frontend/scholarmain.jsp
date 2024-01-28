@@ -100,9 +100,16 @@
 
 </head>
 <meta name="viewport" charset="UTF-8">
+<style>
+body {
+	padding-top: 100px;
+}
+
+table {
+	margin-top: 30px;
+}
+</style>
 <title>獎學網首頁</title>
-
-
 </head>
 <body>
 	<!-- menu -->
