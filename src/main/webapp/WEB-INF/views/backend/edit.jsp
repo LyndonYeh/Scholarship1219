@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" type="image/x-icon"
 	href="../../images/icon.png">
 
@@ -40,10 +41,7 @@ form {
 </style>
 </head>
 <body>
-
-
-	<div class="d-flex justify-content-center  align-items-center vh-100 "
-		class="">
+	<div class="d-flex justify-content-center align-items-center vh-100">
 		<form class="row g-3 needs-validation" novalidate method="post"
 			action="${pageContext.request.contextPath}/mvc/scholarship/backend/edit/${session.userId}">
 			<h4 class="text-center">修改資訊</h4>
