@@ -70,8 +70,8 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/thymeleaf-config.xml</param-value> <!-- Specify the location of your Thymeleaf configuration file -->
 	</context-param>
-
-	<security-constraint>
+	<!-- 全網加密 -->
+	<!--  <security-constraint>
 		<display-name>Constraint1</display-name>
 		<web-resource-collection>
 			<web-resource-name>secure</web-resource-name>
@@ -80,7 +80,7 @@
 		<user-data-constraint>
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
-	</security-constraint>
+	</security-constraint>-->
 
 
 

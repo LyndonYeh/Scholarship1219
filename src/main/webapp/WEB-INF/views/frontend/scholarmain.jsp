@@ -8,8 +8,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=992px, initial-scale=1, height=device-height, maximum-scale=1, user-scalable=no">
+
+
+
 <link rel="shortcut icon" type="image/x-icon"
-	href="../../images/icon.png">
+	href="/Scholarship/images/icon.png">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
