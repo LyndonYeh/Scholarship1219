@@ -2,7 +2,7 @@ To-dos:
 1. sql 新增真實獎學金資訊網址 script 和 to-dos 資料庫: ok 
     - Demo data  
         - 獎學金名稱: 行天宮資優獎學金
-        - 網址: https://www.ht.org.tw/religion177htm
+        - 網址: https://www.ht.org.tw/religion177.htm
         - 開始日期: 2024 年 1 月 1 日
         - 截止日期: 2024 年 3 月 10 日 
         - 身分別: 大學
