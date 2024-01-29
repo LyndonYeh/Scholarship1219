@@ -212,7 +212,9 @@ MySQL
 
 
 Jemetr 測試資料
-完整報告請參考: https://github.com/LyndonYeh/Scholarship1219/tree/main/Jmeter
+完整報告請參考: 
+    - report: https://davewylee.github.io/ScholarshipJmeterReport/
+    - github resource: https://github.com/LyndonYeh/Scholarship1219/tree/main/Jmeter
 
 新增獎學金次數: 3000
 登入次數: 40
