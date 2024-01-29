@@ -85,7 +85,7 @@
 }
 </style>
 <link rel="shortcut icon" type="image/x-icon"
-	href="../../images/icon.png">
+	href="/Scholarship/images/icon.png">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -153,7 +153,8 @@ body {
 						<td>${scholarship.institution.institutionName }</td>
 						<td><a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
 						</td>
-						<td>${scholarship.scholarshipAmount}</td>
+						<td><fmt:formatNumber value="${scholarship.scholarshipAmount}"
+							type="currency" pattern="#,##0.##" /></td>
 						<td>${scholarship.contact }</td>
 						<td>${scholarship.contactNumber }</td>
 						<td>
