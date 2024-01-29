@@ -19,6 +19,7 @@ To-dos:
     - 復原
 
 4. Jmeter 測試 : 新增 / 修改
+    - 測試報告參考: https://davewylee.github.io/ScholarshipJmeterReport/
 
 
 Entity: 
