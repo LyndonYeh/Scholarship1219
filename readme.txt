@@ -1,8 +1,12 @@
 To-dos:
 1. sql 新增真實獎學金資訊網址 script 和 to-dos 資料庫: ok 
-    - 網址: https://www.ccf.org.tw/37/news/NTI1Ng/detail
-            - 家扶基金會
-            - 身分別: 大專 / 金額: 20,000 / 日期  2024 年 7 月 1 日起至 2024 年 7 月 28 日 
+    - Demo data  
+        - 獎學金名稱: 行天宮資優獎學金
+        - 網址: https://www.ht.org.tw/religion177htm
+        - 開始日期: 2024 年 1 月 1 日
+        - 截止日期: 2024 年 3 月 10 日 
+        - 身分別: 大學
+        - 金額: 200,000
 2. placeholder 帶入 session 資料: ok
 3. live demo : 
     - 登入
