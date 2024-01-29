@@ -211,7 +211,7 @@ MySQL
     9-3. 復原 : 資料回復至後台首頁
 
 
-Jemetr 測試資料
+Jemeter 測試資料
 完整報告請參考: 
     - report: https://davewylee.github.io/ScholarshipJmeterReport/
     - github resource: https://github.com/LyndonYeh/Scholarship1219/tree/main/Jmeter
