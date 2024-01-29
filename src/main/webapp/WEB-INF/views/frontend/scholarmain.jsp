@@ -8,9 +8,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+
+
+
 <link rel="shortcut icon" type="image/x-icon"
-	href="/Scholarship/images/icon.png">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+href="/Scholarship/images/icon.png">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
 	rel="stylesheet">
@@ -26,17 +31,17 @@
 <script type="text/javascript" charset="utf8"
 	src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- 引入 DataTables -->
 <script type="text/javascript"
 	src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
-<!--  <script type="text/javascript"
-	src="http://localhost:8080/Scholarship/js/datatables_zh_tw.json"></script>-->
-<!-- 啟用 https 重導 url -->
 <script type="text/javascript"
-	src="https://localhost:8443/Scholarship/js/datatables_zh_tw.json"></script>
+	src="/Scholarship/js/datatables_zh_tw.json"></script>
+<!-- 啟用 https 重導 url -->
+<!--  <script type="text/javascript"
+	src="https://localhost:8443/Scholarship/js/datatables_zh_tw.json"></script>-->
 
 
 <!-- 引入 DataTables 匯出列印功能 -->
@@ -77,8 +82,8 @@
 											// 設定語言為繁體中文
 											"language" : {
 												// 如果啟用 https, port 改為 8443
-												//"url" : "http://localhost:8080/Scholarship/js/datatables_zh_tw.json",
-												"url" : "https://localhost:8443/Scholarship/js/datatables_zh_tw.json",
+												"url" : "/Scholarship/js/datatables_zh_tw.json",
+												//"url" : "https://localhost:8443/Scholarship/js/datatables_zh_tw.json",
 											},
 											//設定匯出功能
 											dom : 'lBfrtip',
@@ -98,8 +103,7 @@
 	}
 </script>
 
-</head>
-<meta name="viewport" charset="UTF-8">
+
 <style>
 body {
 	padding-top: 100px;
@@ -119,7 +123,7 @@ table {
 			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/"
 			class="mb-3">
 			<div class="row g-3">
-				<div class="col-xl-3 col-md-12">
+				<div class="col-lg-3 col-md-12">
 					<sp:select class="form-select" path="entityId">
 						<sp:option value="0" style="color: grey; font-style: italic;"
 							label="身分別:全選"></sp:option>
@@ -131,7 +135,7 @@ table {
 						<sp:option value="6" label="研究所"></sp:option>
 					</sp:select>
 				</div>
-				<div class="col-xl-3 col-md-12">
+				<div class="col-lg-3 col-md-12">
 					<select id="amountSelect" class="form-select"
 						onchange="copySelectedValue()">
 
@@ -144,11 +148,11 @@ table {
 						<option value="100000">100,000</option>
 					</select>
 				</div>
-				<div class="col-xl-3 col-md-12">
+				<div class="col-lg-3 col-md-12">
 					<sp:input type="number" path="scholarshipAmount"
 						class="form-control rounded" placeholder="或:手動輸入搜尋" />
 				</div>
-				<div class="col-xl-3 col-md-12">
+				<div class="col-lg-3 col-md-12">
 					<button type="submit" class="btn btn-outline-secondary">送出</button>
 				</div>
 			</div>

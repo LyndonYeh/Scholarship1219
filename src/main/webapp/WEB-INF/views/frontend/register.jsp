@@ -36,6 +36,8 @@ form {
 	margin-top: 50px;
 }
 </style>
+<link rel="shortcut icon" type="image/x-icon"
+	href="/Scholarship/images/icon.png">
 </head>
 <body>
 	<div class="d-flex justify-content-center align-items-center vh-100">

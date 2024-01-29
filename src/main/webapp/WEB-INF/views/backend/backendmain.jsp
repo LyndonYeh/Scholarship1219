@@ -82,9 +82,8 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-	crossorigin="anonymous"></script>
-<meta name="viewport" charset="UTF-8">
+></script>
+<meta name="viewport" content="width=992, initial-scale=1, maximum-scale=1, user-scalable=yes" charset="UTF-8">
 <style>
 body {
 	padding-top: 70px;
@@ -122,32 +121,32 @@ body {
 				<sp:input path="scholarshipId" type="hidden" />
 
 				<input name="_method" type="hidden" value="${ _method }" />
-				<div class="col-xl-3 col-md-12">
+				<div class="col-lg-3 col-md-12">
 					<sp:input path="scholarshipName" type="text" placeholder="請輸入獎學金名稱"
 						class="form-control rounded" required="required" />
 				</div>
-				<div class="col-xl-3 col-md-12">
+				<div class="col-lg-3 col-md-12">
 					<sp:input path="webUrl" type="text" class="form-control rounded"
 						placeholder="請輸入獎學金網址，例:https://123/" required="required" />
 				</div>
-				<div class=" col-xl-1 col-md-12 ">
+				<div class=" col-lg-1 col-md-12 ">
 					<label class=" mt-2">開始日期</label>
 				</div>
-				<div class="col-xl-2 col-md-12">
+				<div class="col-lg-2 col-md-12">
 
 					<sp:input path="startDate" type="date" class="form-control rounded"
 						placeholder="Start Date" required="required" />
 				</div>
-				<div class="col-xl-1 col-md-12">
+				<div class="col-lg-1 col-md-12">
 					<label class=" mt-2">截止日期</label>
 				</div>
-				<div class="col-xl-2 col-md-12 text-center">
+				<div class="col-lg-2 col-md-12 text-center">
 					<sp:input path="endDate" type="date" class="form-control rounded"
 						placeholder="End Date" required="required" />
 				</div>
 			</div>
 			<div class="row g-3 mt-3">
-				<div class="col-xl-2 col-md-12">
+				<div class="col-lg-2 col-md-12">
 					<sp:select path="entityId" class="form-select" required="required">
 						<sp:option value="" disabled="disabled"
 							style="color: grey; font-style: italic;" label="請選擇身分別">
@@ -161,30 +160,31 @@ body {
 					</sp:select>
 				</div>
 
-				<div class="col-xl-3 col-md-12">
+
+				<div class="col-lg-3 col-md-12">
 					<sp:input class="form-control rounded" path="scholarshipAmount"
 						type="number" placeholder="請輸入獎學金額度" required="required" />
 				</div>
 
-				<div class="col-xl-2 col-md-12">
+				<div class="col-lg-2 col-md-12">
 					<sp:input class="form-control rounded" path="contact" type="text"
 						placeholder="${sessionInstitution.contact}(預設)" />
 				</div>
 
-				<div class="col-xl-3 col-md-12">
+				<div class="col-lg-3 col-md-12">
 					<sp:input class="form-control rounded" path="contactNumber"
 						type="text" placeholder="${sessionInstitution.contactNumber}(預設)" />
 				</div>
 
-				<div class="col-xl-1 col-md-12">
+				<div class="col-lg-1 col-md-12">
 					<button type="submit" type="submit"
 						class="btn btn-outline-secondary">新增</button>
 				</div>
 			</div>
 		</sp:form>
 	</div>
-
-	<table class="table table-light">
+	<div style="padding-right:10px; padding-left:10px;">
+	<table class="table">
 		<thead>
 			<tr>
 				<th scope="col">編號</th>
@@ -233,6 +233,7 @@ body {
 
 		</tbody>
 	</table>
+	</div>
 </body>
 <script>
 	function validateDates() {
