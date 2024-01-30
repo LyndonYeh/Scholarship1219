@@ -212,7 +212,6 @@ public class UserService {
 		} else if (institutionIds.contains(institutionId)) {
 			redirectAttributes.addFlashAttribute("InstitutionIdErrorMessage", "機構統編已存在");
 		}
-
 		return isRegisterValidate;
 	}
 

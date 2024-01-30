@@ -41,11 +41,11 @@
 
 
 
-		<!-- <property name="user" value="root" /> <property name="password" value="123" 
-			/> -->
+		 <property name="user" value="root" /> <property name="password" value="123" 
+			/> 
 
-		<property name="user" value="web" />
-		<property name="password" value="12345678" />
+		<!--<property name="user" value="web" />
+		<property name="password" value="12345678" />-->
 
 
 		<!-- options -->
