@@ -8,13 +8,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
-
-
 <link rel="shortcut icon" type="image/x-icon"
-href="/Scholarship/images/icon.png">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	href="/Scholarship/images/icon.png">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
@@ -31,7 +29,8 @@ href="/Scholarship/images/icon.png">
 <script type="text/javascript" charset="utf8"
 	src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- 引入 DataTables -->
 <script type="text/javascript"
@@ -72,27 +71,21 @@ href="/Scholarship/images/icon.png">
 
 
 <script type="text/javascript">
+	$(document).ready(function() {
+		$('.pure-table').DataTable({
+			// 設定語言為繁體中文
+			"language" : {
+				// 如果啟用 https, port 改為 8443
+				"url" : "/Scholarship/js/datatables_zh_tw.json",
+			//"url" : "https://localhost:8443/Scholarship/js/datatables_zh_tw.json",
+			},
+			//設定匯出功能
+			dom : 'lBfrtip',
+			buttons : [ 'copy', 'csv', 'excel', 'print' ]
+		});
 
-	$(document)
-			.ready(
-					function() {
-						$('.pure-table')
-								.DataTable(
-										{
-											// 設定語言為繁體中文
-											"language" : {
-												// 如果啟用 https, port 改為 8443
-												"url" : "/Scholarship/js/datatables_zh_tw.json",
-												//"url" : "https://localhost:8443/Scholarship/js/datatables_zh_tw.json",
-											},
-											//設定匯出功能
-											dom : 'lBfrtip',
-											buttons : [ 'copy', 'csv', 'excel','print']
-										});
-
-						table.buttons().container().appendTo(
-								'.pure-table_wrapper .col-md-6');
-					});
+		table.buttons().container().appendTo('.pure-table_wrapper .col-md-6');
+	});
 
 	function copySelectedValue() {
 		// 取得下拉清單中選擇的值
@@ -103,14 +96,49 @@ href="/Scholarship/images/icon.png">
 	}
 </script>
 
-
-<style>
+<!--
 body {
 	padding-top: 100px;
+}-->
+
+<style>
+body, html {
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+	position: relative;
 }
 
+-->
 table {
 	margin-top: 30px;
+}
+
+.full-width-img {
+	width: 100vw;
+	height: 50vw;
+	display: block;
+	filter: brightness(50%);
+}
+
+.image-title {
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	text-align: center;
+	width: 100%;
+}
+
+.img-text {
+	font-size: 5vw;
+}
+
+a.href-text, a.href-text:hover {
+	text-decoration: none;
+	font-weight: none;
+	color: white;
 }
 </style>
 <title>獎學網首頁</title>
@@ -118,6 +146,15 @@ table {
 <body>
 	<!-- menu -->
 	<%@include file="../include/menu.jspf"%>
+	<div class="full-width-container">
+		<a href="#main"><img class="full-width-img" alt="graduation"
+			src="/Scholarship/images/graduation.jpg"></a>
+		<div class="image-title">
+			<h1 class="img-text">
+				<a class="href-text" href="#main">You study, we standby.</a>
+			</h1>
+		</div>
+	</div>
 	<div id="main" class="p-3 bg bg-light">
 		<sp:form modelAttribute="scholarship" method="post"
 			action="${pageContext.request.contextPath}/mvc/scholarship/frontend/"
@@ -181,7 +218,9 @@ table {
 						<td><a href="${scholarship.webUrl}">${scholarship.scholarshipName }</a>
 						</td>
 
-						<td><fmt:formatNumber value="${scholarship.scholarshipAmount}" type="currency" pattern="#,##0.##"/></td>
+						<td><fmt:formatNumber
+								value="${scholarship.scholarshipAmount}" type="currency"
+								pattern="#,##0.##" /></td>
 						<td>${scholarship.stringEndDate}</td>
 						<td>${scholarship.institution.contact }</td>
 						<td>${scholarship.institution.contactNumber }</td>
